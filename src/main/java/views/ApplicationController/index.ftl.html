@@ -2,8 +2,29 @@
 <@layout.myLayout "Home page">    
 
 
-<h1>${i18n("hello.world")}</h1>
-<p>${i18n("hello.world.json")}</p>
-<a href="/hello_world.json">Hello World Json</a>
+        
+<#if frontArticle??>
+
+    <div class="jumbotron">
+        <h1>
+            <a href="/article/${frontArticle.id}">${frontArticle.title}</a>    
+        </h1>  
+        <p>${frontArticle.postedAt?date}</p>  
+        <p><#noescape>${frontArticle.content}</#noescape></p>
+    </div>
+</#if>
+
+<hr/>
+
+<#if olderArticles??>
+    
+    <#list olderArticles as article>
+        <h3>
+            <a href="/article/${article.id}">${article.title}</a>    
+        </h3>  
+        <p>${article.postedAt?date}</p>  
+    </#list>
+    
+</#if>
 
 </@layout.myLayout>
