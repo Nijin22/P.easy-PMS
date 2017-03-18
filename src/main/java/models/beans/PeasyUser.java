@@ -5,6 +5,7 @@ import java.lang.String;
 import javax.persistence.*;
 import models.beans.Project;
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Entity implementation class for Entity: User
@@ -20,6 +21,8 @@ public class PeasyUser implements Serializable {
 	private String formOfAddress;
 	private String password;
 	private static final long serialVersionUID = 1L;
+	@ManyToMany(mappedBy = "projectMembers")
+	private Set<Project> projects;
 
 	public PeasyUser() {
 		super();
@@ -106,12 +109,12 @@ public class PeasyUser implements Serializable {
 		this.password = password;
 	}
 
-	public Collection<Project> getProject() {
-	    return project;
+	public Set<Project> getProject() {
+	    return projects;
 	}
 
-	public void setProject(Collection<Project> param) {
-	    this.project = param;
+	public void setProject(Set<Project> param) {
+	    this.projects = param;
 	}
 
 }

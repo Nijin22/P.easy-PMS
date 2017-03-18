@@ -35,7 +35,7 @@
 	<entity>
 		<entity-name>models.beans.Project</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>186</entity-height>
+		<entity-height>206</entity-height>
 		<entity-X-Coordinate>664</entity-X-Coordinate>
 		<entity-Y-Coordinate>245</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
@@ -68,8 +68,8 @@
 	<entity>
 		<entity-name>models.beans.PeasyUser</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>168</entity-height>
-		<entity-X-Coordinate>360</entity-X-Coordinate>
+		<entity-height>206</entity-height>
+		<entity-X-Coordinate>301</entity-X-Coordinate>
 		<entity-Y-Coordinate>231</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>

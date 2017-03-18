@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import models.beans.PeasyUser;
+import java.util.Collection;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Project {
@@ -23,6 +26,8 @@ public class Project {
 	private Set<Task> tasks; 
 	@OneToMany(mappedBy = "project")
 	private Set<ProjectBlogEntry> blogEntries;
+	@ManyToMany
+	private Set<PeasyUser> projectMembers;
 	public Project() {
 
 	}
@@ -70,6 +75,14 @@ public class Project {
 
 	public Set<Task> getTasks() {
 		return tasks;
+	}
+
+	public Set<PeasyUser> getUsers() {
+	    return projectMembers;
+	}
+
+	public void SetProjectMembers(Set<PeasyUser> param) {
+	    this.projectMembers = param;
 	}
 	
 
