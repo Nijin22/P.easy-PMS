@@ -20,8 +20,6 @@ public class PeasyUser implements Serializable {
 	private String formOfAddress;
 	private String password;
 	private static final long serialVersionUID = 1L;
-	@OneToMany(mappedBy = "peasyUser")
-	private Collection<Project> project;
 
 	public PeasyUser() {
 		super();
