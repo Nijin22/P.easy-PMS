@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import models.beans.PeasyUser;
 import java.util.Collection;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Project {
@@ -28,6 +29,8 @@ public class Project {
 	private Set<ProjectBlogEntry> blogEntries;
 	@ManyToMany
 	private Set<PeasyUser> projectMembers;
+	@ManyToOne
+	private PeasyUser projectManager;
 	public Project() {
 
 	}

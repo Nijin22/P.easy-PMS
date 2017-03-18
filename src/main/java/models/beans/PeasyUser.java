@@ -23,6 +23,8 @@ public class PeasyUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@ManyToMany(mappedBy = "projectMembers")
 	private Set<Project> projects;
+	@OneToMany(mappedBy = "projectManager")
+	private Set<Project> projectsWhereUserIsManager;
 
 	public PeasyUser() {
 		super();
