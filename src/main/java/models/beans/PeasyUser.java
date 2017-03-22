@@ -26,8 +26,6 @@ public class PeasyUser implements Serializable {
 	private Set<Project> projectsWhereUserIsManager;
 	@ManyToOne()
 	private Organisation organisation;
-	@OneToOne(mappedBy = "owner")
-	private Calendar calendar;
 
 	public PeasyUser() {
 		super();
@@ -130,11 +128,4 @@ public class PeasyUser implements Serializable {
 		this.organisation = organisation;
 	}
 
-	public Calendar getCalendar() {
-		return calendar;
-	}
-
-	public void setCalendar(Calendar calendar) {
-		this.calendar = calendar;
-	}
 }
