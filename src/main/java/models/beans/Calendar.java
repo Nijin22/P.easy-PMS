@@ -2,6 +2,8 @@ package models.beans;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.Set;
+
 import javax.persistence.*;
 
 /**
@@ -13,7 +15,10 @@ import javax.persistence.*;
 public class Calendar implements Serializable {
 
 	@Id
-	private String ownerMailAddress;
+	@OneToOne()
+	private PeasyUser owner;
+	@OneToMany(mappedBy = "calendar")
+	private Set<Event> events;
 	private static final long serialVersionUID = 1L;
 
 	public Calendar() {
@@ -24,7 +29,7 @@ public class Calendar implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((ownerMailAddress == null) ? 0 : ownerMailAddress.hashCode());
+		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
 		return result;
 	}
 
@@ -37,20 +42,28 @@ public class Calendar implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Calendar other = (Calendar) obj;
-		if (ownerMailAddress == null) {
-			if (other.ownerMailAddress != null)
+		if (owner == null) {
+			if (other.owner != null)
 				return false;
-		} else if (!ownerMailAddress.equals(other.ownerMailAddress))
+		} else if (!owner.equals(other.owner))
 			return false;
 		return true;
 	}
 
-	public String getOwnerMailAddress() {
-		return this.ownerMailAddress;
+	public PeasyUser getOwnerMailAddress() {
+		return this.owner;
 	}
 
-	public void setOwnerMailAddress(String ownerMailAddress) {
-		this.ownerMailAddress = ownerMailAddress;
+	public void setOwnerMailAddress(PeasyUser ownerMailAddress) {
+		this.owner = ownerMailAddress;
+	}
+
+	public Set<Event> getEvents() {
+		return events;
+	}
+
+	public void setEvents(Set<Event> events) {
+		this.events = events;
 	}
 
 }

@@ -13,12 +13,16 @@ public class Event implements Serializable {
 
 	@Id
 	private int Id;
+	@ManyToOne
+	private Calendar calendar;
+	@OneToOne
+	private Task task;
 	private static final long serialVersionUID = 1L;
 
 	public Event() {
 		super();
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -47,6 +51,22 @@ public class Event implements Serializable {
 
 	public void setId(int Id) {
 		this.Id = Id;
+	}
+
+	public Calendar getCalendar() {
+		return calendar;
+	}
+
+	public void setCalendar(Calendar calendar) {
+		this.calendar = calendar;
+	}
+
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
 	}
 
 }

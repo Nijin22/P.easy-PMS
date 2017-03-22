@@ -14,8 +14,8 @@
 		<entity-name>models.beans.Organisation</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>146</entity-height>
-		<entity-X-Coordinate>420</entity-X-Coordinate>
-		<entity-Y-Coordinate>55</entity-Y-Coordinate>
+		<entity-X-Coordinate>-12</entity-X-Coordinate>
+		<entity-Y-Coordinate>20</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -46,9 +46,9 @@
 	<entity>
 		<entity-name>models.beans.PeasyUser</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>246</entity-height>
-		<entity-X-Coordinate>180</entity-X-Coordinate>
-		<entity-Y-Coordinate>180</entity-Y-Coordinate>
+		<entity-height>266</entity-height>
+		<entity-X-Coordinate>239</entity-X-Coordinate>
+		<entity-Y-Coordinate>220</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -57,9 +57,9 @@
 	<entity>
 		<entity-name>models.beans.Event</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>70</entity-height>
-		<entity-X-Coordinate>140</entity-X-Coordinate>
-		<entity-Y-Coordinate>578</entity-Y-Coordinate>
+		<entity-height>128</entity-height>
+		<entity-X-Coordinate>47</entity-X-Coordinate>
+		<entity-Y-Coordinate>660</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -90,9 +90,9 @@
 	<entity>
 		<entity-name>models.beans.Calendar</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>70</entity-height>
-		<entity-X-Coordinate>120</entity-X-Coordinate>
-		<entity-Y-Coordinate>456</entity-Y-Coordinate>
+		<entity-height>108</entity-height>
+		<entity-X-Coordinate>30</entity-X-Coordinate>
+		<entity-Y-Coordinate>468</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
