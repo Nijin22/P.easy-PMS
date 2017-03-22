@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import models.beans.PeasyUser;
-import java.util.Collection;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.lang.String;
 import javax.persistence.*;
 import models.beans.Project;
-import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -27,6 +26,8 @@ public class PeasyUser implements Serializable {
 	private Set<Project> projectsWhereUserIsManager;
 	@ManyToOne()
 	private Organisation organisation;
+	@OneToOne(mappedBy = "owner")
+	private Calendar calendar;
 
 	public PeasyUser() {
 		super();
@@ -127,5 +128,13 @@ public class PeasyUser implements Serializable {
 
 	public void setOrganisation(Organisation organisation) {
 		this.organisation = organisation;
+	}
+
+	public Calendar getCalendar() {
+		return calendar;
+	}
+
+	public void setCalendar(Calendar calendar) {
+		this.calendar = calendar;
 	}
 }
