@@ -15,6 +15,8 @@ public class Organisation implements Serializable {
 	@Id
 	private int organisationId;
 	private String name;
+	@OneToOne
+	private PeasyUser organisationAdmin;
 	private static final long serialVersionUID = 1L;
 
 	@Override

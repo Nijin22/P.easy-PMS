@@ -25,6 +25,8 @@ public class PeasyUser implements Serializable {
 	private Set<Project> projects;
 	@OneToMany(mappedBy = "projectManager")
 	private Set<Project> projectsWhereUserIsManager;
+	@ManyToOne()
+	private Organisation organisation;
 
 	public PeasyUser() {
 		super();
@@ -112,11 +114,18 @@ public class PeasyUser implements Serializable {
 	}
 
 	public Set<Project> getProject() {
-	    return projects;
+		return projects;
 	}
 
 	public void setProject(Set<Project> param) {
-	    this.projects = param;
+		this.projects = param;
 	}
 
+	public Organisation getOrganisation() {
+		return organisation;
+	}
+
+	public void setOrganisation(Organisation organisation) {
+		this.organisation = organisation;
+	}
 }
