@@ -1,1 +1,63 @@
-<h1>Projects</h1>
+<#import "../layout/Layout.ftl.html" as layout> <@layout.Layout "Login
+page">
+<link rel="stylesheet" href="../assets/css/projects.css">
+
+<div id="projectContent">
+	<div class="page-header">
+		<h1>Projects</h1>
+	</div>
+
+	<input type="text" id="myInput" onkeyup="myFunction()"
+		placeholder="Search for Projectname">
+
+	<table id="myTable">
+		<tr class="header">
+			<th style="width: 18%;">Projectname</th>
+			<th style="width: 10%;">In Time</th>
+			<th style="width: 18%;">Status</th>
+			<th style="width: 18%;">Left Time</th>
+			<th style="width: 18%;">Budget</th>
+			<th style="width: 18%;">Deadline</th>
+		</tr>
+		<tr>
+			<td>Projekt 2</td>
+			<td>In Time {green}</td>
+			<td>80%</td>
+			<td>22</td>
+			<td>21212</td>
+			<td>01.02.1017</td>
+		</tr>
+		<tr>
+			<td>Projekt 1</td>
+			<td>In Time {green}</td>
+			<td>80%</td>
+			<td>22</td>
+			<td>21212</td>
+			<td>01.02.1017</td>
+		</tr>
+	</table>
+</div>
+
+<script>
+	function myFunction() {
+		// Declare variables 
+		var input, filter, table, tr, td, i;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("myTable");
+		tr = table.getElementsByTagName("tr");
+
+		// Loop through all table rows, and hide those who don't match the search query
+		for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[0];
+			if (td) {
+				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
+	}
+</script>
+</@layout.Layout>

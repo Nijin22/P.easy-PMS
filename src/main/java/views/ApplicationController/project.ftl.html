@@ -1,1 +1,253 @@
-<h1>project</h1>
+<#import "../layout/Layout.ftl.html" as layout> <@layout.Layout "Login
+page">
+<link rel="stylesheet" href="../assets/css/project.css">
+<div id="project">
+	<div class="page-header">
+		<h1>Project 1</h1>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div role="tabpanel">
+				<div class="col-sm-3">
+					<ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
+						<li role="presentation" class="brand-nav active"><a
+							href="/projects">Overview</a></li>
+						<li role="presentation" class="brand-nav"><a href="">Task
+								Overview</a></li>
+						<li role="presentation" class="brand-nav"><a href="">Members</a></li>
+						<li role="presentation" class="brand-nav"><a href="">Report</a></li>
+						<li role="presentation" class="brand-nav"><a href="">Milestones</a></li>
+					</ul>
+				</div>
+				<div class="col-sm-9">
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="tab1">
+							<p>
+								<!--Button Project Description Start -->
+								<button class="btn btn-primary" data-toggle="collapse"
+									data-target="#details1">Project Description</button>
+							<div id="details1" class="collapse">Project Description ...
+								eget id metus. Mauris quis convallis elit, ac convallis augue.
+								Pellentesque ornare cursus nibh quis fermentum. Morbi faucibus
+								at tortor sed volutpat. Etiam at ex molestie turpis aliquam
+								auctor. Nulla consequat tristique augue, vel vr sit amet,
+								consectetur adipiscing elit. Mauris tincidunt feugiat lorem, at
+								ornare tellus faucibus ut. Curabitur eget metus dapibus nibh
+								laoreet lacinia eget id metus. Mauris quis convallis elit, ac
+								convallis augue. Pellentesque ornare cursus nibh quis fermentum.
+								Morbi faucibus at tortor sed volutpat. Etiam at ex molestie
+								turpis aliquam auctor. Nulla consequat tristique augue, vel vr
+								sit amet, consectetur adipiscing elit. Mauris tincidunt feugiat
+								lorem, at ornare tellus faucibus ut. Curabitur eget metus
+								dapibus nibh laoreet lacinia eget id metus. Mauris quis
+								convallis elit, ac convallis augue. Pellentesque ornare cursus
+								nibh quis fermentum. Morbi faucibus at tortor sed volutpat.
+								Etiam at ex molestie turpis aliquam auctor. Nulla consequat
+								tristique augue, vel vr sit amet, consectetur adipiscing elit.
+								Mauris tincidunt feugiat lorem, at ornare tellus faucibus ut.
+								Curabitur eget metus dapibus nibh laoreet lacinia eget id metus.
+								Mauris quis convallis elit, ac convallis augue. Pellentesque
+								ornare cursus nibh quis fermentum. Morbi faucibus at tortor sed
+								volutpat. Etiam at ex molestie turpis aliquam auctor. Nulla
+								consequat tristique augue, vel vr sit amet, consectetur
+								adipiscing elit. Mauris tincidunt feugiat lorem, at ornare
+								tellus faucibus ut. Curabitur eget metus dapibus nibh laoreet
+								lacinia eget id metus. Mauris quis convallis elit, ac convallis
+								augue. Pellentesque ornare cursus nibh quis fermentum. Morbi
+								faucibus at tortor sed volutpat. Etiam at ex molestie turpis
+								aliquam auctor. Nulla consequat tristique augue, vel v dapibus
+								nibh laoreet lacinia eget id metus. Mauris quis convallis elit,
+								ac convallis augue. Pellentesque ornare cursus nibh quis
+								fermentum. Morbi faucibus at tortor sed volutpat. Etiam at ex
+								molestie turpis aliquam auctor. Nulla consequat tristique augue,
+								vel venenatis massa fringilla sit amet. Morbi egestas turpis
+								facilisis sem faucibus finibus.</div>
+							<br>
+							<!-- Buttom Project Description End -->
+
+							<!--Start Input Parameters of Project -->
+							<TABLE>
+								<TR class="spaceUnder">
+									<TD><strong>Start of Project</strong></TD>
+									<TD><input class="form-control" type="date"
+										value="2011-08-19" id="example-date-input"></TD>
+								</TR>
+								<TR class="spaceUnder">
+									<TD><strong>Deadline of Project</strong></TD>
+									<TD><input class="form-control" type="date"
+										value="2011-08-19" id="example-date-input"></TD>
+								</TR>
+								<TR class="spaceUnder">
+									<TD><strong>Budget of Project</strong></TD>
+									<TD><input class="form-control" type="number" value="42"
+										id="example-number-input"></TD>
+								</TR>
+							</TABLE>
+							<!--End Input Parameters of Project -->
+							<hr>
+							<!--Start Block -->
+							<!-- http://bootsnipp.com/snippets/featured/collapsible-chat-widget -->
+							<div class="panel panel-primary">
+								<div class="panel-heading" id="accordion">
+									<span class="glyphicon glyphicon-comment"></span> Blog
+									<div class="btn-group pull-right">
+										<a type="button" class="btn btn-default btn-xs"
+											data-toggle="collapse" data-parent="#accordion"
+											href="#collapseOne"> <span
+											class="glyphicon glyphicon-chevron-down"></span>
+										</a>
+									</div>
+								</div>
+								<!--replace in with collapse when blog should be closed as default -->
+								<div class="panel-collapse in" id="collapseOne">
+									<div class="panel-body">
+										<ul class="chat">
+											<li class="left clearfix"><span
+												class="chat-img pull-left"> <img
+													src="http://placehold.it/50/55C1E7/fff&text=U"
+													alt="User Avatar" class="img-circle" />
+											</span>
+												<div class="chat-body clearfix">
+													<div class="header">
+														<strong class="primary-font">Jack Sparrow</strong> <small
+															class="pull-right text-muted"> <span
+															class="glyphicon glyphicon-time"></span>12 mins ago
+														</small>
+													</div>
+													<p>Lorem ipsum dolor sit amet, consectetur adipiscing
+														elit. Curabitur bibendum ornare dolor, quis ullamcorper
+														ligula sodales.</p>
+												</div></li>
+											<li class="right clearfix"><span
+												class="chat-img pull-right"> <img
+													src="http://placehold.it/50/FA6F57/fff&text=TA"
+													alt="User Avatar" class="img-circle" />
+											</span>
+												<div class="chat-body clearfix">
+													<div class="header">
+														<small class=" text-muted"><span
+															class="glyphicon glyphicon-time"></span>13 mins ago</small> <strong
+															class="pull-right primary-font">Bhaumik Patel</strong>
+													</div>
+													<p>Lorem ipsum dolor sit amet, consectetur adipiscing
+														elit. Curabitur bibendum ornare dolor, quis ullamcorper
+														ligula sodales.</p>
+												</div></li>
+											<li class="left clearfix"><span
+												class="chat-img pull-left"> <img
+													src="http://placehold.it/50/55C1E7/fff&text=U"
+													alt="User Avatar" class="img-circle" />
+											</span>
+												<div class="chat-body clearfix">
+													<div class="header">
+														<strong class="primary-font">Jack Sparrow</strong> <small
+															class="pull-right text-muted"> <span
+															class="glyphicon glyphicon-time"></span>14 mins ago
+														</small>
+													</div>
+													<p>Lorem ipsum dolor sit amet, consectetur adipiscing
+														elit. Curabitur bibendum ornare dolor, quis ullamcorper
+														ligula sodales.</p>
+												</div></li>
+											<li class="right clearfix"><span
+												class="chat-img pull-right"> <img
+													src="http://placehold.it/50/FA6F57/fff&text=ME"
+													alt="User Avatar" class="img-circle" />
+											</span>
+												<div class="chat-body clearfix">
+													<div class="header">
+														<small class=" text-muted"><span
+															class="glyphicon glyphicon-time"></span>15 mins ago</small> <strong
+															class="pull-right primary-font">Bhaumik Patel</strong>
+													</div>
+													<p>Lorem ipsum dolor sit amet, consectetur adipiscing
+														elit. Curabitur bibendum ornare dolor, quis ullamcorper
+														ligula sodales.</p>
+												</div></li>
+										</ul>
+									</div>
+									<div class="panel-footer">
+										<div class="input-group">
+											<input id="btn-input" type="text"
+												class="form-control input-sm"
+												placeholder="Type your message here..." /> <span
+												class="input-group-btn">
+												<button class="btn btn-warning btn-sm" id="btn-chat">
+													Send</button>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End Block -->
+							<hr>
+							<!--start Fileupload list -->
+
+							<input type="text" id="myInput" onkeyup="myFunction()"
+								placeholder="File Search">
+<!-- 							<div class="form-group has-feedback"> -->
+<!-- 							    <input type="text" class="form-control"  onkeyup="myFunction()" -->
+<!-- 															placeholder="File Search" /> -->
+<!-- 							    <i class="glyphicon glyphicon-search form-control-feedback"></i> -->
+<!-- 							</div> -->
+
+							<table id="myTable">
+								<tr class="header">
+									<th style="width: 90%;">Files</th>
+									<th style="width: 10%;"></th>
+
+								</tr>
+								<tr>
+									<td><a href="">File 1</a></td>
+									<td><a href=""><span class="glyphicon glyphicon-trash"></span></a></td>
+								</tr>
+								<tr>
+									<td><a href="">File 2</a></td>
+									<td><a href=""><span class="glyphicon glyphicon-trash"></span></a></td>
+								</tr>
+							</table>
+							<!--End FileUpload list-->
+							<br>
+							<!--Start Fileupload -->
+							<form method="post" enctype="multipart/form-data"
+								action="/uploadFinish">
+								<!-- 								Please specify file to upload: <input type="file" name="upfile"> -->
+								<br> <label class="custom-file"> <input type="file"
+									id="file" class="custom-file-input"> <span
+									class="custom-file-control"></span>
+								</label>
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</form>
+							<!--End Fileupload -->
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	function myFunction() {
+		// Declare variables 
+		var input, filter, table, tr, td, i;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("myTable");
+		tr = table.getElementsByTagName("tr");
+
+		// Loop through all table rows, and hide those who don't match the search query
+		for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[0];
+			if (td) {
+				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
+	}
+</script>
+</@layout.Layout>
