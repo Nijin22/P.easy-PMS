@@ -74,7 +74,7 @@ public class Routes implements ApplicationRoutes {
 		//p.easy Resources GET
 		///////////////////////////////////////////////////////////////////////        
         //Routing
-        router.GET().route("/hello_world.json").with(ApplicationController::helloWorldJson);
+//        router.GET().route("/hello_world.json").with(ApplicationController::helloWorldJson);
 
         
     	///////////////////////////////////////////////////////////////////////

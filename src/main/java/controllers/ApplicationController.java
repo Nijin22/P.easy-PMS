@@ -113,11 +113,12 @@ public class ApplicationController {
 
     }
     
-    public Result helloWorldJson() {
-        
-        SimplePojo simplePojo = new SimplePojo();
-        simplePojo.content = "Simple JSON test!";
-
+//    public Result helloWorldJson() {
+//        
+//        SimplePojo simplePojo = new SimplePojo();
+//        simplePojo.content = "Simple JSON test!";
+//        
+//    }
 
     /**
      * Method to put initial data in the db...
