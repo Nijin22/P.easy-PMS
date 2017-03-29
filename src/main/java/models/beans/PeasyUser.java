@@ -18,7 +18,7 @@ public class PeasyUser implements Serializable {
 	private String firstName;
 	private String lastName;
 	private String formOfAddress;
-	private String password;
+	private String passwordInDb;
 	private static final long serialVersionUID = 1L;
 	@ManyToMany(mappedBy = "projectMembers")
 	private Set<Project> projects;
@@ -37,12 +37,14 @@ public class PeasyUser implements Serializable {
 	 * @param lastName
 	 * @param password
 	 */
-	public PeasyUser(String emailAddress, String firstName, String lastName, String password) {
+	public PeasyUser(String emailAddress, String firstName, String lastName, String passwordCleantext) {
 		super();
 		this.emailAddress = emailAddress;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.password = password;
+		
+		// TODO: Hash + Salt the PW. Add Password routine
+		this.passwordInDb = passwordCleantext;
 
 		formOfAddress = firstName;
 	}
@@ -104,12 +106,12 @@ public class PeasyUser implements Serializable {
 		this.formOfAddress = formOfAddress;
 	}
 
-	public String getPassword() {
-		return this.password;
+	public String getPasswordInDb() {
+		return this.passwordInDb;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPasswordInDb(String password) {
+		this.passwordInDb = password;
 	}
 
 	public Set<Project> getProject() {
