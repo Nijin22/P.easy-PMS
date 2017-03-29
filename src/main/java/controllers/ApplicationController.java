@@ -4,8 +4,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,18 +14,27 @@
  */
 
 package controllers;
+import java.util.List;
+import java.util.Map;
 
+import models.Article;
 import ninja.Result;
 import ninja.Results;
 
+import com.google.common.collect.Maps;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import dao.ArticleDao;
+import dao.SetupDao;
 
-
-@Singleton
 public class ApplicationController {
 
-    public Result index() {
-        return Results.html();
+    @Inject
+    ArticleDao articleDao;
+
+    @Inject
+    SetupDao setupDao;
+    public ApplicationController() {
 
     }
     
@@ -35,8 +43,7 @@ public class ApplicationController {
 
     }
     
-    public Result dashboard() {
-        return Results.html();
+    public Result dashboard() {        return Results.html();
 
     }
     
@@ -47,7 +54,6 @@ public class ApplicationController {
     
     public Result information() {
         return Results.html();
-
     }
     
     public Result login() {
@@ -57,7 +63,6 @@ public class ApplicationController {
     
     public Result register() {
         return Results.html();
-
     }
     
     public Result forgotPassword() {
@@ -68,8 +73,7 @@ public class ApplicationController {
     public Result members() {
         return Results.html();
 
-    }
-    
+    }    
     public Result milestones() {
         return Results.html();
 
@@ -79,8 +83,7 @@ public class ApplicationController {
         return Results.html();
 
     }
-    
-    public Result organization() {
+        public Result organization() {
         return Results.html();
 
     }
@@ -115,13 +118,32 @@ public class ApplicationController {
         SimplePojo simplePojo = new SimplePojo();
         simplePojo.content = "Simple JSON test!";
 
-        return Results.json().render(simplePojo);
+
+    /**
+     * Method to put initial data in the db...
+     * 
+     * @return
+     */
+    public Result setup() {
+
+        setupDao.setup();
+
+        return Results.ok();
 
     }
-    
-    public static class SimplePojo {
 
-        public String content;
-        
+    public Result index() {
+
+        Article frontPost = articleDao.getFirstArticleForFrontPage();
+
+        List<Article> olderPosts = articleDao.getOlderArticlesForFrontPage();
+
+        Map<String, Object> map = Maps.newHashMap();
+        map.put("frontArticle", frontPost);
+        map.put("olderArticles", olderPosts);
+
+        return Results.html().render("frontArticle", frontPost)
+                .render("olderArticles", olderPosts);
+
     }
 }

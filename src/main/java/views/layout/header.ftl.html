@@ -12,6 +12,17 @@
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="/">${i18n("header.home")}</a></li>
 			</ul>
+			<ul class="navbar-right nav navbar-nav">
+			<#if (session.username)??>
+                <li><a href="#">${session.username}</a></li>
+                <li><a href="/article/new">${i18n("header.new")}</a></li>
+                <li><a href="/logout">${i18n("header.logout")}</a></li>
+            <#else>
+                
+                <li><a href="/login" id="login">${i18n("header.login")}</a></li>
+            </#if>
+				
+			</ul>
 		</div>
 		<!--/.navbar-collapse -->
 	</div>

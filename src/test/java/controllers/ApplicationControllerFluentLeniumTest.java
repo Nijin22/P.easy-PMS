@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2012 the original author or authors.
+ * Copyright (C) 2012-2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,30 @@
  * limitations under the License.
  */
 
-package conf;
+package controllers;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Singleton;
+import static org.junit.Assert.assertTrue;
+import ninja.NinjaFluentLeniumTest;
 
-@Singleton
-public class Module extends AbstractModule {
-    
+import org.junit.Before;
+import org.junit.Test;
 
-    protected void configure() {
+public class ApplicationControllerFluentLeniumTest extends NinjaFluentLeniumTest {
+
+    @Test
+    public void testThatHomepageWorks() {
         
-        bind(StartupActions.class);    
+        goTo(getServerAddress() + "/");
         
+        System.out.println("title: " + title());
+        
+        assertTrue(title().contains("Home page"));
+        
+        click("#login");
+        
+        assertTrue(url().contains("login"));
+
+
     }
 
 }
