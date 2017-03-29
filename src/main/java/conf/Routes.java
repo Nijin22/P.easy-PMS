@@ -44,6 +44,43 @@ public class Routes implements ApplicationRoutes {
      */
     @Override
     public void init(Router router) {  
+      
+    	///////////////////////////////////////////////////////////////////////
+        //p.easy templates GET
+        ///////////////////////////////////////////////////////////////////////          
+        //dynamic 
+        router.GET().route("/account").with(ApplicationController::account);
+        router.GET().route("/dashboard").with(ApplicationController::dashboard);
+        router.GET().route("/login").with(ApplicationController::login);
+        router.GET().route("/register").with(ApplicationController::register);
+        router.GET().route("/forgotPassword").with(ApplicationController::forgotPassword);
+        router.GET().route("/myCalender").with(ApplicationController::myCalender);
+        router.GET().route("/organization").with(ApplicationController::organization);
+       
+        router.GET().route("/projects").with(ApplicationController::projects);
+        router.GET().route("/projects/{projectID}").with(ApplicationController::project);
+        router.GET().route("/projects/{projectID}/members").with(ApplicationController::members);
+        router.GET().route("/projects/{projectID}/milestones").with(ApplicationController::milestones);
+        router.GET().route("/projects/{projectID}/report").with(ApplicationController::report);
+        router.GET().route("/projects/{projectID}/tasks/{taskID}").with(ApplicationController::task);
+        router.GET().route("/projects/{projectID}/tasks").with(ApplicationController::tasks);
+       
+        //static
+    	router.GET().route("/").with(ApplicationController::index);
+        router.GET().route("/impress").with(ApplicationController::impress);
+        router.GET().route("/information").with(ApplicationController::information);
+
+		///////////////////////////////////////////////////////////////////////
+		//p.easy Resources GET
+		///////////////////////////////////////////////////////////////////////        
+        //Routing
+        router.GET().route("/hello_world.json").with(ApplicationController::helloWorldJson);
+
+        
+    	///////////////////////////////////////////////////////////////////////
+        //p.easy Resources POST
+        ///////////////////////////////////////////////////////////////////////     
+        //Routing        
         
         // puts test data into db:
         if (!ninjaProperties.isProd()) {
@@ -77,6 +114,16 @@ public class Routes implements ApplicationRoutes {
         router.POST().route("/api/{username}/article.json").with(ApiController::postArticleJson);
         router.POST().route("/api/{username}/article.xml").with(ApiController::postArticleXml);
  
+    	///////////////////////////////////////////////////////////////////////
+        //p.easy Resources PUT
+        ///////////////////////////////////////////////////////////////////////  
+        //Routing
+        
+    	///////////////////////////////////////////////////////////////////////
+        //p.easy Resources DELETE
+        ///////////////////////////////////////////////////////////////////////   
+        //Routing
+        
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)
         ///////////////////////////////////////////////////////////////////////    

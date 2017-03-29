@@ -20,6 +20,10 @@ import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.Map;
 
+import org.junit.Ignore;
+import org.junit.Test;
+
+
 import models.Article;
 import models.ArticleDto;
 import models.ArticlesDto;
@@ -28,6 +32,9 @@ import ninja.NinjaDocTester;
 import org.doctester.testbrowser.Request;
 import org.doctester.testbrowser.Response;
 import org.hamcrest.CoreMatchers;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
 import com.google.common.collect.Maps;
@@ -45,6 +52,7 @@ public class ApiControllerDocTesterTest extends NinjaDocTester {
     String POST_ARTICLE_URL = "/api/{username}/article.json";
     String LOGIN_URL = "/login";
     
+    @Ignore
     String USER = "bob@gmail.com";
 
     @Test
@@ -68,6 +76,15 @@ public class ApiControllerDocTesterTest extends NinjaDocTester {
                 articlesDto.articles.size(), 
                 CoreMatchers.is(3));
 
+    }
+    
+    @Ignore
+    @Test
+    public void testGetHelloWorldJson() {
+    
+        Response response = makeRequest(
+                Request.GET().url(
+                        testServerUrl().path(URL_HELLO_WORLD_JSON)));
         // /////////////////////////////////////////////////////////////////////
         // Post new article:
         // /////////////////////////////////////////////////////////////////////
