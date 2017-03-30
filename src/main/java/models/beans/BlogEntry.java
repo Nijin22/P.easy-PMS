@@ -18,6 +18,7 @@ public abstract class BlogEntry implements Serializable {
 	private String title;
 	private String text;
 	private Date creationDate;
+	// TODO: Author
 	private static final long serialVersionUID = 1L;
 
 	public BlogEntry() {
