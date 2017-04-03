@@ -6,34 +6,54 @@ import java.security.GeneralSecurityException;
 
 import org.junit.Test;
 
-import com.google.inject.Injector;
-
 import models.manager.UserManager;
 import models.manager.exceptions.UserAlreadyExistsException;
 import ninja.NinjaTest;
 
-public class UserManagerTest extends NinjaTest{
+public class UserManagerTest extends NinjaTest {
+	final String EMAIL = "testme@nijin.org";
+	final String FIRST_NAME = "JOHN";
+	final String LAST_NAME = "DOE";
+	final String PASSWORD = "correcthorsebatterystaple";
+	final String FORM_OF_ADDRESS = "Mr. Doe";
 
 	@Test
-	public void CrudUser(){
-		final String EMAIL = "testme@nijin.org";
-		final String FIRST_NAME = "JOHN";
-		final String LAST_NAME = "DOE";
-		final String PASSWORD = "correcthorsebatterystaple";
-		
-		// this is the application guice injector
-        Injector injector = getInjector();
-    	UserManager um = injector.getInstance(UserManager.class);
-		
+	public void CreateAndUpdateUser() {
+		// inject userManager from runtime
+		UserManager um = getInjector().getInstance(UserManager.class);
+
 		// create user
 		try {
 			um.createUser(EMAIL, FIRST_NAME, LAST_NAME, PASSWORD);
-		} catch (GeneralSecurityException e) {
-			fail();
-		} catch (UserAlreadyExistsException e) {
+		} catch (GeneralSecurityException | UserAlreadyExistsException e) {
 			fail();
 		}
-		
+
+		// verify attributes are as expected
+		assertEquals(FIRST_NAME, um.getUser(EMAIL).getFirstName());
+		assertEquals(LAST_NAME, um.getUser(EMAIL).getLastName());
+
+		// change form of address and update
+		um.updateUser(EMAIL, FIRST_NAME, LAST_NAME, FORM_OF_ADDRESS);
+		assertEquals(FORM_OF_ADDRESS, um.getUser(EMAIL).getFormOfAddress());
+
+		// verify attributes are as expected
+		assertEquals(FIRST_NAME, um.getUser(EMAIL).getFirstName());
+	}
+
+	@Test
+	public void createUserTwice() {
+		// inject userManager from runtime
+		UserManager um = getInjector().getInstance(UserManager.class);
+
+		// create user
+
+		try {
+			um.createUser(EMAIL, FIRST_NAME, LAST_NAME, PASSWORD);
+		} catch (GeneralSecurityException | UserAlreadyExistsException e) {
+			fail();
+		}
+
 		// try to create him again (which should fail)
 		try {
 			um.createUser(EMAIL, FIRST_NAME, LAST_NAME, PASSWORD);
@@ -43,8 +63,10 @@ public class UserManagerTest extends NinjaTest{
 		} catch (UserAlreadyExistsException e) {
 			// this is expected
 		}
-		
-		// verify the name is as expected
-		assertEquals(FIRST_NAME, um.getUser(EMAIL).getFirstName());
+	}
+
+	@Test
+	public void checkPasswords() {
+
 	}
 }

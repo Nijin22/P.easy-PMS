@@ -32,7 +32,6 @@ public class UserManager {
 		System.out.println("UserManager service started.");
 	}
 
-	@Transactional
 	/**
 	 * Creates a new user
 	 * 
@@ -46,6 +45,7 @@ public class UserManager {
 	 * @throws UserAlreadyExistsException
 	 *             if the user already is registered
 	 */
+	@Transactional
 	public PeasyUser createUser(String email, String firstName, String lastName, String passwordCleartext)
 			throws GeneralSecurityException, UserAlreadyExistsException {
 		// Get Manager to persist the user object
@@ -88,9 +88,25 @@ public class UserManager {
 		}
 	}
 
-	public PeasyUser updateUser(String firstName, String lastName, String formOfAddress) {
-		// TODO: Implement
-		return null;
+	/**
+	 * Update a user in the database.
+	 * Note, that you NEED to supply all fields. If they are left empty, they will be overwritten to empty.
+	 * @param email
+	 * @param firstName
+	 * @param lastName
+	 * @param formOfAddress
+	 * @return The updated user
+	 */
+	@Transactional
+	public PeasyUser updateUser(String email, String firstName, String lastName, String formOfAddress) {
+		EntityManager entityManager = entitiyManagerProvider.get();
+		PeasyUser user = entityManager.find(PeasyUser.class, email);
+		
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		user.setFormOfAddress(formOfAddress);
+		
+		return user;
 	}
 
 	public void updatePassword(String email, String passwordCleartext) {
