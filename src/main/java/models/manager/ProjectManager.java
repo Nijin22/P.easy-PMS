@@ -2,6 +2,11 @@ package models.manager;
 
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+
 import models.beans.PeasyUser;
 import models.beans.Project;
 import models.beans.ProjectBlogEntry;
@@ -9,6 +14,8 @@ import models.beans.ProjectStatus;
 import models.beans.Task;
 
 public class ProjectManager {
+	@Inject
+	Provider<EntityManager> entitiyManagerProvider;
 	
 	// BEGIN Project specific Methods
 	public Project createProject(PeasyUser projectManager, String name){
@@ -83,15 +90,18 @@ public class ProjectManager {
 	
 	
 	// BEGIN project & blog specific Methods
-	public ProjectBlogEntry createBlogEntry(Project project){
+	public ProjectBlogEntry createBlogEntry(Project project, PeasyUser author){
 		// TODO: Implement
-		// TODO: Author as parameter (also in BlogEntry class)
 		return null;
 	}
 	
 	public ProjectBlogEntry updateBlogEntry(String title, String text){
 		// TODO: Implement
 		return null;
+	}
+	
+	public void deleteBlogEntry(int blogEntryId){
+		// TODO: Implement
 	}
 	// END project & blog specific Methods
 	
