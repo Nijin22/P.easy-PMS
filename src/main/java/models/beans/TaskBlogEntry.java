@@ -19,4 +19,12 @@ public class TaskBlogEntry extends BlogEntry implements Serializable {
 		super();
 	}
 
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
+	}
+
 }
