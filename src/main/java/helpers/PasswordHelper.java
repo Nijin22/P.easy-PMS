@@ -40,8 +40,9 @@ public class PasswordHelper {
 	/**
 	 * Checks whether given plaintext password corresponds to a stored salted
 	 * hash of the password.
+	 * @throws GeneralSecurityException 
 	 */
-	public static boolean check(String password, String stored) throws Exception {
+	public static boolean check(String password, String stored) throws GeneralSecurityException {
 		String[] saltAndPass = stored.split("\\$");
 		if (saltAndPass.length != 2) {
 			throw new IllegalStateException("The stored password have the form 'salt$hash'");

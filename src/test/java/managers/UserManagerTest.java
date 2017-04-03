@@ -47,7 +47,6 @@ public class UserManagerTest extends NinjaTest {
 		UserManager um = getInjector().getInstance(UserManager.class);
 
 		// create user
-
 		try {
 			um.createUser(EMAIL, FIRST_NAME, LAST_NAME, PASSWORD);
 		} catch (GeneralSecurityException | UserAlreadyExistsException e) {
@@ -67,6 +66,37 @@ public class UserManagerTest extends NinjaTest {
 
 	@Test
 	public void checkPasswords() {
+		final String UPDATED_PASSWORD = "hunter2";
+
+		// inject userManager from runtime
+		UserManager um = getInjector().getInstance(UserManager.class);
+
+		// create user
+		try {
+			um.createUser(EMAIL, FIRST_NAME, LAST_NAME, PASSWORD);
+		} catch (GeneralSecurityException | UserAlreadyExistsException e) {
+			fail();
+		}
+
+		try {
+			// valid login
+			assertTrue(um.verifyLogin(EMAIL, PASSWORD));
+
+			// invalid login
+			assertFalse(um.verifyLogin(EMAIL, "wrongPassword"));
+
+			// change password
+			um.updatePassword(EMAIL, UPDATED_PASSWORD);
+
+			// try old password
+			assertFalse(um.verifyLogin(EMAIL, PASSWORD));
+
+			// try new password
+			assertTrue(um.verifyLogin(EMAIL, UPDATED_PASSWORD));
+
+		} catch (GeneralSecurityException e) {
+			fail();
+		}
 
 	}
 }

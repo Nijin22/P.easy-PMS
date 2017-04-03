@@ -89,8 +89,9 @@ public class UserManager {
 	}
 
 	/**
-	 * Update a user in the database.
-	 * Note, that you NEED to supply all fields. If they are left empty, they will be overwritten to empty.
+	 * Update a user in the database. Note, that you NEED to supply all fields.
+	 * If they are left empty, they will be overwritten to empty.
+	 * 
 	 * @param email
 	 * @param firstName
 	 * @param lastName
@@ -101,25 +102,53 @@ public class UserManager {
 	public PeasyUser updateUser(String email, String firstName, String lastName, String formOfAddress) {
 		EntityManager entityManager = entitiyManagerProvider.get();
 		PeasyUser user = entityManager.find(PeasyUser.class, email);
-		
+
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
 		user.setFormOfAddress(formOfAddress);
-		
+
 		return user;
 	}
 
-	public void updatePassword(String email, String passwordCleartext) {
-		// TODO: Implement
+	/**
+	 * Updates the password of a user
+	 * 
+	 * @param email
+	 * @param passwordCleartext
+	 * @throws GeneralSecurityException
+	 *             if there is a problem with hash+slating the password
+	 */
+	@Transactional
+	public void updatePassword(String email, String passwordCleartext) throws GeneralSecurityException {
+		EntityManager entityManager = entitiyManagerProvider.get();
+		PeasyUser user = entityManager.find(PeasyUser.class, email);
+
+		// Compute the hashed + salted password
+		String pwHashSalt = PasswordHelper.getSaltedHash(passwordCleartext);
+
+		user.setPasswordInDb(pwHashSalt);
+	}
+
+	/**
+	 * Returns true, if the provided password is correct for the given user
+	 * 
+	 * @param email
+	 * @param passwordCleartext
+	 * @return true, if login is okay!
+	 * @throws GeneralSecurityException
+	 */
+	@UnitOfWork
+	public boolean verifyLogin(String email, String passwordCleartext) throws GeneralSecurityException {
+		EntityManager entityManager = entitiyManagerProvider.get();
+		PeasyUser user = entityManager.find(PeasyUser.class, email);
+
+		String passwordDb = user.getPasswordInDb();
+
+		return PasswordHelper.check(passwordCleartext, passwordDb);
 	}
 
 	public void deactivateUser(String email) {
 		// TODO: Implement
-	}
-
-	public boolean verifyLogin(String email, String passwordCleartext) {
-		// TODO: Implement
-		return false;
 	}
 
 	public Set<Project> getProjectsWhereUserIsMember(String email) {
