@@ -6,7 +6,6 @@ import java.security.GeneralSecurityException;
 
 import org.junit.Test;
 
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 import models.manager.UserManager;
