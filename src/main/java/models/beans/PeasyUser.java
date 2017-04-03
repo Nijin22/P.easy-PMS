@@ -37,14 +37,13 @@ public class PeasyUser implements Serializable {
 	 * @param lastName
 	 * @param password
 	 */
-	public PeasyUser(String emailAddress, String firstName, String lastName, String passwordCleantext) {
+	public PeasyUser(String emailAddress, String firstName, String lastName, String pwHashSalt) {
 		super();
 		this.emailAddress = emailAddress;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		
-		// TODO: Hash + Salt the PW. Add Password routine
-		this.passwordInDb = passwordCleantext;
+		this.passwordInDb = pwHashSalt;
 
 		formOfAddress = firstName;
 	}
