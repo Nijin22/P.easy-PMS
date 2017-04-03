@@ -15,6 +15,7 @@ import helpers.PasswordHelper;
 import models.beans.PeasyUser;
 import models.beans.Project;
 import models.manager.exceptions.UserAlreadyExistsException;
+import ninja.jpa.UnitOfWork;
 import ninja.lifecycle.Start;
 
 @Singleton
@@ -75,6 +76,7 @@ public class UserManager {
 	 * @param email
 	 * @return The specified user as a {@link models.beans.PeasyUser} object
 	 */
+	@UnitOfWork
 	public PeasyUser getUser(String email) {
 		EntityManager entityManager = entitiyManagerProvider.get();
 		PeasyUser user = entityManager.find(PeasyUser.class, email);
