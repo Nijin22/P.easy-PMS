@@ -11,7 +11,9 @@ import java.util.Set;
  *
  */
 @Entity
+@Table(name = PeasyUser.TABLENAME)
 public class PeasyUser implements Serializable {
+	public static final String TABLENAME = "PeasyUsers";
 
 	@Id
 	private String emailAddress;
@@ -20,7 +22,7 @@ public class PeasyUser implements Serializable {
 	private String formOfAddress;
 	private String passwordInDb;
 	private static final long serialVersionUID = 1L;
-	@ManyToMany(mappedBy = "projectMembers")
+	@ManyToMany(mappedBy = "projectMembers", fetch = FetchType.LAZY)
 	private Set<Project> projects;
 	@OneToMany(mappedBy = "projectManager")
 	private Set<Project> projectsWhereUserIsManager;
@@ -42,7 +44,7 @@ public class PeasyUser implements Serializable {
 		this.emailAddress = emailAddress;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		
+
 		this.passwordInDb = pwHashSalt;
 
 		formOfAddress = firstName;
@@ -113,11 +115,11 @@ public class PeasyUser implements Serializable {
 		this.passwordInDb = password;
 	}
 
-	public Set<Project> getProject() {
+	public Set<Project> getProjects() {
 		return projects;
 	}
 
-	public void setProject(Set<Project> param) {
+	public void setProjects(Set<Project> param) {
 		this.projects = param;
 	}
 
@@ -127,6 +129,14 @@ public class PeasyUser implements Serializable {
 
 	public void setOrganisation(Organisation organisation) {
 		this.organisation = organisation;
+	}
+
+	public Set<Project> getProjectsWhereUserIsManager() {
+		return projectsWhereUserIsManager;
+	}
+
+	public void setProjectsWhereUserIsManager(Set<Project> projectsWhereUserIsManager) {
+		this.projectsWhereUserIsManager = projectsWhereUserIsManager;
 	}
 
 }

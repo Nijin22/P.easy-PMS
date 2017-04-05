@@ -99,4 +99,9 @@ public class UserManagerTest extends NinjaTest {
 		}
 
 	}
+	
+	@Test
+	public void addToProject(){
+		// TODO: Implement when Project manager is done.
+	}
 }
