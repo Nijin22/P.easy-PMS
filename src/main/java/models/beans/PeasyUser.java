@@ -11,16 +11,18 @@ import java.util.Set;
  *
  */
 @Entity
+@Table(name = PeasyUser.TABLENAME)
 public class PeasyUser implements Serializable {
+	public static final String TABLENAME = "PeasyUsers";
 
 	@Id
 	private String emailAddress;
 	private String firstName;
 	private String lastName;
 	private String formOfAddress;
-	private String password;
+	private String passwordInDb;
 	private static final long serialVersionUID = 1L;
-	@ManyToMany(mappedBy = "projectMembers")
+	@ManyToMany(mappedBy = "projectMembers", fetch = FetchType.LAZY)
 	private Set<Project> projects;
 	@OneToMany(mappedBy = "projectManager")
 	private Set<Project> projectsWhereUserIsManager;
@@ -37,12 +39,13 @@ public class PeasyUser implements Serializable {
 	 * @param lastName
 	 * @param password
 	 */
-	public PeasyUser(String emailAddress, String firstName, String lastName, String password) {
+	public PeasyUser(String emailAddress, String firstName, String lastName, String pwHashSalt) {
 		super();
 		this.emailAddress = emailAddress;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.password = password;
+
+		this.passwordInDb = pwHashSalt;
 
 		formOfAddress = firstName;
 	}
@@ -104,19 +107,19 @@ public class PeasyUser implements Serializable {
 		this.formOfAddress = formOfAddress;
 	}
 
-	public String getPassword() {
-		return this.password;
+	public String getPasswordInDb() {
+		return this.passwordInDb;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPasswordInDb(String password) {
+		this.passwordInDb = password;
 	}
 
-	public Set<Project> getProject() {
+	public Set<Project> getProjects() {
 		return projects;
 	}
 
-	public void setProject(Set<Project> param) {
+	public void setProjects(Set<Project> param) {
 		this.projects = param;
 	}
 
@@ -126,6 +129,14 @@ public class PeasyUser implements Serializable {
 
 	public void setOrganisation(Organisation organisation) {
 		this.organisation = organisation;
+	}
+
+	public Set<Project> getProjectsWhereUserIsManager() {
+		return projectsWhereUserIsManager;
+	}
+
+	public void setProjectsWhereUserIsManager(Set<Project> projectsWhereUserIsManager) {
+		this.projectsWhereUserIsManager = projectsWhereUserIsManager;
 	}
 
 }

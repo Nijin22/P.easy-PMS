@@ -2,6 +2,8 @@ package models.beans;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.Set;
+
 import javax.persistence.*;
 
 /**
@@ -13,10 +15,13 @@ import javax.persistence.*;
 public class Organisation implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int organisationId;
 	private String name;
 	@OneToOne
 	private PeasyUser organisationAdmin;
+	@OneToMany(mappedBy = "organisation")
+	private Set<PeasyUser> users;
 	private static final long serialVersionUID = 1L;
 
 	@Override

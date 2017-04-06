@@ -15,13 +15,14 @@ import javax.persistence.*;
 public class Task implements Serializable {
 
 	@Id
-	private int taskId;
-	private String title;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long taskId;
+	private String name;
 	private String description;
 	private float progress;
 	@ManyToOne
 	private Project project;
-	@OneToMany(mappedBy="task")
+	@OneToMany(mappedBy = "task")
 	private Set<TaskBlogEntry> blogEntries;
 	private static final long serialVersionUID = 1L;
 
@@ -33,7 +34,7 @@ public class Task implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + taskId;
+		result = prime * result + (int) (taskId ^ (taskId >>> 32));
 		return result;
 	}
 
@@ -51,20 +52,20 @@ public class Task implements Serializable {
 		return true;
 	}
 
-	public int getTaskId() {
+	public long getTaskId() {
 		return this.taskId;
 	}
 
-	public void setTaskId(int taskId) {
+	public void setTaskId(long taskId) {
 		this.taskId = taskId;
 	}
 
-	public String getTitle() {
-		return this.title;
+	public String getName() {
+		return this.name;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String title) {
+		this.name = title;
 	}
 
 	public String getDescription() {

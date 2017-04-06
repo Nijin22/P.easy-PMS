@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Project {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Long projectId;
@@ -22,14 +22,16 @@ public class Project {
 	private String name;
 	@NotNull
 	private String description;
+	private ProjectStatus status;
 	@OneToMany(mappedBy = "project")
-	private Set<Task> tasks; 
+	private Set<Task> tasks;
 	@OneToMany(mappedBy = "project")
 	private Set<ProjectBlogEntry> blogEntries;
 	@ManyToMany
 	private Set<PeasyUser> projectMembers;
 	@ManyToOne
 	private PeasyUser projectManager;
+
 	public Project() {
 
 	}
@@ -80,12 +82,19 @@ public class Project {
 	}
 
 	public Set<PeasyUser> getUsers() {
-	    return projectMembers;
+		return projectMembers;
 	}
 
 	public void SetProjectMembers(Set<PeasyUser> param) {
-	    this.projectMembers = param;
+		this.projectMembers = param;
 	}
-	
+
+	public ProjectStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(ProjectStatus status) {
+		this.status = status;
+	}
 
 }
