@@ -11,133 +11,138 @@ import java.util.logging.Logger;
 import models.beans.Organisation;
 import models.beans.PeasyUser;
 import models.manager.OrganisationManager;
-import java.lang.IllegalArgumentException;
 import java.security.GeneralSecurityException;
+import java.util.NoSuchElementException;
 import javax.persistence.EntityManager;
-import models.User;
 import models.manager.UserManager;
 import models.manager.exceptions.UserAlreadyExistsException;
 import ninja.NinjaTest;
-import ninja.jpa.UnitOfWork;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 
 /**
  *
  * @author Tugrul
  */
 public class OrganisationManagerTest extends NinjaTest {
-    private static Logger log =null;
+
+    private static Logger log = null;
     @Inject
     Provider<EntityManager> entitiyManagerProvider;
-    
+
     public OrganisationManagerTest() {
     }
-    
+
     @Before
     public void setUp() {
-    //initialize Logger to log Test
-    log = Logger.getLogger( OrganisationManagerTest.class.getName() );
+        //initialize Logger to log Test
+        log = Logger.getLogger(OrganisationManagerTest.class.getName());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testCreateOrganisationException1() {
-       OrganisationManager om = getInjector().getInstance(OrganisationManager.class);
-       log.info("Start Testing Fail Test 1: name is null");
-       om.createOrganisation("", new PeasyUser());
+        OrganisationManager om = getInjector().getInstance(OrganisationManager.class);
+        log.info("Start Testing Fail Test 1: name is null");
+        om.createOrganisation("", new PeasyUser());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testCreateOrganisationException2() {
-       OrganisationManager om = getInjector().getInstance(OrganisationManager.class);
-       log.info("Start Testing Fail Test 2: PeasyUser is null");
-       om.createOrganisation("PeasyOrg", null);
-    }
-    
-    @Test
-    public void testCreateOrganisation() throws GeneralSecurityException, UserAlreadyExistsException {
-       try{
-       OrganisationManager om = getInjector().getInstance(OrganisationManager.class);
-       UserManager um = getInjector().getInstance(UserManager.class);
-      
-       log.info("Start Testing Succesfull Test: createOrganisation");
-     
-       PeasyUser user = um.createUser("tugi@peasy.de", "Tugi", "Bugi", "123456789");
-       Organisation createdOrg = om.createOrganisation("PeasyOrg",user);
-       
-       assertEquals(createdOrg.getName(), "PeasyOrg");
-       }catch(GeneralSecurityException| UserAlreadyExistsException e){
-           fail(e.getMessage() + " " + e.getStackTrace());
-       }
-       
-    }
-  
-    /**
-     * Test of renameOrganisation method, of class OrganisationManager.
-     */
-    @Ignore
-    @Test
-    public void testRenameOrganisation() {
-        System.out.println("renameOrganisation");
-        int organisationId = 0;
-        String newName = "";
-        OrganisationManager instance = new OrganisationManager();
-        Organisation expResult = null;
-        Organisation result = instance.renameOrganisation(organisationId, newName);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        OrganisationManager om = getInjector().getInstance(OrganisationManager.class);
+        log.info("Start Testing Fail Test 2: PeasyUser is null");
+        om.createOrganisation("PeasyOrg", null);
     }
 
-    /**
-     * Test of changeOrganisationManager method, of class OrganisationManager.
-     */
-    @Ignore
-    @Test
-    public void testChangeOrganisationManager() {
-        System.out.println("changeOrganisationManager");
-        int organisationId = 0;
-        PeasyUser newAdmin = null;
-        OrganisationManager instance = new OrganisationManager();
-        Organisation expResult = null;
-        Organisation result = instance.changeOrganisationManager(organisationId, newAdmin);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateOrganisationNameException1() {
+        OrganisationManager om = getInjector().getInstance(OrganisationManager.class);
+        log.info("Start Testing Fail Test 1: name is null");
+        om.renameOrganisation(111, null);
     }
 
-    /**
-     * Test of addUser method, of class OrganisationManager.
-     */
-    @Ignore
-    @Test
-    public void testAddUser() {
-        System.out.println("addUser");
-        int organisationId = 0;
-        PeasyUser user = null;
-        OrganisationManager instance = new OrganisationManager();
-        Organisation expResult = null;
-        Organisation result = instance.addUser(organisationId, user);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    @Test(expected = NoSuchElementException.class)
+    public void testUpdateOrganisationNameException2() {
+        OrganisationManager om = getInjector().getInstance(OrganisationManager.class);
+        log.info("Start Testing Fail Test 2: organisation does not exist in database");
+        om.renameOrganisation(111, "orgname");
     }
 
-    /**
-     * Test of removeUser method, of class OrganisationManager.
-     */
-    @Ignore
-    @Test
-    public void testRemoveUser() {
-        System.out.println("removeUser");
-        int organisationId = 0;
-        PeasyUser user = null;
-        OrganisationManager instance = new OrganisationManager();
-        instance.removeUser(organisationId, user);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateOrganisationManagerException1() {
+        OrganisationManager om = getInjector().getInstance(OrganisationManager.class);
+        log.info("Start Testing Fail Test 1: Manager is null");
+        om.changeOrganisationManager(111222333, null);
     }
-    
+
+    @Test(expected = NoSuchElementException.class)
+    public void testUpdateOrganisationManagerException2() {
+        OrganisationManager om = getInjector().getInstance(OrganisationManager.class);
+        log.info("Start Testing Fail Test 2: organisation does not exist in database");
+        om.renameOrganisation(111222333, "orgname");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateOrganisationUserAddException1() {
+        OrganisationManager om = getInjector().getInstance(OrganisationManager.class);
+        log.info("Start Testing Fail Test 1: User is null");
+        om.addUser(111222333, null);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testUpdateOrganisationUserAddException2() {
+        OrganisationManager om = getInjector().getInstance(OrganisationManager.class);
+        log.info("Start Testing Fail Test 2: organisation does not exist in database");
+        om.addUser(111222333, new PeasyUser());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateOrganisationUserRemoveException1() {
+        OrganisationManager om = getInjector().getInstance(OrganisationManager.class);
+        log.info("Start Testing Fail Test 1: User is null");
+        om.removeUser(111222333, null);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testUpdateOrganisationUserRemoveException2() {
+        OrganisationManager om = getInjector().getInstance(OrganisationManager.class);
+        log.info("Start Testing Fail Test 2: organisation does not exist in database");
+        om.removeUser(111222333, new PeasyUser());
+    }
+
+    @Test
+    public void testCreateUpadateOrganisation() throws GeneralSecurityException, UserAlreadyExistsException {
+        try {
+            OrganisationManager om = getInjector().getInstance(OrganisationManager.class);
+            UserManager um = getInjector().getInstance(UserManager.class);
+
+            log.info("Start Testing Succesfull Test: createUpadteOrganisation");
+
+            //Test Create Organisation
+            PeasyUser admin = um.createUser("tugi@peasy.de", "Tugi", "Bugi", "123456789");
+            Organisation createdOrg = om.createOrganisation("PeasyOrg", admin);
+            assertEquals(createdOrg.getName(), "PeasyOrg");
+
+            //Test Update Organisationsname
+            Organisation updatedOrgName = om.renameOrganisation(createdOrg.getOrganisationId(), "PeasyOrgNewName");
+            assertEquals(updatedOrgName.getName(), "PeasyOrgNewName");
+
+            //Test Update Organisationsname
+            PeasyUser newAdmin = um.createUser("engin@peasy.de", "Engin", "Mengin", "123456789");
+            Organisation updatedOrgManger = om.changeOrganisationManager(createdOrg.getOrganisationId(), newAdmin);
+            assertEquals(updatedOrgManger.getName(), "PeasyOrgNewName");
+
+            //Test Add user to Organisation
+            Organisation updatedOrgUserAdd = om.addUser(createdOrg.getOrganisationId(), admin);
+            assertTrue(updatedOrgUserAdd.getUsers().contains(admin));
+
+            //Test Add user to Organisation
+            Organisation updatedOrgUserRemove = om.removeUser(createdOrg.getOrganisationId(), admin);
+            assertFalse(updatedOrgUserRemove.getUsers().contains(admin));
+
+        } catch (GeneralSecurityException | UserAlreadyExistsException e) {
+            fail(e.getMessage());
+        }
+
+    }
 }

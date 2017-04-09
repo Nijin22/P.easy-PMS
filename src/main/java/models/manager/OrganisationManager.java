@@ -139,10 +139,11 @@ public class OrganisationManager {
      *
      * @param organisationId
      * @param user
+     * @return updated Organisation bean
      * @throws IllegalArgumentException
      */
     @Transactional
-    public void removeUser(int organisationId, PeasyUser user) throws IllegalArgumentException {
+    public Organisation removeUser(int organisationId, PeasyUser user) throws IllegalArgumentException {
         //check bean user is not null
         if (user == null) {
             throw new IllegalArgumentException();
@@ -155,8 +156,9 @@ public class OrganisationManager {
             throw new NoSuchElementException();
         } else {
             //add User to organization
-            organisation.getUsers().remove(user);            
-            entityManager.remove(user);
+            organisation.getUsers().remove(user);
+            user.setOrganisation(null);
+            return organisation;
         }
         
     }
