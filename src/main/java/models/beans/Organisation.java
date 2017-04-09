@@ -24,10 +24,6 @@ public class Organisation implements Serializable {
     private Set<PeasyUser> users;
     private static final long serialVersionUID = 1L;
 
-    public Organisation(String name, PeasyUser organisationAdmin) {
-        this.name = name;
-        this.organisationAdmin = organisationAdmin;
-    }
 
     @Override
     public int hashCode() {

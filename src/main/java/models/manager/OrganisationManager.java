@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.persist.Transactional;
+import java.util.NoSuchElementException;
 
 import models.beans.Organisation;
 import models.beans.PeasyUser;
@@ -14,7 +15,7 @@ import models.beans.PeasyUser;
  * @author Tugrul
  */
 public class OrganisationManager {
-
+    
     @Inject
     Provider<EntityManager> entitiyManagerProvider;
 
@@ -22,13 +23,13 @@ public class OrganisationManager {
      *
      * @param name
      * @param organisationManager
-     * @return The Created Organization
+     * @return created organization bean
      * @throws IllegalArgumentException
      */
     @Transactional
     public Organisation createOrganisation(String name, PeasyUser organisationManager)
             throws IllegalArgumentException {
-
+        
         if (name.isEmpty()) {
             throw new IllegalArgumentException();
         }
@@ -39,10 +40,13 @@ public class OrganisationManager {
         // Get Manager to persist the organization object
         EntityManager entityManager = entitiyManagerProvider.get();
         // Create organisation bean
-        Organisation organisation = new Organisation(name, organisationManager);
+        Organisation organisation = new Organisation();
+        organisation.setName(name);
+        organisation.setOrganisationAdmin(organisationManager);
+        organisationManager.setOrganisation(organisation);
         // Persist the organisation
         entityManager.persist(organisation);
-
+        
         return organisation;
     }
 
@@ -50,45 +54,85 @@ public class OrganisationManager {
      *
      * @param organisationId
      * @param newName
-     * @return The updated Organization
+     * @return updated organization bean
      * @throws IllegalArgumentException
+     * @throws NoSuchElementException
      */
     @Transactional
-    public Organisation renameOrganisation(int organisationId, String newName) throws IllegalArgumentException  {
+    public Organisation renameOrganisation(int organisationId, String newName) throws IllegalArgumentException, NoSuchElementException {
         //check newName is not null
         if (newName == null) {
             throw new IllegalArgumentException();
         }
-
+        
         EntityManager entityManager = entitiyManagerProvider.get();
         Organisation organisation = entityManager.find(Organisation.class, organisationId);
-
-        //set new name
-        organisation.setName(newName);
-
-        return organisation;
+        
+        if (organisation == null) {
+            throw new NoSuchElementException();
+        } else {
+            //set new name
+            organisation.setName(newName);
+            
+            return organisation;
+        }
+        
     }
 
     /**
      *
      * @param organisationId
      * @param newAdmin
-     * @return The updated Organization
+     * @return updated organization bean
+     * @throws IllegalArgumentException
+     * @throws NoSuchElementException
      */
     @Transactional
-    public Organisation changeOrganisationManager(int organisationId, PeasyUser newAdmin) throws IllegalArgumentException {
+    public Organisation changeOrganisationManager(int organisationId, PeasyUser newAdmin) throws IllegalArgumentException, NoSuchElementException {
         //check bean newAdmin is not null
         if (newAdmin == null) {
             throw new IllegalArgumentException();
         }
-
+        
         EntityManager entityManager = entitiyManagerProvider.get();
         Organisation organisation = entityManager.find(Organisation.class, organisationId);
+        
+        if (organisation == null) {
+            throw new NoSuchElementException();
+        } else {
+            //set new Admin
+            organisation.setOrganisationAdmin(newAdmin);
+            return organisation;
+        }
+    }
 
-        //set new Admin
-        organisation.setOrganisationAdmin(newAdmin);
-
-        return organisation;
+    /**
+     *
+     * @param organisationId
+     * @param user
+     * @return updated organization bean
+     * @throws IllegalArgumentException
+     * @throws NoSuchElementException
+     */
+    @Transactional
+    public Organisation addUser(int organisationId, PeasyUser user) throws IllegalArgumentException, NoSuchElementException {
+        //check bean user is not null
+        if (user == null) {
+            throw new IllegalArgumentException();
+        }
+        
+        EntityManager entityManager = entitiyManagerProvider.get();
+        Organisation organisation = entityManager.find(Organisation.class, organisationId);
+        
+        if (organisation == null) {
+            throw new NoSuchElementException();
+        } else {
+            //add User to organization
+            organisation.getUsers().add(user);
+            user.setOrganisation(organisation);
+            return organisation;
+        }
+        
     }
 
     /**
@@ -96,43 +140,25 @@ public class OrganisationManager {
      * @param organisationId
      * @param user
      * @throws IllegalArgumentException
-     * @return The updated Organization
      */
     @Transactional
-    public Organisation addUser(int organisationId, PeasyUser user) throws IllegalArgumentException {
+    public void removeUser(int organisationId, PeasyUser user) throws IllegalArgumentException {
         //check bean user is not null
         if (user == null) {
             throw new IllegalArgumentException();
         }
-
+        
         EntityManager entityManager = entitiyManagerProvider.get();
         Organisation organisation = entityManager.find(Organisation.class, organisationId);
-
-        //add User to organization
-        organisation.getUsers().add(user);
-
-        return organisation;
-
-    }
-
-    /**
-     *
-     * @param organisationId
-     * @param user
-     * @throws IllegalArgumentException
-     */
-    @Transactional
-    public void removeUser(int organisationId, PeasyUser user) throws IllegalArgumentException  {
-        //check bean user is not null
-        if (user == null) {
-            throw new IllegalArgumentException();
+        
+        if (organisation == null) {
+            throw new NoSuchElementException();
+        } else {
+            //add User to organization
+            organisation.getUsers().remove(user);            
+            entityManager.remove(user);
         }
-
-        EntityManager entityManager = entitiyManagerProvider.get();
-        Organisation organisation = entityManager.find(Organisation.class, organisationId);
-
-        //add User to organization
-        organisation.getUsers().remove(user);
+        
     }
-
+    
 }
