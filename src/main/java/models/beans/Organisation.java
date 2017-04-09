@@ -68,6 +68,12 @@ public class Organisation implements Serializable {
     public void setUsers(Set<PeasyUser> users) {
         this.users = users;
     }
+
+    @Override
+    public String toString() {
+        return "Organisation{" + "organisationId=" + organisationId + ", name=" + name + ", organisationAdmin=" + organisationAdmin.toString() + ", userSize=" + users.size() + '}';
+    }
+    
     
     
         @Override

@@ -5,15 +5,12 @@
  */
 package managers;
 
-import com.google.inject.Inject;
-import com.google.inject.Provider;
 import java.util.logging.Logger;
 import models.beans.Organisation;
 import models.beans.PeasyUser;
 import models.manager.OrganisationManager;
 import java.security.GeneralSecurityException;
 import java.util.NoSuchElementException;
-import javax.persistence.EntityManager;
 import models.manager.UserManager;
 import models.manager.exceptions.UserAlreadyExistsException;
 import ninja.NinjaTest;
@@ -28,8 +25,6 @@ import static org.junit.Assert.*;
 public class OrganisationManagerTest extends NinjaTest {
 
     private static Logger log = null;
-    @Inject
-    Provider<EntityManager> entitiyManagerProvider;
 
     public OrganisationManagerTest() {
     }
@@ -139,6 +134,8 @@ public class OrganisationManagerTest extends NinjaTest {
             //Test Add user to Organisation
             Organisation updatedOrgUserRemove = om.removeUser(createdOrg.getOrganisationId(), admin);
             assertFalse(updatedOrgUserRemove.getUsers().contains(admin));
+            
+            
 
         } catch (GeneralSecurityException | UserAlreadyExistsException e) {
             fail(e.getMessage());

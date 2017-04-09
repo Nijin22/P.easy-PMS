@@ -160,4 +160,11 @@ public class PeasyUser implements Serializable {
         this.organisation = organisation;
     }
 
+    @Override
+    public String toString() {
+        return "PeasyUser{" + "emailAddress=" + emailAddress + ", firstName=" + firstName + ", lastName=" + lastName + ", formOfAddress=" + formOfAddress + ", passwordInDb=" + passwordInDb + ", projects=" + projects + ", tasks=" + tasks + ", projectsWhereUserIsManager=" + projectsWhereUserIsManager + ", organisation=" + organisation + '}';
+    }
+    
+    
+
 }

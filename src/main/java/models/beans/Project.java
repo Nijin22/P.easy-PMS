@@ -20,7 +20,6 @@ public class Project {
     Long projectId;
     @NotNull
     private String name;
-    @NotNull
     private String description;
     private ProjectStatus status;
     @OneToMany(mappedBy = "project")
