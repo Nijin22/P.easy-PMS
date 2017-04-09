@@ -7,9 +7,12 @@ package managers;
 
 import java.security.GeneralSecurityException;
 import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.beans.PeasyUser;
 import models.beans.Project;
+import models.beans.ProjectBlogEntry;
 import models.beans.ProjectStatus;
 import models.beans.Task;
 import models.manager.ProjectManager;
@@ -114,11 +117,81 @@ public class ProjectManagerTest extends NinjaTest {
         pm.removeMemberFromProject(111222333, null);
     }
 
-   @Test(expected = NoSuchElementException.class)
+    @Test(expected = NoSuchElementException.class)
     public void testGetTaskException1() {
         ProjectManager pm = getInjector().getInstance(ProjectManager.class);
         log.info("Start Testing Fail Test 1: task does not exist in database");
         pm.getTask(111222333);
+    }
+       
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateTaskException2() {
+        ProjectManager pm = getInjector().getInstance(ProjectManager.class);
+        log.info("Start Testing Fail Test 1: name is null");
+        pm.updateTask(111222333, "","Description",0);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testUpdateTaskException1() {
+        ProjectManager pm = getInjector().getInstance(ProjectManager.class);
+        log.info("Start Testing Fail Test 1: task does not exist in database");
+        pm.updateTask(111222333,"Task 1","Description",90);
+    }
+    
+    @Test(expected = NoSuchElementException.class)
+    public void testDeleteTaskException1() {
+        ProjectManager pm = getInjector().getInstance(ProjectManager.class);
+        log.info("Start Testing Fail Test 1: task does not exist in database");
+        pm.deleteTask(111222333);
+    }
+   
+    @Test(expected = NoSuchElementException.class)
+    public void testProjectTasksException1() {
+        ProjectManager pm = getInjector().getInstance(ProjectManager.class);
+        log.info("Start Testing Fail Test 1: task does not exist in database");
+        pm.getProjectTasks(111222333);
+    }
+    
+    @Test(expected = NoSuchElementException.class)
+    public void testAssignUserTaskException1() {
+        ProjectManager pm = getInjector().getInstance(ProjectManager.class);
+        log.info("Start Testing Fail Test 1: task does not exist in database");
+        pm.assignUserToTask(111222333,"email");
+    }
+        
+    @Test(expected = NoSuchElementException.class)
+    public void testUnassignUserTaskException1() {
+        ProjectManager pm = getInjector().getInstance(ProjectManager.class);
+        log.info("Start Testing Fail Test 1: task does not exist in database");
+        pm.unassignUserFromTask(111222333,"email");
+    } 
+    
+    @Test(expected = NoSuchElementException.class)
+    public void testCreateProjectBlogEntryException1() {
+        ProjectManager pm = getInjector().getInstance(ProjectManager.class);
+        log.info("Start Testing Fail Test 1: Project does not exist in database");
+        pm.createBlogEntry(111222333,"email","Title","Message");
+    }
+    
+    @Test(expected = NoSuchElementException.class)
+    public void testUpdatedProjectBlogEntryException1() {
+        ProjectManager pm = getInjector().getInstance(ProjectManager.class);
+        log.info("Start Testing Fail Test 1: ProjectBlogEntry does not exist in database");
+        pm.updateBlogEntry(111222333,"Title","Message");
+    }
+   
+    @Test(expected = NoSuchElementException.class)
+    public void testDeleteProjectBlogEntryException1() {
+        ProjectManager pm = getInjector().getInstance(ProjectManager.class);
+        log.info("Start Testing Fail Test 1: ProjectBlogEntry does not exist in database");
+        pm.deleteBlogEntry(111222333);
+    }
+    
+    @Test(expected = NoSuchElementException.class)
+    public void testDeleteProjectException1() {
+        ProjectManager pm = getInjector().getInstance(ProjectManager.class);
+        log.info("Start Testing Fail Test 1: Project does not exist in database");
+        pm.deleteProject(111222333);
     }
     
     @Test
@@ -162,6 +235,46 @@ public class ProjectManagerTest extends NinjaTest {
             Task projectgetTask = pm.getTask(projectCreatedTask.getTaskId());
             assertEquals(projectgetTask.getName(), projectCreatedTask.getName());
 
+            //test update task
+            Task projectTaskUpdated = pm.updateTask(projectCreatedTask.getTaskId(),"Task 1","description",80);
+            assertEquals(projectTaskUpdated.getDescription(), "description");
+            
+            //test get Project tasks
+            Set<Task> projectTasks = pm.getProjectTasks(createdProject.getProjectId());
+            log.log(Level.INFO, "Size of tasks in Project: {0}", projectTasks.size());
+            assertEquals(projectTasks.size(), 1);
+           
+            //test assign user to Task 
+            Task taskUserAssign = pm.assignUserToTask(createdProject.getProjectId(),manager.getEmailAddress());
+            log.log(Level.INFO, "Size of Users in Task: {0}", taskUserAssign.getUsers().size());
+            assertEquals(taskUserAssign.getUsers().size(), 1);
+            
+            //test unassign user to Task 
+            Task taskUserUnassign = pm.unassignUserFromTask(createdProject.getProjectId(),manager.getEmailAddress());
+            log.log(Level.INFO, "Size of Users in Task: {0}", taskUserAssign.getUsers().size());
+            assertEquals(taskUserUnassign.getUsers().size(), 0);
+
+            //test create Blogentry
+            ProjectBlogEntry createdBlogEntry = pm.createBlogEntry(createdProject.getProjectId(),manager.getEmailAddress(),"Title","Message");
+            assertEquals(createdBlogEntry.getText(), "Message");
+            
+            //test update Blogentry
+            ProjectBlogEntry updatedBlogEntry = pm.updateBlogEntry(createdBlogEntry.getBlogEntryId(),"Title","New Message");
+            assertEquals(updatedBlogEntry.getText(), "New Message");  
+        
+            //this part have to be checked as a integration test
+            
+            //test delete Blogentry
+            pm.deleteBlogEntry(createdBlogEntry.getBlogEntryId());
+            //check with integration test, wether blog is deleted
+
+            //test delete task (integrationstest)
+            pm.deleteTask(projectCreatedTask.getTaskId());
+            //check with integration test, wether task is deleted
+            
+            //delete project
+            pm.deleteProject(createdProject.getProjectId());
+            //check with integration test, wether project is deleted
 
             
         } catch (GeneralSecurityException | UserAlreadyExistsException e) {

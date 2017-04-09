@@ -3,6 +3,7 @@ package models.beans;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +23,7 @@ public class Project {
     private String name;
     private String description;
     private ProjectStatus status;
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project",fetch = FetchType.EAGER)
     private Set<Task> tasks;
     @OneToMany(mappedBy = "project")
     private Set<ProjectBlogEntry> blogEntries;

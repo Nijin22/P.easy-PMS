@@ -149,7 +149,7 @@ public class ProjectManager {
      * @throws NoSuchElementException
      */
     @UnitOfWork
-    public Set<Task> getProjectsTasks(long projectId) throws NoSuchElementException {
+    public Set<Task> getProjectTasks(long projectId) throws NoSuchElementException {
         EntityManager entityManager = entitiyManagerProvider.get();
         Project project = entityManager.find(Project.class, projectId);
 
@@ -225,7 +225,7 @@ public class ProjectManager {
     // BEGIN project & task specific Methods
     /**
      *
-     * @param project
+     * @param projectId
      * @param name
      * @return Created Task
      * @throws IllegalArgumentException
@@ -241,7 +241,7 @@ public class ProjectManager {
           if (project == null) {
             throw new NoSuchElementException("Project with projectId " + projectId + "is not in the database");
         } else {
-                     Task task = new Task();
+        Task task = new Task();
         task.setProject(project);
         task.setName(name);
         project.getTasks().add(task);
@@ -316,19 +316,23 @@ public class ProjectManager {
 
     /**
      *
-     * @param task
-     * @param user
+     * @param taskId
+     * @param email
      * @return updated Task
-     * @throws IllegalArgumentException
+     * @throws NoSuchElementException
      */
     @Transactional
-    public Task assignUserToTask(Task task, PeasyUser user) throws IllegalArgumentException {
-
+    public Task assignUserToTask(long taskId, String email) throws NoSuchElementException {
+       
+        EntityManager entityManager = entitiyManagerProvider.get();
+        Task task = entityManager.find(Task.class, taskId);
+        PeasyUser user = entityManager.find(PeasyUser.class, email);  
+        
         if (task == null) {
-            throw new IllegalArgumentException();
+            throw new NoSuchElementException("Task with taskId: " + taskId + "doesn't exist in the database");
         }
         if (user == null) {
-            throw new IllegalArgumentException();
+            throw new NoSuchElementException("User with email: " + email + "doesn't exist in the database");
         }
 
         task.getUsers().add(user);
@@ -340,51 +344,62 @@ public class ProjectManager {
 
     /**
      *
-     * @param task
-     * @param user
-     * @throws IllegalArgumentException
+     * @param taskId
+     * @param email
+     * @return Updated Task
+     * @throws NoSuchElementException
      */
     @Transactional
-    public void unassignUserFromTask(Task task, PeasyUser user) throws IllegalArgumentException {
+    public Task unassignUserFromTask(long taskId, String email) throws IllegalArgumentException {
+      
+        EntityManager entityManager = entitiyManagerProvider.get();
+        Task task = entityManager.find(Task.class, taskId);
+        PeasyUser user = entityManager.find(PeasyUser.class, email);     
+        
         if (task == null) {
-            throw new IllegalArgumentException();
+            throw new NoSuchElementException("Task with taskId: " + taskId + "doesn't exist in the database");
         }
         if (user == null) {
-            throw new IllegalArgumentException();
+            throw new NoSuchElementException("User with email: " + email + "doesn't exist in the database");
         }
         task.getUsers().remove(user);
         user.getTasks().remove(task);
+        
+        return task;
     }
     // END project & task specific Methods
 
     // BEGIN project & blog specific Methods
     /**
      *
-     * @param project
-     * @param author
+     * @param projectId
+     * @param email
      * @param title
      * @param text
      * @return ctreated ProjectBlogEntry
-     * @throws IllegalArgumentException
+     * @throws NoSuchElementException
      */
     @Transactional
-    public ProjectBlogEntry createBlogEntry(Project project, PeasyUser author, String title, String text) throws IllegalArgumentException {
-
-        if (project == null) {
-            throw new IllegalArgumentException();
-        }
-        if (author == null) {
-            throw new IllegalArgumentException();
-
-        }
+    public ProjectBlogEntry createBlogEntry(long projectId, String email, String title, String text) throws NoSuchElementException {
 
         EntityManager entityManager = entitiyManagerProvider.get();
+        Project project = entityManager.find(Project.class, projectId);
+        PeasyUser author = entityManager.find(PeasyUser.class, email);     
+        
+        if (project == null) {
+            throw new NoSuchElementException("Project with projectId: " + projectId + "doesn't exist in the database");
+        }
+        if (author == null) {
+            throw new NoSuchElementException("Author with email: " + email + "doesn't exist in the database");
+
+        }
 
         ProjectBlogEntry blogEntry = new ProjectBlogEntry();
         blogEntry.setTitle(title);
         blogEntry.setText(text);
         blogEntry.setAuthor(author);
-
+        blogEntry.setProject(project);
+        
         project.getBlogEntries().add(blogEntry);
 
         entityManager.persist(blogEntry);
@@ -401,7 +416,7 @@ public class ProjectManager {
      * @throws NoSuchElementException
      */
     @Transactional
-    public ProjectBlogEntry updateBlogEntry(long blogEntryId, String title, String text) throws NoSuchElementException {
+    public ProjectBlogEntry updateBlogEntry(int blogEntryId, String title, String text) throws NoSuchElementException {
         EntityManager entityManager = entitiyManagerProvider.get();
         ProjectBlogEntry blogEntry = entityManager.find(ProjectBlogEntry.class, blogEntryId);
 
@@ -421,7 +436,7 @@ public class ProjectManager {
      * @throws NoSuchElementException
      */
     @Transactional
-    public void deleteBlogEntry(long blogEntryId) throws NoSuchElementException {
+    public void deleteBlogEntry(int blogEntryId) throws NoSuchElementException {
         EntityManager entityManager = entitiyManagerProvider.get();
         ProjectBlogEntry blogEntry = entityManager.find(ProjectBlogEntry.class, blogEntryId);
         if (blogEntry == null) {
@@ -429,7 +444,6 @@ public class ProjectManager {
         } else {
             entityManager.remove(blogEntry);
         }
-
     }
     // END project & blog specific Methods
 
