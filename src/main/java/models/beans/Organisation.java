@@ -24,15 +24,6 @@ public class Organisation implements Serializable {
     private Set<PeasyUser> users;
     private static final long serialVersionUID = 1L;
 
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + organisationId;
-        return result;
-    }
-
     public Organisation() {
         super();
     }
@@ -74,7 +65,13 @@ public class Organisation implements Serializable {
         return "Organisation{" + "organisationId=" + organisationId + ", name=" + name + ", organisationAdmin=" + organisationAdmin.toString() + ", userSize=" + users.size() + '}';
     }
     
-    
+      @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + organisationId;
+        return result;
+    }
     
         @Override
     public boolean equals(Object obj) {

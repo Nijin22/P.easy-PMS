@@ -147,20 +147,31 @@ public class UserManager {
 		return PasswordHelper.check(passwordCleartext, passwordDb);
 	}
 
-	public void deactivateUser(String email) {
-		// TODO: Implement
-	}
-
+	/**
+	 * Returns a set of projects where the user is a member
+	 * 
+	 * @param email
+	 *            The email address of the user
+	 * @return
+	 */
+	@UnitOfWork
 	public Set<Project> getProjectsWhereUserIsMember(String email) {
-		// TODO: Implement
-		return null;
+		EntityManager entityManager = entitiyManagerProvider.get();
+		PeasyUser user = entityManager.find(PeasyUser.class, email);
+
+		return user.getProjects();
 	}
 
+	/**
+	 * Returns a set of projects managed by this user
+	 * @param email
+	 * @return
+	 */
+	@UnitOfWork
 	public Set<Project> getProjectsWhereUserIsManager(String email) {
-		// TODO: Implement
-		return null;
+		EntityManager entityManager = entitiyManagerProvider.get();
+		PeasyUser user = entityManager.find(PeasyUser.class, email);
+
+		return user.getProjectsWhereUserIsManager();
 	}
-
-	// private methods:
-
 }

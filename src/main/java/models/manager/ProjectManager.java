@@ -9,6 +9,7 @@ import com.google.inject.Provider;
 import com.google.inject.persist.Transactional;
 import java.util.NoSuchElementException;
 
+
 import models.beans.PeasyUser;
 import models.beans.Project;
 import models.beans.ProjectBlogEntry;
@@ -446,5 +447,4 @@ public class ProjectManager {
         }
     }
     // END project & blog specific Methods
-
 }

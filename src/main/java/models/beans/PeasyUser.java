@@ -11,7 +11,9 @@ import java.util.Set;
  *
  */
 @Entity
+@Table(name = PeasyUser.TABLENAME)
 public class PeasyUser implements Serializable {
+	public static final String TABLENAME = "PeasyUsers";
 
     @Id
     private String emailAddress;
@@ -159,12 +161,21 @@ public class PeasyUser implements Serializable {
     public void setOrganisation(Organisation organisation) {
         this.organisation = organisation;
     }
+  
+  	public Set<Project> getProjectsWhereUserIsManager() {
+		return projectsWhereUserIsManager;
+	}
+
+	public void setProjectsWhereUserIsManager(Set<Project> projectsWhereUserIsManager) {
+		this.projectsWhereUserIsManager = projectsWhereUserIsManager;
+	}
 
     @Override
     public String toString() {
         return "PeasyUser{" + "emailAddress=" + emailAddress + ", firstName=" + firstName + ", lastName=" + lastName + ", formOfAddress=" + formOfAddress + ", passwordInDb=" + passwordInDb + ", projects=" + projects + ", tasks=" + tasks + ", projectsWhereUserIsManager=" + projectsWhereUserIsManager + ", organisation=" + organisation + '}';
     }
     
-    
+
+
 
 }

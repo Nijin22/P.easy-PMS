@@ -7,6 +7,7 @@ import com.google.inject.Provider;
 import com.google.inject.persist.Transactional;
 import java.util.NoSuchElementException;
 
+
 import models.beans.Organisation;
 import models.beans.PeasyUser;
 
@@ -162,5 +163,4 @@ public class OrganisationManager {
         }
         
     }
-    
 }
