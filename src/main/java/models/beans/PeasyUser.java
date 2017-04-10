@@ -161,14 +161,7 @@ public class PeasyUser implements Serializable {
     public void setOrganisation(Organisation organisation) {
         this.organisation = organisation;
     }
-  
-  	public Set<Project> getProjectsWhereUserIsManager() {
-		return projectsWhereUserIsManager;
-	}
 
-	public void setProjectsWhereUserIsManager(Set<Project> projectsWhereUserIsManager) {
-		this.projectsWhereUserIsManager = projectsWhereUserIsManager;
-	}
 
     @Override
     public String toString() {
