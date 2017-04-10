@@ -41,10 +41,8 @@
 			<property name="javax.persistence.provider" value="org.hibernate.ejb.HibernatePersistence" />
 			<property name="hibernate.connection.driver_class" value="org.h2.Driver" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
-
 			<!-- This will make sure that the database schema is automatically created -->
 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
-
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="false" />
 
