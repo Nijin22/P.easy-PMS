@@ -28,10 +28,16 @@ import dao.ArticleDao;
 import dao.SetupDao;
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jdk.internal.org.objectweb.asm.TypeReference;
+import models.manager.FileManager;
 import ninja.Context;
 import ninja.params.Param;
+import ninja.uploads.DiskFileItemProvider;
 import ninja.uploads.FileItem;
+import ninja.uploads.FileProvider;
+import ninja.uploads.MemoryFileItemProvider;
 import static org.eclipse.jetty.http.HttpParser.LOG;
 
 public class ApplicationController {
@@ -41,6 +47,12 @@ public class ApplicationController {
 
     @Inject
     SetupDao setupDao;
+       
+    @Inject
+    FileManager fileManager;
+    
+    private static final Logger LOG = Logger.getLogger(ApplicationController.class.getName() );
+
 
     public ApplicationController() {
 
@@ -129,11 +141,18 @@ public class ApplicationController {
 
     }
 
+    @FileProvider(DiskFileItemProvider.class)
     public Result uploadFinish(Context context) throws Exception {
+        LOG.info("Start method");
         
+        //get parameters
         FileItem upfile = context.getParameterAsFileItem("upfile");
-        LOG.info("File name is: " + upfile);
-        return Results.ok(); 
+        String type = context.getParameter("type");
+        String path = fileManager.uploadFile(upfile,type);
+        
+        LOG.log(Level.INFO, "Uploaded File in following Path: {0}", path); 
+        
+        return Results.redirect("/upload"); 
     }
 
     
