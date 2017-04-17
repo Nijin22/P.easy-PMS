@@ -12,8 +12,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package controllers;
+
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +26,13 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import dao.ArticleDao;
 import dao.SetupDao;
+import java.io.File;
+import java.lang.reflect.Method;
+import jdk.internal.org.objectweb.asm.TypeReference;
+import ninja.Context;
+import ninja.params.Param;
+import ninja.uploads.FileItem;
+import static org.eclipse.jetty.http.HttpParser.LOG;
 
 public class ApplicationController {
 
@@ -34,95 +41,105 @@ public class ApplicationController {
 
     @Inject
     SetupDao setupDao;
+
     public ApplicationController() {
 
     }
-    
+
     public Result account() {
         return Results.html();
 
     }
-    
-    public Result dashboard() {        return Results.html();
+
+    public Result dashboard() {
+        return Results.html();
 
     }
-    
+
     public Result impress() {
         return Results.html();
 
     }
-    
+
     public Result information() {
         return Results.html();
     }
-    
+
     public Result login() {
         return Results.html();
 
     }
-    
+
     public Result register() {
         return Results.html();
     }
-    
+
     public Result forgotPassword() {
         return Results.html();
 
     }
-    
+
     public Result members() {
         return Results.html();
 
-    }    
+    }
+
     public Result milestones() {
         return Results.html();
 
     }
-    
+
     public Result myCalender() {
         return Results.html();
 
     }
-        public Result organization() {
+
+    public Result organization() {
         return Results.html();
 
     }
-    
+
     public Result project() {
         return Results.html();
 
     }
-    
+
     public Result projects() {
         return Results.html();
 
     }
-    
+
     public Result report() {
         return Results.html();
 
     }
-    
+
     public Result tasks() {
         return Results.html();
 
     }
-    
+
     public Result task() {
         return Results.html();
 
     }
-    
-//    public Result helloWorldJson() {
-//        
-//        SimplePojo simplePojo = new SimplePojo();
-//        simplePojo.content = "Simple JSON test!";
-//        
-//    }
 
+    public Result fileUpload() {
+        return Results.html();
+
+    }
+
+    public Result uploadFinish(Context context) throws Exception {
+        
+        FileItem upfile = context.getParameterAsFileItem("upfile");
+        LOG.info("File name is: " + upfile);
+        return Results.ok(); 
+    }
+
+    
     /**
      * Method to put initial data in the db...
-     * 
+     *
      * @return
      */
     public Result setup() {
