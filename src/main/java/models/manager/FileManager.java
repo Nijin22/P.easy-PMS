@@ -4,9 +4,11 @@ import com.google.common.io.Files;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ninja.uploads.FileItem;
@@ -67,4 +69,25 @@ public class FileManager {
        return saveFile.getAbsolutePath();
 
  }
+    
+     public void downloadFile(OutputStream outputstream, String id) throws IOException{
+
+         log.log(Level.INFO, "Start method with FileId: {0}", id);
+      
+        String type = "picture";
+        File directory = new File("target" + File.separator + "tmp"  + File.separator + type);
+        File downloadFile = new File(directory.getCanonicalPath() ,"Hochschulzeugnis.pdf");
+        byte[] buf = new byte[8192];
+        InputStream is = new FileInputStream(downloadFile);
+        int c = 0;
+        while ((c = is.read(buf, 0, buf.length)) > 0) {
+            outputstream.write(buf, 0, c);
+            outputstream.flush();
+        }
+        outputstream.close();
+        is.close();
+        
+                  
+     }
+
 }
