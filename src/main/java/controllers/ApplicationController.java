@@ -23,27 +23,11 @@ import ninja.Results;
 
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import dao.ArticleDao;
 import dao.SetupDao;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.lang.reflect.Method;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import jdk.internal.org.objectweb.asm.TypeReference;
 import models.manager.FileManager;
-import ninja.Context;
-import ninja.Renderable;
-import ninja.params.Param;
-import ninja.params.PathParam;
-import ninja.uploads.DiskFileItemProvider;
-import ninja.uploads.FileItem;
-import ninja.uploads.FileProvider;
-import ninja.uploads.MemoryFileItemProvider;
-import ninja.utils.ResponseStreams;
-import static org.eclipse.jetty.http.HttpParser.LOG;
+
 
 public class ApplicationController {
 
@@ -145,45 +129,7 @@ public class ApplicationController {
         return Results.html();
 
     }
-
-    @FileProvider(DiskFileItemProvider.class)
-    public Result uploadFinish(Context context) throws Exception {
-        LOG.info("Start method");
-        //get parameters
-        FileItem upfile = context.getParameterAsFileItem("upfile");
-        String type = context.getParameter("type");
-        String path = fileManager.uploadFile(upfile,type);
-        
-        LOG.log(Level.INFO, "Uploaded File in following Path: {0}", path); 
-        
-        return Results.redirect("/upload"); 
-    }
-
-    public Result downloadFinish(@PathParam("fileId") String id) {
-        LOG.info("Start method");
-        
-                
-        Renderable renderable = new Renderable() { 
-
-        @Override 
-        public void render(Context context, Result result) { 
-          ResponseStreams responseStreams = context.finalizeHeaders(result); 
-            try {
-                OutputStream outputstream = responseStreams.getOutputStream(); // do what you want with the streams
-                LOG.log(Level.INFO, "Result: {0} stream: {1}", new Object[]{result, outputstream});
-                fileManager.downloadFile(outputstream,id);       
-            
-            } catch (IOException ex) {
-                Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-          } 
-        }; 
-      //  return new Results.ok.render(renderable); 
-        return Results.redirect("/upload").render(renderable);
-
-        
-    }
-    
+ 
     /**
      * Method to put initial data in the db...
      *

@@ -26,6 +26,7 @@ import com.google.inject.Inject;
 import controllers.ApiController;
 import controllers.ApplicationController;
 import controllers.ArticleController;
+import controllers.FileController;
 import controllers.LoginLogoutController;
 
 public class Routes implements ApplicationRoutes {
@@ -68,8 +69,8 @@ public class Routes implements ApplicationRoutes {
         
         //Fileupload htmlside for testing
         router.GET().route("/upload").with(ApplicationController::fileUpload);
-        router.POST().route("/uploadFinish").with(ApplicationController::uploadFinish);
-        router.GET().route("/download/{fileId}").with(ApplicationController::downloadFinish);
+        router.POST().route("/uploadFinish").with(FileController::uploadFinish);
+        router.GET().route("/download/{fileId}").with(FileController::downloadFinish);
 
 
        
