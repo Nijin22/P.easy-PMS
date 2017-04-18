@@ -35,7 +35,7 @@ private static final Logger LOG = Logger.getLogger(FileController.class.getName(
 
 @FileProvider(DiskFileItemProvider.class)
 public Result uploadFinish(Context context) throws Exception {
-    LOG.info("Start method");
+     LOG.log(Level.INFO,"Start method");
     //get parameters
     FileItem upfile = context.getParameterAsFileItem("upfile");
     String type = context.getParameter("type");
@@ -50,7 +50,7 @@ public Result uploadFinish(Context context) throws Exception {
 
 
     public Result downloadFinish(@PathParam("fileId") String id) {
-        LOG.info("Start method");
+        LOG.log(Level.INFO,"Start method");
         
                 
         Renderable renderable = new Renderable() { 
@@ -73,5 +73,9 @@ public Result uploadFinish(Context context) throws Exception {
 
         
     }
+    
+     public Result deleteFinish(@PathParam("fileId") String id) {
+         return null;
+     }
     
 }

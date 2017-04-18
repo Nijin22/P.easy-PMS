@@ -47,9 +47,8 @@ public class Routes implements ApplicationRoutes {
     public void init(Router router) {  
       
     	///////////////////////////////////////////////////////////////////////
-        //p.easy templates GET
+        //p.easy templates GET FOR DYNAMIC WEBSITES
         ///////////////////////////////////////////////////////////////////////          
-        //dynamic 
         router.GET().route("/account").with(ApplicationController::account);
         router.GET().route("/dashboard").with(ApplicationController::dashboard);
         router.GET().route("/login").with(ApplicationController::login);
@@ -65,23 +64,28 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/projects/{projectID}/report").with(ApplicationController::report);
         router.GET().route("/projects/{projectID}/tasks/{taskID}").with(ApplicationController::task);
         router.GET().route("/projects/{projectID}/tasks").with(ApplicationController::tasks);
-        
-        
-        //Fileupload htmlside for testing
         router.GET().route("/upload").with(ApplicationController::fileUpload);
-        router.POST().route("/uploadFinish").with(FileController::uploadFinish);
-        router.GET().route("/download/{fileId}").with(FileController::downloadFinish);
 
-
-       
-        //static
+        ///////////////////////////////////////////////////////////////////////
+        //p.easy templates GET FOR STATIC WEBSITES
+        /////////////////////////////////////////////////////////////////////// 
     	router.GET().route("/").with(ApplicationController::index);
         router.GET().route("/impress").with(ApplicationController::impress);
-        router.GET().route("/information").with(ApplicationController::information);
+        router.GET().route("/information").with(ApplicationController::information); 
+      
+        
+        ///////////////////////////////////////////////////////////////////////
+        //p.easy templates RESOURCE HANDLING
+        ///////////////////////////////////////////////////////////////////////        
+        
+        //FILE RESOURCE
+        router.POST().route("/uploadFinish").with(FileController::uploadFinish);
+        router.GET().route("/download/{fileId}").with(FileController::downloadFinish);
+        router.DELETE().route("/delete/{fileId}").with(FileController::deleteFinish);
 
-		///////////////////////////////////////////////////////////////////////
-		//p.easy Resources GET
-		///////////////////////////////////////////////////////////////////////        
+	///////////////////////////////////////////////////////////////////////
+	//p.easy Resources GET
+	///////////////////////////////////////////////////////////////////////        
         //Routing
 //        router.GET().route("/hello_world.json").with(ApplicationController::helloWorldJson);
 

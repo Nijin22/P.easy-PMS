@@ -89,5 +89,9 @@ public class FileManager {
         
                   
      }
+     
+     public void deleteFile(String fileId){
+         //delete File 
+     }
 
 }
