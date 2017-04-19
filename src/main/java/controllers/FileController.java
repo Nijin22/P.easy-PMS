@@ -39,7 +39,8 @@ public Result uploadFinish(Context context) throws Exception {
     //get parameters
     FileItem upfile = context.getParameterAsFileItem("upfile");
     String type = context.getParameter("type");
-    String path = fileManager.uploadFile(upfile,type);
+   //String ownerId = context.getParameter("id");
+    String path = fileManager.uploadFile(upfile.getFile(),upfile.getFileName(),type,"123");
     
     LOG.log(Level.INFO, "Uploaded File in following Path: {0}", path); 
     

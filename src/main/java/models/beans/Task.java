@@ -11,7 +11,6 @@ import javax.persistence.*;
  *
  */
 @Entity
-
 public class Task implements Serializable {
 
     @Id
@@ -27,6 +26,8 @@ public class Task implements Serializable {
     @OneToMany(mappedBy = "task")
     private Set<TaskBlogEntry> blogEntries;
     private static final long serialVersionUID = 1L;
+    @OneToMany(mappedBy = "task")
+    private Set<TaskFile> taskFiles;
 
     public Task() {
         super();
@@ -105,6 +106,24 @@ public class Task implements Serializable {
     public void setProject(Project project) {
         this.project = project;
     }
+
+    public Set<TaskBlogEntry> getBlogEntries() {
+        return blogEntries;
+    }
+
+    public void setBlogEntries(Set<TaskBlogEntry> blogEntries) {
+        this.blogEntries = blogEntries;
+    }
+
+    public Set<TaskFile> getTaskFiles() {
+        return taskFiles;
+    }
+
+    public void setTaskFiles(Set<TaskFile> taskFiles) {
+        this.taskFiles = taskFiles;
+    }
+    
+    
 
 
 }

@@ -197,14 +197,15 @@ public class ProjectManagerTest extends NinjaTest {
     @Test
     public void testCreateUpadteProject() {
         try {
+            
             ProjectManager pm = getInjector().getInstance(ProjectManager.class);
             UserManager um = getInjector().getInstance(UserManager.class);
 
             log.info("Start Testing Succesfull Test: createUpadteOrganisation");
-
             //test create Project
             PeasyUser manager = um.createUser("tugi@peasy.de", "Tugi", "Bugi", "123456789");
             Project createdProject = pm.createProject(manager, "Project 1");
+
             assertEquals(createdProject.getName(), "Project 1");
 
             //test get Project
