@@ -27,6 +27,11 @@ import com.google.inject.Singleton;
 
 import dao.UserDao;
 
+/**
+ * This class was created by the NinjaFramework Archetype and should be removed before releasing
+ * @author Dennis
+ *
+ */
 @Singleton
 public class LoginLogoutController {
     

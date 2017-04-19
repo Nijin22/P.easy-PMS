@@ -61,10 +61,6 @@ public class ApplicationController {
 
     }
     
-    public Result register() {
-        return Results.html();
-    }
-    
     public Result forgotPassword() {
         return Results.html();
 
