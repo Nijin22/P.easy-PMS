@@ -44,10 +44,12 @@ public class UserController {
 			// make sure email and password are not empty
 			if (!email.get().isEmpty() && !passwordCleartext.get().isEmpty()) {
 				// TODO: Send email verification mail
+				
+				// TODO: Verify both passwords match
 
 				try {
 					PeasyUser user = userManager.createUser(email.get(), firstName.get(), lastName.get(), passwordCleartext.get());
-					return Results.html().render(user);
+					return Results.html().render("userFirstName", user.getFirstName());
 				} catch (GeneralSecurityException e) {
 					return Results.internalServerError();
 				} catch (UserAlreadyExistsException e) {
