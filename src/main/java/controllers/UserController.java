@@ -1,11 +1,14 @@
 package controllers;
 
+import java.security.GeneralSecurityException;
 import java.util.Optional;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import models.beans.PeasyUser;
 import models.manager.UserManager;
+import models.manager.exceptions.UserAlreadyExistsException;
 import ninja.Result;
 import ninja.Results;
 import ninja.params.Param;
@@ -32,7 +35,6 @@ public class UserController {
 	 * 
 	 * @return
 	 */
-	
 	public Result registerAction(FlashScope flashScope, @Param("first_name") Optional<String> firstName,
 			@Param("last_name") Optional<String> lastName, @Param("email") Optional<String> email,
 			@Param("password") Optional<String> passwordCleartext) {
@@ -43,7 +45,15 @@ public class UserController {
 			if (!email.get().isEmpty() && !passwordCleartext.get().isEmpty()) {
 				// TODO: Send email verification mail
 
-				return Results.html();
+				try {
+					PeasyUser user = userManager.createUser(email.get(), firstName.get(), lastName.get(), passwordCleartext.get());
+					return Results.html().render(user);
+				} catch (GeneralSecurityException e) {
+					return Results.internalServerError();
+				} catch (UserAlreadyExistsException e) {
+					flashScope.error("registration.UserAlreadyExists");
+					return Results.badRequest();
+				}
 			} else {
 				flashScope.error("registration.EmailOrPwEmpty");
 				return Results.badRequest();
