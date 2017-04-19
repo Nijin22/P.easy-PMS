@@ -11,6 +11,8 @@ import models.manager.UserManager;
 import models.manager.exceptions.UserAlreadyExistsException;
 import ninja.Result;
 import ninja.Results;
+import ninja.exceptions.BadRequestException;
+import ninja.exceptions.InternalServerErrorException;
 import ninja.params.Param;
 import ninja.session.FlashScope;
 
@@ -31,38 +33,60 @@ public class UserController {
 	}
 
 	/**
-	 * Handle the filled register form
-	 * 
+	 * Handles the action after registration (and returns feedback if it worked)
+	 * @param flashScope
+	 * @param firstName
+	 * @param lastName
+	 * @param email
+	 * @param passwordCleartext
+	 * @param passwordConfirm
 	 * @return
 	 */
 	public Result registerAction(FlashScope flashScope, @Param("first_name") Optional<String> firstName,
 			@Param("last_name") Optional<String> lastName, @Param("email") Optional<String> email,
-			@Param("password") Optional<String> passwordCleartext) {
+			@Param("password") Optional<String> passwordCleartext,
+			@Param("password_confirmation") Optional<String> passwordConfirm) {
 
 		// check all fields were transmitted
-		if (firstName.isPresent() && lastName.isPresent() && email.isPresent() && passwordCleartext.isPresent()) {
+		if (firstName.isPresent() && lastName.isPresent() && email.isPresent() && passwordCleartext.isPresent()
+				&& passwordConfirm.isPresent()) {
+
 			// make sure email and password are not empty
 			if (!email.get().isEmpty() && !passwordCleartext.get().isEmpty()) {
-				// TODO: Send email verification mail
-				
-				// TODO: Verify both passwords match
 
-				try {
-					PeasyUser user = userManager.createUser(email.get(), firstName.get(), lastName.get(), passwordCleartext.get());
-					return Results.html().render("userFirstName", user.getFirstName());
-				} catch (GeneralSecurityException e) {
-					return Results.internalServerError();
-				} catch (UserAlreadyExistsException e) {
-					flashScope.error("registration.UserAlreadyExists");
-					return Results.badRequest();
+				// verify both passwords match
+				if (passwordCleartext.get().equals(passwordConfirm.get())) {
+
+					// create the user
+					try {
+						PeasyUser user = userManager.createUser(email.get(), firstName.get(), lastName.get(),
+								passwordCleartext.get());
+
+						// TODO: Send email verification mail
+						Result result = Results.html();
+
+						result.render("userFirstName", user.getFirstName());
+						result.render("userPassword", user.getPasswordInDb());
+
+						return result;
+					} catch (GeneralSecurityException e) {
+						throw new InternalServerErrorException("Error when hashing password");
+					} catch (UserAlreadyExistsException e) {
+						flashScope.error("registration.UserAlreadyExists");
+						return Results.redirect("/login");
+					}
+				} else {
+					flashScope.error("registration.PwDontMatch");
+					return Results.redirect("/register");
 				}
+
 			} else {
 				flashScope.error("registration.EmailOrPwEmpty");
-				return Results.badRequest();
+				return Results.redirect("/register");
 			}
 
 		} else {
-			return Results.badRequest();
+			throw new BadRequestException("Not all required parameters transfered.");
 		}
 
 	}
