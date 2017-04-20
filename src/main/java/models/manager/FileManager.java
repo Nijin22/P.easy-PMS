@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
+import models.beans.FileClass;
 import models.beans.PeasyUser;
 import models.beans.ProfilePicture;
 import models.beans.Project;
@@ -113,25 +114,6 @@ public class FileManager {
             }
         }
         return saveFile.getCanonicalPath();
-
-    }
-
-    public void downloadFile(OutputStream outputstream, String id) throws IOException {
-
-        log.log(Level.INFO, "Start method with FileId: {0}", id);
-
-        String type = "picture";
-        File directory = new File("target" + File.separator + "tmp" + File.separator + type);
-        File downloadFile = new File(directory.getCanonicalPath(), "Hochschulzeugnis.pdf");
-        byte[] buf = new byte[8192];
-        InputStream is = new FileInputStream(downloadFile);
-        int c = 0;
-        while ((c = is.read(buf, 0, buf.length)) > 0) {
-            outputstream.write(buf, 0, c);
-            outputstream.flush();
-        }
-        outputstream.close();
-        is.close();
 
     }
 
@@ -241,10 +223,10 @@ public class FileManager {
 
         task.getTaskFiles().remove(taskFile);
         taskFile.setTask(null);
-        
+
         //logs for testing
         log.info("Taskfile " + taskFile.toString());
-        log.info("Taskfile " +  task.getTaskFiles().toString());
+        log.info("Taskfile " + task.getTaskFiles().toString());
 
         entityManager.remove(taskFile);
         log.log(Level.INFO, taskFile.toString());
@@ -266,5 +248,29 @@ public class FileManager {
 
         log.log(Level.INFO, projectFile.toString());
 
+    }
+
+    @Transactional
+    public TaskFile getTaskFile(String id) {
+        EntityManager entityManager = entitiyManagerProvider.get();
+        long taskId = Long.parseLong(id);
+        TaskFile taskFile = entityManager.find(TaskFile.class, taskId);
+        return taskFile;
+    }
+
+    @Transactional
+    public ProjectFile getProjectFile(String id) {
+        EntityManager entityManager = entitiyManagerProvider.get();
+        long projectId = Long.parseLong(id);
+        ProjectFile projctFile = entityManager.find(ProjectFile.class, projectId);
+        return projctFile;
+    }
+
+    @Transactional
+    public ProfilePicture getProfilePicture(String id) {
+        EntityManager entityManager = entitiyManagerProvider.get();
+        long pictureId = Long.parseLong(id);
+        ProfilePicture picture = entityManager.find(ProfilePicture.class, pictureId);
+        return picture;
     }
 }
