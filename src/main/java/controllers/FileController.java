@@ -54,7 +54,7 @@ public class FileController {
     }
 
     public Result downloadFinish(@PathParam("fileId") String id,@PathParam("type") String type) throws IOException {
-        LOG.log(Level.INFO, "Start method downloadFinish");
+        LOG.log(Level.INFO, "Start method downloadFinish for type {0}", type);
 
         //Dennis will provide this
         //taskFile = fileManager.getTaskFile(id); 
