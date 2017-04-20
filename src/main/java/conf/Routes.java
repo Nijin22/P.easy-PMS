@@ -27,6 +27,7 @@ import controllers.ApiController;
 import controllers.ApplicationController;
 import controllers.ArticleController;
 import controllers.LoginLogoutController;
+import controllers.UserController;
 
 public class Routes implements ApplicationRoutes {
     
@@ -52,7 +53,6 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/account").with(ApplicationController::account);
         router.GET().route("/dashboard").with(ApplicationController::dashboard);
         router.GET().route("/login").with(ApplicationController::login);
-        router.GET().route("/register").with(ApplicationController::register);
         router.GET().route("/forgotPassword").with(ApplicationController::forgotPassword);
         router.GET().route("/myCalender").with(ApplicationController::myCalender);
         router.GET().route("/organization").with(ApplicationController::organization);
@@ -64,6 +64,10 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/projects/{projectID}/report").with(ApplicationController::report);
         router.GET().route("/projects/{projectID}/tasks/{taskID}").with(ApplicationController::task);
         router.GET().route("/projects/{projectID}/tasks").with(ApplicationController::tasks);
+        
+        // Handling User-Sites
+        router.GET().route("/register").with(UserController::register);
+        router.POST().route("/register").with(UserController::registerAction);
        
         //static
     	router.GET().route("/").with(ApplicationController::index);
