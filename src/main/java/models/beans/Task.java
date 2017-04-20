@@ -26,7 +26,7 @@ public class Task implements Serializable {
     @OneToMany(mappedBy = "task")
     private Set<TaskBlogEntry> blogEntries;
     private static final long serialVersionUID = 1L;
-    @OneToMany(mappedBy = "task")
+    @OneToMany(mappedBy = "task",fetch = FetchType.EAGER)
     private Set<TaskFile> taskFiles;
 
     public Task() {

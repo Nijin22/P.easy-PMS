@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
  * @author Tugrul
  */
 @Entity
-public class TaskFile extends FileClass implements Serializable{
+public class TaskFile extends FileClass {
 
     public TaskFile() {
     }

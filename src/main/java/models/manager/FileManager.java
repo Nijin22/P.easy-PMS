@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import models.beans.PeasyUser;
 import models.beans.ProfilePicture;
@@ -22,6 +23,8 @@ import models.beans.Project;
 import models.beans.ProjectFile;
 import models.beans.Task;
 import models.beans.TaskFile;
+import org.apache.commons.io.FilenameUtils;
+import org.dom4j.IllegalAddException;
 
 public class FileManager {
 
@@ -43,20 +46,29 @@ public class FileManager {
             throw new IllegalArgumentException("Type can't be null!");
         }
 
+        String fileIdJPA = "";
+
         //Second Persist Objects in Database
         if (type.equals("picture")) {
             log.log(Level.INFO, "Saving ProfilePicture: {0}", fileName);
-            createPictureUser(idOfOwner, fileName);
+            try {
+                ImageIO.read(file);
+                fileIdJPA = createPictureUser(idOfOwner, fileName);
+            } catch (IOException e) {
+                log.log(Level.WARNING, "Given File is not a image {0}", file.getName());
+                throw new IllegalAddException("Given File is not a image " + file.getName());
+            }
 
         } else if (type.equals("task")) {
             log.log(Level.INFO, "Saving Taskfile: {0}", fileName);
             long taskId = Long.parseLong(idOfOwner);
-            createTaskFile(taskId, fileName);
+            fileIdJPA = createTaskFile(taskId, fileName);
+            log.log(Level.INFO, "Generated Id for TaskFile {0}", fileIdJPA);
 
         } else if (type.equals("project")) {
             log.log(Level.INFO, "Saving Projectfile: {0}", fileName);
             long projectId = Long.parseLong(idOfOwner);
-            createProjectFile(projectId, fileName);
+            fileIdJPA = createProjectFile(projectId, fileName);
         }
 
         //declare file output directory CAUTION: USE fileItem.getFileName not file.getName() !!!!
@@ -64,8 +76,13 @@ public class FileManager {
         if (!directory.exists()) {
             directory.mkdirs();
         }
-
-        File saveFile = new File(directory.getCanonicalPath(), fileName);
+        File saveFile = null;
+        if (!fileIdJPA.isEmpty()) {
+            String ext = "." + FilenameUtils.getExtension(fileName);
+            saveFile = new File(directory.getCanonicalPath(), fileIdJPA + ext);
+        } else {
+            throw new IllegalArgumentException("fileIdJPA is not set in methods");
+        }
 
         if (saveFile.exists()) {
             log.log(Level.WARNING, "File with Filename {0} exists already!", saveFile.getName());
@@ -118,7 +135,7 @@ public class FileManager {
 
     }
 
-    public void deleteFile(long fileId, String type) throws FileNotFoundException, IOException {
+    public void deleteFile(long fileId, String fileType, String type) throws FileNotFoundException, IOException {
 
         //Second Persist Objects in Database
         if (type.equals("picture")) {
@@ -136,43 +153,52 @@ public class FileManager {
 
         File directory = new File("target" + File.separator + "tmp" + File.separator + type);
         if (!directory.exists()) {
-            throw new FileNotFoundException("Could not find directory where File: " + fileId + " could be");
+            throw new FileNotFoundException("Could not find directory " + directory.getCanonicalPath());
         }
-        //uncomment this after changing logic
-        //File fileToDelete = new File(directory.getCanonicalPath(), String.valueOf(fileId));
-        //fileToDelete.delete();
+
+        File fileToDelete = new File(directory.getCanonicalPath(), String.valueOf(fileId) + "." + fileType);
+        fileToDelete.delete();
 
     }
 
     @Transactional
-    private void createPictureUser(String email, String fileName) {
-        log.log(Level.INFO, "createPictureUser: Persist Object in Database with email {0} and Filename: {1}", new Object[]{email, fileName});
+    private String createPictureUser(String email, String fileName) {
+        log.log(Level.INFO, "Start add ProfilePicture to User in Database");
+
         EntityManager entityManager = entitiyManagerProvider.get();
         PeasyUser peasyUser = entityManager.find(PeasyUser.class, email);
 
         ProfilePicture profilePicture = new ProfilePicture(fileName);
-        entityManager.persist(profilePicture);
-
         profilePicture.setPeasyUser(peasyUser);
         peasyUser.setProfilePicture(profilePicture);
+
+        entityManager.persist(profilePicture);
+
+        log.log(Level.INFO, profilePicture.toString());
+
+        return String.valueOf(profilePicture.getFileId());
 
     }
 
     @Transactional
-    private void createTaskFile(long taskId, String fileName) {
-        log.log(Level.INFO, "createTaskFile: Persist Object in Database with taskID {0} and Filename: {1}", new Object[]{taskId, fileName});
+    private String createTaskFile(long taskId, String fileName) {
+        log.log(Level.INFO, "Start add TaskFile to Task in Database");
+
         EntityManager entityManager = entitiyManagerProvider.get();
         Task task = entityManager.find(Task.class, taskId);
 
         TaskFile taskFile = new TaskFile(fileName);
-        entityManager.persist(taskFile);
-
         taskFile.setTask(task);
         task.getTaskFiles().add(taskFile);
+
+        entityManager.persist(taskFile);
+        log.info(taskFile.toString());
+
+        return String.valueOf(taskFile.getFileId());
     }
 
     @Transactional
-    public ProjectFile createProjectFile(long projectId, String fileName) {
+    public String createProjectFile(long projectId, String fileName) {
         log.log(Level.INFO, "Start add ProjectFile to Project in Database");
 
         EntityManager entityManager = entitiyManagerProvider.get();
@@ -183,36 +209,62 @@ public class FileManager {
         project.getProjectFiles().add(projectFile);
 
         entityManager.persist(projectFile);
-
-        log.log(Level.INFO, "Succesfull add ProjectFile to Project in Database");
-
-        return projectFile;
+        log.log(Level.INFO, projectFile.toString());
+        return String.valueOf(projectFile.getFileId());
 
     }
 
     @Transactional
     private void deletePictureUser(long fileId) {
-        log.log(Level.INFO, "Start deleting ProfilPicture from Project in Database");
+        log.log(Level.INFO, "Start deleting ProfilPicture from User in Database");
+
+        EntityManager entityManager = entitiyManagerProvider.get();
+        ProfilePicture profilePicture = entityManager.find(ProfilePicture.class, fileId);
+        PeasyUser peasyUser = entityManager.find(PeasyUser.class, profilePicture.getPeasyUser().getEmailAddress());
+
+        peasyUser.setProfilePicture(null);
+        profilePicture.setPeasyUser(null);
+
+        entityManager.remove(profilePicture);
+
+        log.log(Level.INFO, profilePicture.toString());
 
     }
 
     @Transactional
     private void deleteTaskFile(long fileId) {
+        log.log(Level.INFO, "Start deleting TaskFile from Task in Database");
+
+        EntityManager entityManager = entitiyManagerProvider.get();
+        TaskFile taskFile = entityManager.find(TaskFile.class, fileId);
+        Task task = entityManager.find(Task.class, taskFile.getTask().getTaskId());
+
+        task.getTaskFiles().remove(taskFile);
+        taskFile.setTask(null);
+        
+        //logs for testing
+        log.info("Taskfile " + taskFile.toString());
+        log.info("Taskfile " +  task.getTaskFiles().toString());
+
+        entityManager.remove(taskFile);
+        log.log(Level.INFO, taskFile.toString());
+
     }
 
     @Transactional
     public void deleteProjectFile(long fileId) {
-        log.log(Level.INFO, "Start deleting ProfilPicture from Project in Database");
+        log.log(Level.INFO, "Start deleting ProjectFile from Project in Database");
 
         EntityManager entityManager = entitiyManagerProvider.get();
         ProjectFile projectFile = entityManager.find(ProjectFile.class, fileId);
         Project project = entityManager.find(Project.class, projectFile.getProject().getProjectId());
-        
+
         project.getProjectFiles().remove(projectFile);
         projectFile.setProject(null);
 
         entityManager.remove(projectFile);
-        
-        log.log(Level.INFO, "Succesfull deleting ProfilPicture from Project in Database");
+
+        log.log(Level.INFO, projectFile.toString());
+
     }
 }

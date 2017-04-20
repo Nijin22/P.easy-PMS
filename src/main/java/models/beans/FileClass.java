@@ -10,26 +10,44 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
 
 /**
  *
  * @author Tugrul
  */
-@Entity
-abstract public class FileClass{
+//@Entity
+@MappedSuperclass
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+public abstract class FileClass{
+    
+    static class IdContainer{
+        private static long id;
+        
+        IdContainer(){
+            this.id = 0;
+        }
+        
+        static long getId(){
+            long current = id;
+            id++;
+            return current;
+        }
+        
+    }
 
     public FileClass() {
     }
 
     public FileClass(String title) {
         this.title = title;
+     //   fileId = IdContainer.getId();
     }
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private long fileId;
     @NotNull
     private String title;
@@ -50,14 +68,19 @@ abstract public class FileClass{
         this.title = title;
     }
 
+
+
+    @Override
+    public String toString() {
+        return "FileClass{" + "id=" + fileId + ", title=" + title + '}';
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + (int) (this.fileId ^ (this.fileId >>> 32));
+        hash = 67 * hash + (int) (this.fileId ^ (this.fileId >>> 32));
         return hash;
     }
-
-
 
     @Override
     public boolean equals(Object obj) {
@@ -75,11 +98,6 @@ abstract public class FileClass{
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "FileClass{" + "id=" + fileId + ", title=" + title + '}';
     }
    
     
