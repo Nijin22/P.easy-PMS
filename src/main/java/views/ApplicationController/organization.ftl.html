@@ -1,262 +1,170 @@
 <#import "../layout/Layout.ftl.html" as layout> <@layout.Layout "Loginpage">
 <h1>Organization</h1>
-
-<!-- Bootstrap Core JavaScript -->
-	<script src="/assets/webjars/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	
-	<!-- Bootstrap Core CSS -->
-    <link href="../assets/webjars/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"
-
- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-
-
-
-
-
- <!-- Collapse 1 - Project User Table --> 
-
-
-
+<!-- Collapse 1 - Project User Table --> 
 <div class="panel-group" id="accordion">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse"  href="#collapse1">
-        Project User</a>
-      </h4>
-    </div>
-    <div id="collapse1" class="panel-collapse collapse in">
-   
-   
-
-<div class="container">
-	<div class="row">
-		
-        
-        <div class="col-md-12">
-        <h4></h4>
-        <div class="table-responsive">
-
-                
-              <table id="mytable" class="table table-bordred table-striped">
-                   
-                   <thead>
-                   
-                   <th><input type="checkbox" id="checkall" /></th>
-                   <th>First Name</th>
-                    <th>Last Name</th>
-                     <th>Email</th>
-                      <th>Edit</th>
-                      
-                       <th>Delete</th>
-                   </thead>
-    <tbody>
-    
-    <tr>
-    <td><input type="checkbox" class="checkthis" /></td>
-    <td>Max</td>
-    <td>Mustermann</td>
-    <td>Mustermann@gmail.com</td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-    </tr>
-    
- <tr>
-    <tr>
-    <td><input type="checkbox" class="checkthis" /></td>
-    <td>Max</td>
-    <td>Mustermann</td>
-    <td>Mustermann@gmail.com</td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-    </tr>
-    
-    </tbody>
-        
-</table>
-
-<div class="form-group">
-            <label class="col-md-3 control-label"></label>
-            <div class="col-md-8">
-              <input type="button" class="btn btn-primary" value="Add User">
-              <span></span>
-              <input type="reset" class="btn btn-default" value="Cancel">
-            </div>
-          </div>
-          
-          
-<div class="clearfix"></div>
-<ul class="pagination pull-right">
-  <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-  <li class="active"><a href="#">1</a></li>
-  <li><a href="#">2</a></li>
-  <li><a href="#">3</a></li>
-  <li><a href="#">4</a></li>
-  <li><a href="#">5</a></li>
-  <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-</ul>
-                
-            </div>
-            
-        </div>
-	</div>
-</div>
-
-
-
-
-<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Edit Your Detail</h4>
-      </div>
-          <div class="modal-body">
-          <div class="form-group">
-        <input class="form-control " type="text" placeholder="Mohsin">
-        </div>
-        <div class="form-group">
-        
-        <input class="form-control " type="text" placeholder="Irshad">
-        </div>
-        <div class="form-group">
-        <textarea rows="2" class="form-control" placeholder="CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan"></textarea>
-    
-        
-        </div>
-      </div>
-          <div class="modal-footer ">
-        <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
-      </div>
-        </div>
-    <!-- /.modal-content --> 
-  </div>
-      <!-- /.modal-dialog --> 
-    </div>
-    
-    
-    
-    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
-      </div>
-          <div class="modal-body">
-       
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
-       
-      </div>
-        <div class="modal-footer ">
-        <button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
-      </div>
-        </div>
-    <!-- /.modal-content --> 
-  </div>
-      <!-- /.modal-dialog --> 
-    </div>
-     </div>
-  </div>
-  
-  
-  
-  
-  
-  
-  
- <!-- Collapse 2 - Data Upload --> 
-  
- <script src='../assets/js/organizationDataUpload.js'></script>
- 
- <style>
- /* layout.css Style */
-.upload-drop-zone {
-  height: 200px;
-  border-width: 2px;
-  margin-bottom: 20px;
-}
-
-/* skin.css Style*/
-.upload-drop-zone {
-  color: #ccc;
-  border-style: dashed;
-  border-color: #ccc;
-  line-height: 200px;
-  text-align: center
-}
-.upload-drop-zone.drop {
-  color: #222;
-  border-color: #222;
-}
-</style> 
-  
 <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse"  href="#collapse2">Coorperate Design</a>
-        </h4>
+   <div class="panel-heading">
+      <h4 class="panel-title">
+         <a data-toggle="collapse"  href="#collapse1">
+         Project User</a>
+      </h4>
+   </div>
+   <div id="collapse1" class="panel-collapse collapse in">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-12">
+               <h4></h4>
+               <div class="table-responsive">
+                  <table id="mytable" class="table table-bordred table-striped">
+                     <thead>
+                        <th><input type="checkbox" id="checkall" /></th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td><input type="checkbox" class="checkthis" /></td>
+                           <td>Max</td>
+                           <td>Mustermann</td>
+                           <td>Mustermann@gmail.com</td>
+                           <td>
+                              <p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p>
+                           </td>
+                           <td>
+                              <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p>
+                           </td>
+                        </tr>
+                        <tr>
+                        <tr>
+                           <td><input type="checkbox" class="checkthis" /></td>
+                           <td>Max</td>
+                           <td>Mustermann</td>
+                           <td>Mustermann@gmail.com</td>
+                           <td>
+                              <p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p>
+                           </td>
+                           <td>
+                              <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <div class="form-group">
+                     <label class="col-md-3 control-label"></label>
+                     <div class="col-md-8">
+                        <input type="button" class="btn btn-primary" value="Add User">
+                        <span></span>
+                        <input type="reset" class="btn btn-default" value="Cancel">
+                     </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <ul class="pagination pull-right">
+                     <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                     <li class="active"><a href="#">1</a></li>
+                     <li><a href="#">2</a></li>
+                     <li><a href="#">3</a></li>
+                     <li><a href="#">4</a></li>
+                     <li><a href="#">5</a></li>
+                     <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                  </ul>
+               </div>
+            </div>
+         </div>
       </div>
-      <div id="collapse2" class="panel-collapse collapse">
-       
-  
-  
-  
-  <div class="container">
+      <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                  <h4 class="modal-title custom_align" id="Heading">Edit Your Detail</h4>
+               </div>
+               <div class="modal-body">
+                  <div class="form-group">
+                     <input class="form-control " type="text" placeholder="Mohsin">
+                  </div>
+                  <div class="form-group">
+                     <input class="form-control " type="text" placeholder="Irshad">
+                  </div>
+                  <div class="form-group">
+                     <textarea rows="2" class="form-control" placeholder="CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan"></textarea>
+                  </div>
+               </div>
+               <div class="modal-footer ">
+                  <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+               </div>
+            </div>
+            <!-- /.modal-content --> 
+         </div>
+         <!-- /.modal-dialog --> 
+      </div>
+      <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                  <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
+               </div>
+               <div class="modal-body">
+                  <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
+               </div>
+               <div class="modal-footer ">
+                  <button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+               </div>
+            </div>
+            <!-- /.modal-content --> 
+         </div>
+         <!-- /.modal-dialog --> 
+      </div>
+   </div>
+</div>
+<!-- Collapse 2 - Data Upload --> 
+<script src='../assets/js/organizationDataUpload.js'></script>
+<div class="panel panel-default">
+<div class="panel-heading">
+   <h4 class="panel-title">
+      <a data-toggle="collapse"  href="#collapse2">Coorperate Design</a>
+   </h4>
+</div>
+<div id="collapse2" class="panel-collapse collapse">
+   <div class="container">
       <div class="panel panel-default">
-
-        <div class="panel-body">
-
-          <!-- Standar Form -->
-          <h4>Select files from your computer</h4>
-          <form action="" method="post" enctype="multipart/form-data" id="js-upload-form">
-            <div class="form-inline">
-              <div class="form-group">
-                <input type="file" name="files[]" id="js-upload-files" multiple>
-              </div>
-              <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload files</button>
+         <div class="panel-body">
+            <!-- Standar Form -->
+            <h4>Select files from your computer</h4>
+            <form action="" method="post" enctype="multipart/form-data" id="js-upload-form">
+               <div class="form-inline">
+                  <div class="form-group">
+                     <input type="file" name="files[]" id="js-upload-files" multiple>
+                  </div>
+                  <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload files</button>
+               </div>
+            </form>
+            <!-- Drop Zone -->
+            <h4>Or drag and drop files below</h4>
+            <div class="upload-drop-zone" id="drop-zone">
+               Just drag and drop files here
             </div>
-          </form>
-
-          <!-- Drop Zone -->
-          <h4>Or drag and drop files below</h4>
-          <div class="upload-drop-zone" id="drop-zone">
-            Just drag and drop files here
-          </div>
-
-          <!-- Progress Bar -->
-          <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-              <span class="sr-only">60% Complete</span>
+            <!-- Progress Bar -->
+            <div class="progress">
+               <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                  <span class="sr-only">60% Complete</span>
+               </div>
             </div>
-          </div>
-
-          <!-- Upload Finished -->
-          <div class="js-upload-finished">
-            <h3>Processed files</h3>
-            <div class="list-group">
-              <a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">Success</span>image-01.jpg</a>
-              <a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">Success</span>image-02.jpg</a>
+            <!-- Upload Finished -->
+            <div class="js-upload-finished">
+               <h3>Processed files</h3>
+               <div class="list-group">
+                  <a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">Success</span>image-01.jpg</a>
+                  <a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">Success</span>image-02.jpg</a>
+               </div>
             </div>
-          </div>
-        </div>
-     
-    </div> <!-- /container -->
-  
-  
-     </div>
-  </div>
-  
-
-  
-  
-  
-  
-  
-  
+         </div>
+      </div>
+      <!-- /container -->
+   </div>
+</div>
 </@layout.Layout>
-    		
-<#include "../layout/footer.ftl.html"/>
