@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<#macro peasyLayout title="This is a example title"> <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -21,26 +21,27 @@
 		<div class="row">
 			<#include "navigation.ftl.html"/>
 		</div>
-		
+
 		<!-- Error / Success messages -->
 		<div class="row">
-			<#if(flash.error)??>
+			<#if (flash.error)??>
 			<div class="alert alert-danger">${flash.error}</div>
-			</#if> <#if(flash.success)??>
+			</#if>
+			<#if (flash.success)??>
             <div class="alert alert-success">
                 ${flash.success}
             </div>
         	</#if>
         
 		</div>
-		
+
 		<!-- Content -->
 		<div class="row">
 			<div class="col-md-12">
 				<#nested/>
 			</div>
 		</div>
-		
+
 		<!-- Footer -->
 		<div class="row">
 			<#include "footer.ftl.html"/>
@@ -52,3 +53,4 @@
 	<script src="/assets/webjars/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </body>
 </html>
+</#macro>
