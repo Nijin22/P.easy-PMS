@@ -7,21 +7,34 @@ package models.beans;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author Tugrul
  */
 @Entity
-public class TaskFile extends FileClass {
+public class TaskFile {
 
     public TaskFile() {
     }
 
     public TaskFile(String title) {
-        super(title);
+        this.title = title;
     }
+
+ 
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    private long fileId;
+    
+    @NotNull
+    private String title;
     
     @ManyToOne
     private Task task;
@@ -34,5 +47,21 @@ public class TaskFile extends FileClass {
         this.task = task;
     }
 
-    
+    public long getFileId() {
+        return fileId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public String toString() {
+        return "TaskFile{" + "fileId=" + fileId + ", title=" + title + ", task=" + task + '}';
+    }
+   
 }

@@ -25,8 +25,8 @@ import ninja.params.PathParam;
 import ninja.uploads.DiskFileItemProvider;
 import ninja.uploads.FileItem;
 import ninja.uploads.FileProvider;
+import ninja.utils.NinjaProperties;
 import ninja.utils.ResponseStreams;
-
 
 /**
  *
@@ -37,6 +37,8 @@ public class FileController {
     @Inject
     FileManager fileManager;
 
+//    @Inject 
+//    NinjaProperties ninjaProperties;
     private static final Logger LOG = Logger.getLogger(FileController.class.getName());
 
     @FileProvider(DiskFileItemProvider.class)
@@ -53,37 +55,35 @@ public class FileController {
         return Results.redirect("/upload");
     }
 
-    public Result downloadFinish(@PathParam("fileId") String id,@PathParam("type") String type) throws IOException {
+    public Result downloadFinish(@PathParam("fileId") String id, @PathParam("type") String type) throws IOException {
         LOG.log(Level.INFO, "Start method downloadFinish for type {0}", type);
 
         //Dennis will provide this
         //taskFile = fileManager.getTaskFile(id); 
-        File directory = new File("target" + File.separator + "tmp" + File.separator + type);
-        File downloadFile = new File(directory.getCanonicalPath(),id); 
-        
-        //TestPath
-        File directory2 = new File("C:/Users/Tugrul/Desktop/TIM/TIM SoSe17.pdf");
-        File downloadFile2 = new File(directory2.getCanonicalPath());  
-        
+        //Set alos upload and delete over config after merging wth dennis part
+        //File directory = new File(ninjaProperties.get("uploadFileLoc"));
+        //File directory = new File("target" + File.separator + "tmp" + File.separator + type);
+        //File downloadFile = new File(directory.getCanonicalPath(),id); 
+
+        File directory = new File("C:/Users/Tugrul/Desktop/TIM/TIM SoSe17.pdf");
+        File downloadFile = new File(directory.getCanonicalPath());
+
         //TODO: Provide flexible Path also in renderable and set right nam ewith extension, merge with dennis part to access the database and get TaskFike 
-        
         Renderable renderable = new Renderable() {
             @Override
             public void render(Context context, Result result) {
                 try {
-                    //declare Path
-                    File directory = new File("C:/Users/Tugrul/Desktop/TIM/TIM SoSe17.pdf");
-                    File downloadFile = new File(directory.getCanonicalPath());
                     //Stream File
                     InputStream stream = new FileInputStream(downloadFile);
                     ResponseStreams responseStreams = context.finalizeHeaders(result);
                     ByteStreams.copy(stream, responseStreams.getOutputStream());
                 } catch (IOException ex) {
-                     LOG.log(Level.SEVERE, null, ex.getMessage());;
+                    LOG.log(Level.SEVERE, null, ex.getMessage());;
                 }
             }
         };
-        return new Result(200).render(renderable).addHeader("Content-Transfer-Encoding", "binary").addHeader("Content-Disposition","attachment; filename=\"" + downloadFile2.getName());
+
+        return new Result(200).render(renderable).addHeader("Content-Transfer-Encoding", "binary").addHeader("Content-Disposition", "attachment; filename=\"" + downloadFile.getName());
     }
 
     public Result deleteFinish(@PathParam("fileId") String id) {

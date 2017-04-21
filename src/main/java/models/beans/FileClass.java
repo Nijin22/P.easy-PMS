@@ -11,12 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.validation.constraints.NotNull;
-import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
 
 /**
  *
  * @author Tugrul
+ * This Class is 
  */
 //@Entity
 @MappedSuperclass
@@ -47,7 +47,7 @@ public abstract class FileClass{
     }
     
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long fileId;
     @NotNull
     private String title;

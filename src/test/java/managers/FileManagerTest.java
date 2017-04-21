@@ -89,7 +89,6 @@ public class FileManagerTest extends NinjaTest {
      *
      * @throws java.lang.Exception
      */
-    @Ignore
     @Test
     public void testUploadDeleteTaskFile() throws Exception {
         log.info("Start Testing Succesfull Test: uploadFile");

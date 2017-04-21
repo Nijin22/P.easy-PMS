@@ -7,23 +7,21 @@ import com.google.inject.persist.Transactional;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
-import models.beans.FileClass;
 import models.beans.PeasyUser;
 import models.beans.ProfilePicture;
 import models.beans.Project;
 import models.beans.ProjectFile;
 import models.beans.Task;
 import models.beans.TaskFile;
+import models.manager.enums.FileType;
 import org.apache.commons.io.FilenameUtils;
 import org.dom4j.IllegalAddException;
 
@@ -50,7 +48,7 @@ public class FileManager {
         String fileIdJPA = "";
 
         //Second Persist Objects in Database
-        if (type.equals("picture")) {
+        if (type.equals(FileType.picture.name())) {
             log.log(Level.INFO, "Saving ProfilePicture: {0}", fileName);
             try {
                 ImageIO.read(file);
@@ -60,13 +58,13 @@ public class FileManager {
                 throw new IllegalAddException("Given File is not a image " + file.getName());
             }
 
-        } else if (type.equals("task")) {
+        } else if (type.equals(FileType.task.name())) {
             log.log(Level.INFO, "Saving Taskfile: {0}", fileName);
             long taskId = Long.parseLong(idOfOwner);
             fileIdJPA = createTaskFile(taskId, fileName);
             log.log(Level.INFO, "Generated Id for TaskFile {0}", fileIdJPA);
 
-        } else if (type.equals("project")) {
+        } else if (type.equals(FileType.project.name())) {
             log.log(Level.INFO, "Saving Projectfile: {0}", fileName);
             long projectId = Long.parseLong(idOfOwner);
             fileIdJPA = createProjectFile(projectId, fileName);
@@ -120,15 +118,15 @@ public class FileManager {
     public void deleteFile(long fileId, String fileType, String type) throws FileNotFoundException, IOException {
 
         //Second Persist Objects in Database
-        if (type.equals("picture")) {
+        if (type.equals(FileType.picture.name())) {
             log.log(Level.INFO, "Deleting ProfilePicture with id: {0}", fileId);
             deletePictureUser(fileId);
 
-        } else if (type.equals("task")) {
+        } else if (type.equals(FileType.task.name())) {
             log.log(Level.INFO, "Deleting Taskfile with id: {0}", fileId);
             deleteTaskFile(fileId);
 
-        } else if (type.equals("project")) {
+        } else if (type.equals(FileType.project.name())) {
             log.log(Level.INFO, "Deleting Projectfile with id: {0}", fileId);
             deleteProjectFile(fileId);
         }
@@ -223,10 +221,6 @@ public class FileManager {
 
         task.getTaskFiles().remove(taskFile);
         taskFile.setTask(null);
-
-        //logs for testing
-        log.info("Taskfile " + taskFile.toString());
-        log.info("Taskfile " + task.getTaskFiles().toString());
 
         entityManager.remove(taskFile);
         log.log(Level.INFO, taskFile.toString());
