@@ -28,6 +28,7 @@ import controllers.ApplicationController;
 import controllers.ArticleController;
 import controllers.FileController;
 import controllers.LoginLogoutController;
+import controllers.UserController;
 
 public class Routes implements ApplicationRoutes {
     
@@ -52,7 +53,6 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/account").with(ApplicationController::account);
         router.GET().route("/dashboard").with(ApplicationController::dashboard);
         router.GET().route("/login").with(ApplicationController::login);
-        router.GET().route("/register").with(ApplicationController::register);
         router.GET().route("/forgotPassword").with(ApplicationController::forgotPassword);
         router.GET().route("/myCalender").with(ApplicationController::myCalender);
         router.GET().route("/organization").with(ApplicationController::organization);
@@ -69,7 +69,13 @@ public class Routes implements ApplicationRoutes {
         ///////////////////////////////////////////////////////////////////////
         //p.easy templates GET FOR STATIC WEBSITES
         /////////////////////////////////////////////////////////////////////// 
-    	router.GET().route("/").with(ApplicationController::index);
+        
+        // Handling User-Sites
+        router.GET().route("/register").with(UserController::register);
+        router.POST().route("/register").with(UserController::registerAction);
+       
+        //static
+      	router.GET().route("/").with(ApplicationController::index);
         router.GET().route("/impress").with(ApplicationController::impress);
         router.GET().route("/information").with(ApplicationController::information); 
       
