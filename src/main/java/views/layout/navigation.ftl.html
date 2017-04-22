@@ -8,42 +8,52 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/index">P.easy</a>
+      <a class="navbar-brand" href="/">P.easy</a>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
+    <!-- Left part of the navigation -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <!-- Left part of navigation -->
       <ul class="nav navbar-nav">
-        <li><a href="#">Dashboard</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="/projects/id">Project 1</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="/projects/id">Project 2</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="/projects/id">Project 3</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="/projects/id">Project 3</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="/projects/id">Project 4</a></li>
-          </ul>
-        </li>
+      	<!-- Show either the links to register and login or the dashboard -->
+      	<#if (session.email)??>
+          <li><a href="/dashboard">${i18n('nav.dashboard')}</a></li>
+        <#else>
+          <li><a href="/register">${i18n('nav.register')}</a></li>
+          <li><a href="/login">${i18n('nav.login')}</a></li>
+        </#if>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="/account"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Max Mustermann</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="/myCalender">My Calender</a></li>
-            <li><a href="/projects">Projects</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="/account">Account</a></li>
-            <li><a href="/organization">Organization</a></li>
-          </ul>
-        </li>
-      </ul>
+      
+      <#if (session.email)??>
+        <!-- Right part of the navigation (only for logged-in users -->
+        <ul class="nav navbar-nav navbar-right">
+  
+          <!-- Project dropdown -->
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/projects">${i18n('nav.projectOverview')}</a></li>
+              <li><a href="/????">${i18n('nav.newProject')}</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="/projects/id">Project 1</a></li>
+              <li><a href="/projects/id">Project 2</a></li>
+              <li><a href="/projects/id">Project 3</a></li>
+            </ul>
+          </li>
+
+          <!-- Account dropdown -->
+          <li class="dropdown">
+            <a href="/account" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${session.firstName} ${session.lastName}<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="/????">${i18n('nav.myAccount')}</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="/logout">${i18n('nav.logout')}</a></li>
+            </ul>
+          </li>
+        </ul>
+      </#if>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

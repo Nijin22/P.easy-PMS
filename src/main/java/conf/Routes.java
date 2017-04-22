@@ -23,11 +23,8 @@ import ninja.utils.NinjaProperties;
 
 import com.google.inject.Inject;
 
-import controllers.ApiController;
 import controllers.ApplicationController;
-import controllers.ArticleController;
 import controllers.FileController;
-import controllers.LoginLogoutController;
 import controllers.UserController;
 
 public class Routes implements ApplicationRoutes {
@@ -48,11 +45,11 @@ public class Routes implements ApplicationRoutes {
     public void init(Router router) {  
       
     	///////////////////////////////////////////////////////////////////////
-        //p.easy templates GET FOR DYNAMIC WEBSITES
+        //p.easy templates GET
         ///////////////////////////////////////////////////////////////////////          
+        //dynamic 
         router.GET().route("/account").with(ApplicationController::account);
         router.GET().route("/dashboard").with(ApplicationController::dashboard);
-        router.GET().route("/login").with(ApplicationController::login);
         router.GET().route("/forgotPassword").with(ApplicationController::forgotPassword);
         router.GET().route("/myCalender").with(ApplicationController::myCalender);
         router.GET().route("/organization").with(ApplicationController::organization);
@@ -66,22 +63,20 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/projects/{projectID}/tasks").with(ApplicationController::tasks);
         router.GET().route("/upload").with(ApplicationController::fileUpload);
 
-        ///////////////////////////////////////////////////////////////////////
-        //p.easy templates GET FOR STATIC WEBSITES
-        /////////////////////////////////////////////////////////////////////// 
-        
-        // Handling User-Sites
+        // Handling Registration / Sessions
         router.GET().route("/register").with(UserController::register);
         router.POST().route("/register").with(UserController::registerAction);
+        router.GET().route("/login").with(UserController::login);
+        router.POST().route("/login").with(UserController::loginAction);
+        router.GET().route("/logout").with(UserController::logout);
        
         //static
-      	router.GET().route("/").with(ApplicationController::index);
+    	router.GET().route("/").with(ApplicationController::index);
         router.GET().route("/impress").with(ApplicationController::impress);
         router.GET().route("/information").with(ApplicationController::information); 
-      
-        
+
         ///////////////////////////////////////////////////////////////////////
-        //p.easy templates RESOURCE HANDLING
+        // user uploaded content
         ///////////////////////////////////////////////////////////////////////        
         
         //FILE RESOURCE
@@ -89,59 +84,6 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/download/{fileId}/{type}").with(FileController::downloadFinish);
         router.DELETE().route("/delete/{fileId}").with(FileController::deleteFinish);
 
-	///////////////////////////////////////////////////////////////////////
-	//p.easy Resources GET
-	///////////////////////////////////////////////////////////////////////        
-        //Routing
-//        router.GET().route("/hello_world.json").with(ApplicationController::helloWorldJson);
-
-        
-    	///////////////////////////////////////////////////////////////////////
-        //p.easy Resources POST
-        ///////////////////////////////////////////////////////////////////////     
-        //Routing        
-        
-        // puts test data into db:
-        if (!ninjaProperties.isProd()) {
-            router.GET().route("/setup").with(ApplicationController::setup);
-        }
-        
-        ///////////////////////////////////////////////////////////////////////
-        // Login / Logout
-        ///////////////////////////////////////////////////////////////////////
-        router.GET().route("/login").with(LoginLogoutController::login);
-        router.POST().route("/login").with(LoginLogoutController::loginPost);
-        router.GET().route("/logout").with(LoginLogoutController::logout);
-        
-        ///////////////////////////////////////////////////////////////////////
-        // Create new article
-        ///////////////////////////////////////////////////////////////////////
-        router.GET().route("/article/new").with(ArticleController::articleNew);
-        router.POST().route("/article/new").with(ArticleController::articleNewPost);
-        
-        ///////////////////////////////////////////////////////////////////////
-        // Create new article
-        ///////////////////////////////////////////////////////////////////////
-        router.GET().route("/article/{id}").with(ArticleController::articleShow);
-
-        ///////////////////////////////////////////////////////////////////////
-        // Api for management of software
-        ///////////////////////////////////////////////////////////////////////
-        router.GET().route("/api/{username}/articles.json").with(ApiController::getArticlesJson);
-        router.GET().route("/api/{username}/article/{id}.json").with(ApiController::getArticleJson);
-        router.GET().route("/api/{username}/articles.xml").with(ApiController::getArticlesXml);
-        router.POST().route("/api/{username}/article.json").with(ApiController::postArticleJson);
-        router.POST().route("/api/{username}/article.xml").with(ApiController::postArticleXml);
- 
-    	///////////////////////////////////////////////////////////////////////
-        //p.easy Resources PUT
-        ///////////////////////////////////////////////////////////////////////  
-        //Routing
-        
-    	///////////////////////////////////////////////////////////////////////
-        //p.easy Resources DELETE
-        ///////////////////////////////////////////////////////////////////////   
-        //Routing
         
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)
@@ -149,10 +91,6 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/assets/webjars/{fileName: .*}").with(AssetsController::serveWebJars);
         router.GET().route("/assets/{fileName: .*}").with(AssetsController::serveStatic);
         
-        ///////////////////////////////////////////////////////////////////////
-        // Index / Catchall shows index page
-        ///////////////////////////////////////////////////////////////////////
-        router.GET().route("/.*").with(ApplicationController::index);
     }
 
 }
