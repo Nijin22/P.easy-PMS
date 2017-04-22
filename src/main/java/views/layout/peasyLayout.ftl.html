@@ -1,0 +1,65 @@
+<#macro peasyLayout title="This is a example title">
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Bootstrap Core CSS -->
+<link href="/assets/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+	rel="stylesheet">
+	
+<!-- Custom CSS -->
+<link href="../assets/css/custom.css" rel="stylesheet">
+
+<!-- Landing page theme -->
+ <link href="../assets/css/landing-page.css" rel="stylesheet">
+ 
+<!-- Fonts -->
+<link href="../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+<title>${title}</title>
+</head>
+<body>
+	<div class="container">
+		<!-- Header -->
+		<div class="row">
+			<#include "navigation.ftl.html"/>
+		</div>
+
+		<!-- Error / Success messages -->
+		<div class="row">
+			<#if (flash.error)??>
+			<div class="alert alert-danger">${flash.error}</div>
+			</#if>
+			<#if (flash.success)??>
+            <div class="alert alert-success">
+                ${flash.success}
+            </div>
+        	</#if>
+        
+		</div>
+
+		<!-- Content -->
+		<div class="row">
+			<div class="col-md-12">
+				<#nested/>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<div class="row">
+			<#include "footer.ftl.html"/>
+		</div>
+	</div>
+	<!-- jQuery -->
+	<script src="/assets/webjars/jquery/2.1.3/jquery.js"></script>
+	<!-- Bootstrap Core JavaScript -->
+	<script src="/assets/webjars/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</body>
+</html>
+</#macro>

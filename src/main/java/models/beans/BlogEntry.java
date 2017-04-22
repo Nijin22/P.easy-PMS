@@ -14,10 +14,13 @@ import javax.persistence.*;
 public abstract class BlogEntry implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int BlogEntryId;
 	private String title;
 	private String text;
 	private Date creationDate;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private PeasyUser author;
 	private static final long serialVersionUID = 1L;
 
 	public BlogEntry() {
@@ -76,6 +79,14 @@ public abstract class BlogEntry implements Serializable {
 
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
+	}
+
+	public PeasyUser getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(PeasyUser author) {
+		this.author = author;
 	}
 
 }

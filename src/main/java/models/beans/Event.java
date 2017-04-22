@@ -12,6 +12,7 @@ import javax.persistence.*;
 public class Event implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int Id;
 	@ManyToOne
 	private Calendar calendar;
