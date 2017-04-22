@@ -23,6 +23,7 @@ import models.beans.ProjectFile;
 import models.beans.Task;
 import models.beans.TaskFile;
 import models.manager.enums.FileType;
+import ninja.utils.NinjaProperties;
 import org.apache.commons.io.FilenameUtils;
 import org.dom4j.IllegalAddException;
 
@@ -36,6 +37,9 @@ public class FileManager {
 
     @Inject
     Provider<EntityManager> entitiyManagerProvider;
+
+    @Inject
+    NinjaProperties ninjaProperties;
 
     /**
      * This Method is saving the File in the FileSystem and creates a FileObject
@@ -65,13 +69,13 @@ public class FileManager {
         }
 
         String fileIdJPA = "";
-
+        String fileType = FilenameUtils.getExtension(fileName);
         //Second Persist Objects in Database
         if (type.equals(FileType.picture.name())) {
             log.log(Level.INFO, "Saving ProfilePicture: {0}", fileName);
             try {
                 ImageIO.read(file);
-                fileIdJPA = createPictureUser(idOfOwner, fileName);
+                fileIdJPA = createPictureUser(idOfOwner, fileName, fileType);
             } catch (IOException e) {
                 log.log(Level.WARNING, "Given File is not a image {0}", file.getName());
                 throw new IllegalAddException("Given File is not a image " + file.getName());
@@ -80,24 +84,23 @@ public class FileManager {
         } else if (type.equals(FileType.task.name())) {
             log.log(Level.INFO, "Saving Taskfile: {0}", fileName);
             long taskId = Long.parseLong(idOfOwner);
-            fileIdJPA = createTaskFile(taskId, fileName);
+            fileIdJPA = createTaskFile(taskId, fileName, fileType);
             log.log(Level.INFO, "Generated Id for TaskFile {0}", fileIdJPA);
 
         } else if (type.equals(FileType.project.name())) {
             log.log(Level.INFO, "Saving Projectfile: {0}", fileName);
             long projectId = Long.parseLong(idOfOwner);
-            fileIdJPA = createProjectFile(projectId, fileName);
+            fileIdJPA = createProjectFile(projectId, fileName, fileType);
         }
 
-        //declare file output directory CAUTION: USE fileItem.getFileName not file.getName() !!!!
-        File directory = new File("target" + File.separator + "tmp" + File.separator + type);
+        //File directory = new File("target" + File.separator + "tmp" + File.separator + type); 
+        File directory = new File(ninjaProperties.get("UploadDirectoryPath") + File.separator + type);
         if (!directory.exists()) {
             directory.mkdirs();
         }
         File saveFile = null;
         if (!fileIdJPA.isEmpty()) {
-            String ext = "." + FilenameUtils.getExtension(fileName);
-            saveFile = new File(directory.getCanonicalPath(), fileIdJPA + ext);
+            saveFile = new File(directory.getCanonicalPath(), fileIdJPA);
         } else {
             throw new IllegalArgumentException("fileIdJPA is not set in methods");
         }
@@ -146,28 +149,38 @@ public class FileManager {
      * @throws IOException
      * @throws NoSuchElementException
      */
-    public void deleteFile(long fileId, String fileType, String type) throws FileNotFoundException, IOException, NoSuchElementException {
+    public void deleteFile(long fileId, String type) throws FileNotFoundException, IOException, NoSuchElementException {
+
+        EntityManager entityManager = entitiyManagerProvider.get();
+        String fileType = "";
 
         //Second Persist Objects in Database
         if (type.equals(FileType.picture.name())) {
             log.log(Level.INFO, "Deleting ProfilePicture with id: {0}", fileId);
+            ProfilePicture profilePicture = entityManager.find(ProfilePicture.class, fileId);
+            fileType = profilePicture.getFileType();
             deletePictureUser(fileId);
 
         } else if (type.equals(FileType.task.name())) {
             log.log(Level.INFO, "Deleting Taskfile with id: {0}", fileId);
+            TaskFile taskFile = entityManager.find(TaskFile.class, fileId);
+            fileType = taskFile.getFileType();
             deleteTaskFile(fileId);
 
         } else if (type.equals(FileType.project.name())) {
             log.log(Level.INFO, "Deleting Projectfile with id: {0}", fileId);
+            ProjectFile projectFile = entityManager.find(ProjectFile.class, fileId);
+            fileType = projectFile.getFileType();
             deleteProjectFile(fileId);
         }
 
-        File directory = new File("target" + File.separator + "tmp" + File.separator + type);
+        //File directory = new File("target" + File.separator + "tmp" + File.separator + type);
+        File directory = new File(ninjaProperties.get("UploadDirectoryPath") + File.separator + type);
         if (!directory.exists()) {
             throw new FileNotFoundException("Could not find directory " + directory.getCanonicalPath());
         }
 
-        File fileToDelete = new File(directory.getCanonicalPath(), String.valueOf(fileId) + "." + fileType);
+        File fileToDelete = new File(directory.getCanonicalPath(), String.valueOf(fileId) + fileType);
         fileToDelete.delete();
 
     }
@@ -179,11 +192,12 @@ public class FileManager {
      *
      * @param email
      * @param fileName
+     * @param fileType
      * @return id of created rofilePicture-Object
      * @throws NoSuchElementException
      */
     @Transactional
-    private String createPictureUser(String email, String fileName) throws NoSuchElementException {
+    private String createPictureUser(String email, String fileName, String fileType) throws NoSuchElementException {
         log.log(Level.INFO, "Start add ProfilePicture to User in Database");
 
         EntityManager entityManager = entitiyManagerProvider.get();
@@ -195,13 +209,20 @@ public class FileManager {
 
         ProfilePicture profilePicture = new ProfilePicture(fileName);
         profilePicture.setPeasyUser(peasyUser);
+
+        if (fileType.isEmpty()) {
+            profilePicture.setFileType("");
+        } else {
+            profilePicture.setFileType("." + fileType);
+        }
+
         peasyUser.setProfilePicture(profilePicture);
 
         entityManager.persist(profilePicture);
 
         log.log(Level.INFO, profilePicture.toString());
 
-        return String.valueOf(profilePicture.getFileId());
+        return String.valueOf(profilePicture.getFileId()) + profilePicture.getFileType();
 
     }
 
@@ -212,11 +233,12 @@ public class FileManager {
      *
      * @param taskId
      * @param fileName
+     * @param fileType
      * @return id of created TaskFile-Object
      * @throws NoSuchElementException
      */
     @Transactional
-    private String createTaskFile(long taskId, String fileName) throws NoSuchElementException {
+    private String createTaskFile(long taskId, String fileName, String fileType) throws NoSuchElementException {
         log.log(Level.INFO, "Start add TaskFile to Task in Database");
 
         EntityManager entityManager = entitiyManagerProvider.get();
@@ -228,12 +250,18 @@ public class FileManager {
 
         TaskFile taskFile = new TaskFile(fileName);
         taskFile.setTask(task);
+        if (fileType.isEmpty()) {
+            taskFile.setFileType("");
+        } else {
+            taskFile.setFileType("." + fileType);
+        }
         task.getTaskFiles().add(taskFile);
 
         entityManager.persist(taskFile);
         log.info(taskFile.toString());
 
-        return String.valueOf(taskFile.getFileId());
+
+        return String.valueOf(taskFile.getFileId()) + taskFile.getFileType();
     }
 
     /**
@@ -243,11 +271,12 @@ public class FileManager {
      *
      * @param projectId
      * @param fileName
+     * @param fileType
      * @return id of created ProjectFile-Object
      * @throws NoSuchElementException
      */
     @Transactional
-    private String createProjectFile(long projectId, String fileName) throws NoSuchElementException {
+    private String createProjectFile(long projectId, String fileName, String fileType) throws NoSuchElementException {
         log.log(Level.INFO, "Start add ProjectFile to Project in Database");
 
         EntityManager entityManager = entitiyManagerProvider.get();
@@ -259,11 +288,17 @@ public class FileManager {
 
         ProjectFile projectFile = new ProjectFile(fileName);
         projectFile.setProject(project);
+        if (fileType.isEmpty()) {
+            projectFile.setFileType("");
+        } else {
+            projectFile.setFileType("." + fileType);
+        }
         project.getProjectFiles().add(projectFile);
 
         entityManager.persist(projectFile);
         log.log(Level.INFO, projectFile.toString());
-        return String.valueOf(projectFile.getFileId());
+
+        return String.valueOf(projectFile.getFileId()) + projectFile.getFileType();
 
     }
 

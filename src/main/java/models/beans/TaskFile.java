@@ -5,7 +5,6 @@
  */
 package models.beans;
 
-import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,15 +26,14 @@ public class TaskFile {
         this.title = title;
     }
 
- 
-    
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private long fileId;
-    
+
     @NotNull
     private String title;
-    
+    private String fileType;
+
     @ManyToOne
     private Task task;
 
@@ -59,9 +57,17 @@ public class TaskFile {
         this.title = title;
     }
 
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
     @Override
     public String toString() {
-        return "TaskFile{" + "fileId=" + fileId + ", title=" + title + ", task=" + task + '}';
+        return "TaskFile{" + "fileId=" + fileId + ", title=" + title + ", fileType=" + fileType + ", task=" + task + '}';
     }
-   
+
 }

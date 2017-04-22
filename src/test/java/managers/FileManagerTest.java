@@ -68,7 +68,7 @@ public class FileManagerTest extends NinjaTest {
 
         //uploadFile
         File file = new File("src/test/resources/TestfileForUpload.pdf");
-        String uploadedFileLocation = fm.uploadFile(file, "test.pdf", "project", String.valueOf(createdProject.getProjectId()));
+        String uploadedFileLocation = fm.uploadFile(file, file.getName() , "project", String.valueOf(createdProject.getProjectId()));
 
         //test Objects
         Project newProject = pm.getProject(createdProject.getProjectId());
@@ -81,7 +81,7 @@ public class FileManagerTest extends NinjaTest {
         ProjectFile projectFile = newProject.getProjectFiles().iterator().next();
 
         //start testing delete
-        fm.deleteFile(projectFile.getFileId(),FilenameUtils.getExtension(uploadedFile.getName()), "project");
+        fm.deleteFile(projectFile.getFileId(), "project");
         Project AfterDelProject = pm.getProject(createdProject.getProjectId());
         //test Project has no ProjectFile
         assertEquals(0, AfterDelProject.getProjectFiles().size());
@@ -106,7 +106,7 @@ public class FileManagerTest extends NinjaTest {
 
         //uploadFile
         File file = new File("src/test/resources/TestfileForUpload.pdf");
-        String uploadedFileLocation = fm.uploadFile(file, "test.pdf", "task", String.valueOf(projectCreatedTask.getTaskId()));
+        String uploadedFileLocation = fm.uploadFile(file, file.getName(), "task", String.valueOf(projectCreatedTask.getTaskId()));
 
         //test Objects
         Task newTask = pm.getTask(projectCreatedTask.getTaskId());
@@ -118,7 +118,7 @@ public class FileManagerTest extends NinjaTest {
         //get First and the only Object in Set
         TaskFile taskFile = newTask.getTaskFiles().iterator().next();
         //start testing delete
-        fm.deleteFile(taskFile.getFileId(),FilenameUtils.getExtension(uploadedFile.getName()), "task");
+        fm.deleteFile(taskFile.getFileId(), "task");
         Task AfterDelTask = pm.getTask(projectCreatedTask.getTaskId());
         //test Project has no ProjectFile
         assertEquals(0, AfterDelTask.getTaskFiles().size());
@@ -139,7 +139,7 @@ public class FileManagerTest extends NinjaTest {
 
         //uploadFile
         File file = new File("src/test/resources/githubCat.png");
-        String uploadedFileLocation = fm.uploadFile(file, "githubCat.png", "picture", String.valueOf(manager.getEmailAddress()));
+        String uploadedFileLocation = fm.uploadFile(file, file.getName(), "picture", String.valueOf(manager.getEmailAddress()));
 
         //test Objects
         PeasyUser newManager = um.getUser(manager.getEmailAddress());
@@ -149,7 +149,7 @@ public class FileManagerTest extends NinjaTest {
         assertTrue(uploadedFile.exists());
 
         //start testing delete
-        fm.deleteFile(newManager.getProfilePicture().getFileId(),FilenameUtils.getExtension(uploadedFile.getName()), "picture");
+        fm.deleteFile(newManager.getProfilePicture().getFileId(), "picture");
         PeasyUser AfterDelUser = um.getUser(manager.getEmailAddress());
         //test Project has no ProjectFile
         assertNull(AfterDelUser.getProfilePicture());

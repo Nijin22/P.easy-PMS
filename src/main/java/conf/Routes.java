@@ -85,7 +85,7 @@ public class Routes implements ApplicationRoutes {
         ///////////////////////////////////////////////////////////////////////        
         
         //FILE RESOURCE
-        router.POST().route("/uploadFinish").with(FileController::uploadFinish);
+        router.POST().route("/uploadFinish/{idOfOwner}").with(FileController::uploadFinish);
         router.GET().route("/download/{fileId}/{type}").with(FileController::downloadFinish);
         router.DELETE().route("/delete/{fileId}").with(FileController::deleteFinish);
 

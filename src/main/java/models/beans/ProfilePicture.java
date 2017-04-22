@@ -23,19 +23,18 @@ public class ProfilePicture {
     public ProfilePicture() {
     }
 
-
     public ProfilePicture(String title) {
         this.title = title;
     }
-    
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private long fileId;
-    
+
     @NotNull
     private String title;
-    
+    private String fileType;
+
     @OneToOne
     private PeasyUser peasyUser;
 
@@ -59,9 +58,17 @@ public class ProfilePicture {
         this.title = title;
     }
 
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
     @Override
     public String toString() {
-        return "ProfilePicture{" + "fileId=" + fileId + ", title=" + title + ", peasyUser=" + peasyUser + '}';
+        return "ProfilePicture{" + "fileId=" + fileId + ", title=" + title + ", fileType=" + fileType + ", peasyUser=" + peasyUser + '}';
     }
-   
+
 }

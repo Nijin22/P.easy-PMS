@@ -42,13 +42,15 @@ public class FileController {
     private static final Logger LOG = Logger.getLogger(FileController.class.getName());
 
     @FileProvider(DiskFileItemProvider.class)
-    public Result uploadFinish(Context context) throws Exception {
-        LOG.log(Level.INFO, "Start method");
+    public Result uploadFinish(Context context, @PathParam("idOfOwner") String idOfOwner) throws Exception {
         //get parameters
         FileItem upfile = context.getParameterAsFileItem("upfile");
         String type = context.getParameter("type");
+       
+        LOG.log(Level.INFO, "Start method uploadFinish with parameters: File: {0}, type: {1}, IdOfOwner:{2}", new Object[]{upfile, type, idOfOwner});
+        
         //String ownerId = context.getParameter("id");
-        String path = fileManager.uploadFile(upfile.getFile(), upfile.getFileName(), type, "123");
+        String path = fileManager.uploadFile(upfile.getFile(), upfile.getFileName(), type, idOfOwner);
 
         LOG.log(Level.INFO, "Uploaded File in following Path: {0}", path);
 
@@ -57,18 +59,21 @@ public class FileController {
 
     public Result downloadFinish(@PathParam("fileId") String id, @PathParam("type") String type) throws IOException {
         LOG.log(Level.INFO, "Start method downloadFinish for type {0}", type);
-
-        //Dennis will provide this
-        //taskFile = fileManager.getTaskFile(id); 
-        //Set alos upload and delete over config after merging wth dennis part
-        //File directory = new File(ninjaProperties.get("uploadFileLoc"));
-        //File directory = new File("target" + File.separator + "tmp" + File.separator + type);
+      
+        //########################
+        //TODO: Provide flexible Path also in renderable and set right nam ewith extension, merge with dennis part to access the database and get TaskFike 
+        //##########
+       
+        //TaskFile taskFile = fileManager.getTaskFile(id); 
+        //getId + getFileType for download
+        //File directory = new File(ninjaProperties.get("UploadDirectoryPath") + File.separator + type);
         //File downloadFile = new File(directory.getCanonicalPath(),id); 
-
+      
+        
+        //Dummyyyyy value
         File directory = new File("C:/Users/Tugrul/Desktop/TIM/TIM SoSe17.pdf");
         File downloadFile = new File(directory.getCanonicalPath());
 
-        //TODO: Provide flexible Path also in renderable and set right nam ewith extension, merge with dennis part to access the database and get TaskFike 
         Renderable renderable = new Renderable() {
             @Override
             public void render(Context context, Result result) {
@@ -78,7 +83,7 @@ public class FileController {
                     ResponseStreams responseStreams = context.finalizeHeaders(result);
                     ByteStreams.copy(stream, responseStreams.getOutputStream());
                 } catch (IOException ex) {
-                    LOG.log(Level.SEVERE, null, ex.getMessage());;
+                    LOG.log(Level.SEVERE, null, ex.getMessage());
                 }
             }
         };
@@ -86,7 +91,11 @@ public class FileController {
         return new Result(200).render(renderable).addHeader("Content-Transfer-Encoding", "binary").addHeader("Content-Disposition", "attachment; filename=\"" + downloadFile.getName());
     }
 
-    public Result deleteFinish(@PathParam("fileId") String id) {
+    public Result deleteFinish(@PathParam("fileId") String fileId, @PathParam("type") String type) throws IOException {
+                
+        fileManager.deleteFile(Long.parseLong(fileId), type);
+        
+        //provide return ok statement if delete
         return null;
     }
 
