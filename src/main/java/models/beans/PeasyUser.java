@@ -30,6 +30,8 @@ public class PeasyUser implements Serializable {
     private Set<Project> projectsWhereUserIsManager;
     @ManyToOne()
     private Organisation organisation;
+    @OneToOne()
+    private ProfilePicture profilePicture;
 
     public PeasyUser() {
         super();
@@ -162,11 +164,20 @@ public class PeasyUser implements Serializable {
         this.organisation = organisation;
     }
 
+    public ProfilePicture getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(ProfilePicture profilePicture) {
+        this.profilePicture = profilePicture;
+    }
 
     @Override
     public String toString() {
-        return "PeasyUser{" + "emailAddress=" + emailAddress + ", firstName=" + firstName + ", lastName=" + lastName + ", formOfAddress=" + formOfAddress + ", passwordInDb=" + passwordInDb + ", projects=" + projects + ", tasks=" + tasks + ", projectsWhereUserIsManager=" + projectsWhereUserIsManager + ", organisation=" + organisation + '}';
+        return "PeasyUser{" + "emailAddress=" + emailAddress + ", firstName=" + firstName + ", lastName=" + lastName + '}';
     }
+    
+
     
 
 

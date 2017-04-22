@@ -31,6 +31,8 @@ public class Project {
     private Set<PeasyUser> projectMembers;
     @ManyToOne
     private PeasyUser projectManager;
+    @OneToMany(mappedBy = "project",fetch = FetchType.EAGER)
+    private Set<ProjectFile> projectFiles;
 
     public Project() {
 
@@ -104,6 +106,16 @@ public class Project {
         this.projectManager = projectManager;
     }
 
+    public Set<ProjectFile> getProjectFiles() {
+        return projectFiles;
+    }
+
+    public void setProjectFiles(Set<ProjectFile> projectFiles) {
+        this.projectFiles = projectFiles;
+    }
+    
+    
+
     
     @Override
     public int hashCode() {
@@ -134,4 +146,13 @@ public class Project {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Project{" + "projectId=" + projectId + ", name=" + name + ", status=" + status + '}';
+    }
+
+
+    
+    
 }

@@ -24,6 +24,7 @@ import ninja.utils.NinjaProperties;
 import com.google.inject.Inject;
 
 import controllers.ApplicationController;
+import controllers.FileController;
 import controllers.UserController;
 
 public class Routes implements ApplicationRoutes {
@@ -60,7 +61,8 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/projects/{projectID}/report").with(ApplicationController::report);
         router.GET().route("/projects/{projectID}/tasks/{taskID}").with(ApplicationController::task);
         router.GET().route("/projects/{projectID}/tasks").with(ApplicationController::tasks);
-        
+        router.GET().route("/upload").with(ApplicationController::fileUpload);
+
         // Handling Registration / Sessions
         router.GET().route("/register").with(UserController::register);
         router.POST().route("/register").with(UserController::registerAction);
@@ -71,7 +73,16 @@ public class Routes implements ApplicationRoutes {
         //static
     	router.GET().route("/").with(ApplicationController::index);
         router.GET().route("/impress").with(ApplicationController::impress);
-        router.GET().route("/information").with(ApplicationController::information);        
+        router.GET().route("/information").with(ApplicationController::information); 
+
+        ///////////////////////////////////////////////////////////////////////
+        // user uploaded content
+        ///////////////////////////////////////////////////////////////////////        
+        
+        //FILE RESOURCE
+        router.POST().route("/uploadFinish/{idOfOwner}").with(FileController::uploadFinish);
+        router.GET().route("/download/{fileId}/{type}").with(FileController::downloadFinish);
+        router.DELETE().route("/delete/{fileId}").with(FileController::deleteFinish);
 
         
         ///////////////////////////////////////////////////////////////////////
@@ -79,7 +90,6 @@ public class Routes implements ApplicationRoutes {
         ///////////////////////////////////////////////////////////////////////    
         router.GET().route("/assets/webjars/{fileName: .*}").with(AssetsController::serveWebJars);
         router.GET().route("/assets/{fileName: .*}").with(AssetsController::serveStatic);
-        
         
     }
 

@@ -76,7 +76,7 @@ public class UserManager {
 	 * @param email
 	 * @return The specified user as a {@link models.beans.PeasyUser} object
 	 */
-	@UnitOfWork
+	@Transactional
 	public PeasyUser getUser(String email) {
 		EntityManager entityManager = entitiyManagerProvider.get();
 		PeasyUser user = entityManager.find(PeasyUser.class, email);

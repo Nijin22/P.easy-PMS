@@ -8,10 +8,6 @@ public class ApplicationController {
 	public ApplicationController() {
 
 	}
-	
-	public Result index(){
-		return Results.html();
-	}
 
 	public Result account() {
 		return Results.html();
@@ -83,6 +79,16 @@ public class ApplicationController {
 	}
 
 	public Result task() {
+		return Results.html();
+
+	}
+
+	public Result fileUpload() {
+		return Results.html();
+
+	}
+
+	public Result index() {
 		return Results.html();
 
 	}
