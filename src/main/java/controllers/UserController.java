@@ -113,10 +113,13 @@ public class UserController {
 			if (userManager.verifyLogin(email.get(), passwordCleartext.get())) {
 				// Credentials correct
 				
-				// TODO: Set session
-				context.getSession().put("username", email.get());
-				flashScope.success("login.success");
+				// Set session
+				PeasyUser user = userManager.getUser(email.get());
+				context.getSession().put("email", user.getEmailAddress());
+				context.getSession().put("firstName", user.getFirstName());
+				context.getSession().put("lastName", user.getLastName());
 				
+				flashScope.success("login.success");
 				return Results.redirect("/dashboard");
 			} else {
 				// Credentials false
