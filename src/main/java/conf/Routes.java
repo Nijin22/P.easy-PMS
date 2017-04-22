@@ -49,7 +49,6 @@ public class Routes implements ApplicationRoutes {
         //dynamic 
         router.GET().route("/account").with(ApplicationController::account);
         router.GET().route("/dashboard").with(ApplicationController::dashboard);
-        router.GET().route("/login").with(ApplicationController::login);
         router.GET().route("/forgotPassword").with(ApplicationController::forgotPassword);
         router.GET().route("/myCalender").with(ApplicationController::myCalender);
         router.GET().route("/organization").with(ApplicationController::organization);
@@ -62,9 +61,12 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/projects/{projectID}/tasks/{taskID}").with(ApplicationController::task);
         router.GET().route("/projects/{projectID}/tasks").with(ApplicationController::tasks);
         
-        // Handling User-Sites
+        // Handling Registration / Sessions
         router.GET().route("/register").with(UserController::register);
         router.POST().route("/register").with(UserController::registerAction);
+        router.GET().route("/login").with(UserController::login);
+        router.POST().route("/login").with(UserController::loginAction);
+        router.GET().route("/logout").with(UserController::logout);
        
         //static
     	router.GET().route("/").with(ApplicationController::index);
