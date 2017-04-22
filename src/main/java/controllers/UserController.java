@@ -91,6 +91,15 @@ public class UserController {
 
 	}
 
+	public Result login(){
+		return Results.html();
+	}
+	
+	public Result loginAction(){
+		
+		return Results.html(); // TODO: tmp
+	}
+	
 	public void setUserManager(UserManager userManager) {
 		this.userManager = userManager;
 	}
