@@ -141,6 +141,11 @@ public class UserManager {
 	public boolean verifyLogin(String email, String passwordCleartext) throws GeneralSecurityException {
 		EntityManager entityManager = entitiyManagerProvider.get();
 		PeasyUser user = entityManager.find(PeasyUser.class, email);
+		
+		if (user == null) {
+			// User not found
+			return false;
+		}
 
 		String passwordDb = user.getPasswordInDb();
 
