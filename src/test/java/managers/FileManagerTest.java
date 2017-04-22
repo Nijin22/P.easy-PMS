@@ -5,7 +5,6 @@
  */
 package managers;
 
-import com.google.inject.persist.UnitOfWork;
 import java.io.File;
 import java.util.logging.Logger;
 import models.beans.PeasyUser;
@@ -21,7 +20,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 
 /**
  *
@@ -31,6 +29,9 @@ public class FileManagerTest extends NinjaTest {
 
     private static Logger log = null;
 
+    /**
+     *
+     */
     public FileManagerTest() {
     }
     
@@ -38,6 +39,9 @@ public class FileManagerTest extends NinjaTest {
     ProjectManager pm;
     UserManager um;
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
         //initialize Logger to log Test
