@@ -131,6 +131,12 @@ public class UserController {
 			throw new InternalServerErrorException("Error when hashing password");
 		}
 	}
+	
+	public Result logout(Context context){
+		context.getSession().clear();
+		context.getFlashScope().success("logout.success");
+		return Results.redirect("/");
+	}
 
 	public void setUserManager(UserManager userManager) {
 		this.userManager = userManager;

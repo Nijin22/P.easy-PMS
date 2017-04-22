@@ -66,6 +66,7 @@ public class Routes implements ApplicationRoutes {
         router.POST().route("/register").with(UserController::registerAction);
         router.GET().route("/login").with(UserController::login);
         router.POST().route("/login").with(UserController::loginAction);
+        router.GET().route("/logout").with(UserController::logout);
        
         //static
     	router.GET().route("/").with(ApplicationController::index);
