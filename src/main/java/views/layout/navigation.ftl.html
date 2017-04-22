@@ -16,7 +16,7 @@
       <!-- Left part of navigation -->
       <ul class="nav navbar-nav">
       	<!-- Show either the links to register and login or the dashboard -->
-      	<#if session.email??>
+      	<#if (session.email)??>
           <li><a href="/dashboard">${i18n('nav.dashboard')}</a></li>
         <#else>
           <li><a href="/register">${i18n('nav.register')}</a></li>
@@ -24,7 +24,7 @@
         </#if>
       </ul>
       
-      <#if session.email??>
+      <#if (session.email)??>
         <!-- Right part of the navigation (only for logged-in users -->
         <ul class="nav navbar-nav navbar-right">
   
