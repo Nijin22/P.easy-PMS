@@ -97,7 +97,7 @@ public class UserController {
 	
 	public Result loginAction(){
 		
-		return Results.html(); // TODO: tmp
+		return Results.redirect("/dashboard"); // TODO: tmp
 	}
 	
 	public void setUserManager(UserManager userManager) {
