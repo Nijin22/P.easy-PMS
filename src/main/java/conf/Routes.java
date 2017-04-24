@@ -24,6 +24,7 @@ import ninja.utils.NinjaProperties;
 import com.google.inject.Inject;
 
 import controllers.ApplicationController;
+import controllers.FileController;
 import controllers.UserController;
 
 public class Routes implements ApplicationRoutes {
@@ -49,7 +50,6 @@ public class Routes implements ApplicationRoutes {
         //dynamic 
         router.GET().route("/account").with(ApplicationController::account);
         router.GET().route("/dashboard").with(ApplicationController::dashboard);
-        router.GET().route("/login").with(ApplicationController::login);
         router.GET().route("/forgotPassword").with(ApplicationController::forgotPassword);
         router.GET().route("/myCalender").with(ApplicationController::myCalender);
         router.GET().route("/organization").with(ApplicationController::organization);
@@ -61,15 +61,28 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/projects/{projectID}/report").with(ApplicationController::report);
         router.GET().route("/projects/{projectID}/tasks/{taskID}").with(ApplicationController::task);
         router.GET().route("/projects/{projectID}/tasks").with(ApplicationController::tasks);
-        
-        // Handling User-Sites
+        router.GET().route("/upload").with(ApplicationController::fileUpload);
+
+        // Handling Registration / Sessions
         router.GET().route("/register").with(UserController::register);
         router.POST().route("/register").with(UserController::registerAction);
+        router.GET().route("/login").with(UserController::login);
+        router.POST().route("/login").with(UserController::loginAction);
+        router.GET().route("/logout").with(UserController::logout);
        
         //static
     	router.GET().route("/").with(ApplicationController::index);
         router.GET().route("/impress").with(ApplicationController::impress);
-        router.GET().route("/information").with(ApplicationController::information);        
+        router.GET().route("/information").with(ApplicationController::information); 
+
+        ///////////////////////////////////////////////////////////////////////
+        // user uploaded content
+        ///////////////////////////////////////////////////////////////////////        
+        
+        //FILE RESOURCE
+        router.POST().route("/uploadFinish/{idOfOwner}").with(FileController::uploadFinish);
+        router.GET().route("/download/{fileId}/{type}").with(FileController::downloadFinish);
+        router.DELETE().route("/delete/{fileId}").with(FileController::deleteFinish);
 
         
         ///////////////////////////////////////////////////////////////////////
@@ -77,7 +90,6 @@ public class Routes implements ApplicationRoutes {
         ///////////////////////////////////////////////////////////////////////    
         router.GET().route("/assets/webjars/{fileName: .*}").with(AssetsController::serveWebJars);
         router.GET().route("/assets/{fileName: .*}").with(AssetsController::serveStatic);
-        
         
     }
 

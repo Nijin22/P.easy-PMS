@@ -76,7 +76,7 @@ public class UserManager {
 	 * @param email
 	 * @return The specified user as a {@link models.beans.PeasyUser} object
 	 */
-	@UnitOfWork
+	@Transactional
 	public PeasyUser getUser(String email) {
 		EntityManager entityManager = entitiyManagerProvider.get();
 		PeasyUser user = entityManager.find(PeasyUser.class, email);
@@ -141,6 +141,11 @@ public class UserManager {
 	public boolean verifyLogin(String email, String passwordCleartext) throws GeneralSecurityException {
 		EntityManager entityManager = entitiyManagerProvider.get();
 		PeasyUser user = entityManager.find(PeasyUser.class, email);
+		
+		if (user == null) {
+			// User not found
+			return false;
+		}
 
 		String passwordDb = user.getPasswordInDb();
 

@@ -9,6 +9,7 @@ import com.google.inject.Singleton;
 import models.beans.PeasyUser;
 import models.manager.UserManager;
 import models.manager.exceptions.UserAlreadyExistsException;
+import ninja.Context;
 import ninja.Result;
 import ninja.Results;
 import ninja.exceptions.BadRequestException;
@@ -34,6 +35,7 @@ public class UserController {
 
 	/**
 	 * Handles the action after registration (and returns feedback if it worked)
+	 * 
 	 * @param flashScope
 	 * @param firstName
 	 * @param lastName
@@ -89,6 +91,51 @@ public class UserController {
 			throw new BadRequestException("Not all required parameters transfered.");
 		}
 
+	}
+
+	public Result login() {
+		return Results.html();
+	}
+
+	public Result loginAction(FlashScope flashScope, Context context, @Param("email") Optional<String> email,
+			@Param("password") Optional<String> passwordCleartext) {
+
+		// check fields are there and filled
+		if (!email.isPresent() || !passwordCleartext.isPresent()) {
+			throw new BadRequestException("Not all required parameters transfered.");
+		}
+		if (email.get().isEmpty() || passwordCleartext.get().isEmpty()) {
+			throw new BadRequestException("Not all required parameters transfered.");
+		}
+
+		// Verify credentials
+		try {
+			if (userManager.verifyLogin(email.get(), passwordCleartext.get())) {
+				// Credentials correct
+				
+				// Set session
+				PeasyUser user = userManager.getUser(email.get());
+				context.getSession().put("email", user.getEmailAddress());
+				context.getSession().put("firstName", user.getFirstName());
+				context.getSession().put("lastName", user.getLastName());
+				
+				flashScope.success("login.success");
+				return Results.redirect("/dashboard");
+			} else {
+				// Credentials false
+				flashScope.error("login.failed");
+				;
+				return Results.redirect("/login");
+			}
+		} catch (GeneralSecurityException e) {
+			throw new InternalServerErrorException("Error when hashing password");
+		}
+	}
+	
+	public Result logout(Context context){
+		context.getSession().clear();
+		context.getFlashScope().success("logout.success");
+		return Results.redirect("/");
 	}
 
 	public void setUserManager(UserManager userManager) {
