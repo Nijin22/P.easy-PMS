@@ -1,6 +1,6 @@
-<#import "../layout/Layout.ftl.html" as layout> <@layout.Layout "Login
-page">
-<link rel="stylesheet" href="../assets/css/task.css">
+<#import "../layout/peasyLayout.ftl.html" as layout>
+<@layout.peasyLayout "Register page">
+
 <div id="project">
 	<div class="page-header">
 		<h1>Project 1 - Task 1</h1>
@@ -100,7 +100,6 @@ page">
 									<TD><input class="form-control" type="text" value="80%"
 										id="example-date-input"></TD>
 								</TR>
-								</TR>
 								<TR class="spaceUnder">
 									<TD><strong>Milestone</strong></TD>
 									<TD><input class="form-control" type="text" value="42"
@@ -156,7 +155,6 @@ page">
 								<button type="submit" class="btn btn-primary">Submit</button>
 							</form>
 							<!--End Fileupload -->
-							</p>
 						</div>
 					</div>
 				</div>
@@ -188,12 +186,14 @@ page">
 		}
 	}
 </script>
+
 <style>
-#project {
+
+ #project {
 	margin: 2%;
 }
 
-tr.spaceUnder>td {
+.spaceUnder {
 	padding-bottom: 1em;
 	border-spacing: 10px;
 }
@@ -202,7 +202,6 @@ tr.spaceUnder>td {
 	margin-left: 0.35cm;
 }
 
-/* Css for Filelisting and Uploading */
 #myInput {
 	background-image: url('/css/searchicon.png');
 	/* Add a search icon to input */
@@ -242,4 +241,6 @@ table tr td:empty {
 }
 </style>
 
-</@layout.Layout>
+</@layout.peasyLayout>
+
+

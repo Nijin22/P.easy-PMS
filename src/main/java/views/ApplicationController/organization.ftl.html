@@ -1,4 +1,7 @@
-<#import "../layout/Layout.ftl.html" as layout> <@layout.Layout "Loginpage">
+<#import "../layout/peasyLayout.ftl.html" as layout>
+<@layout.peasyLayout "Register page">
+
+
 <h1>Organization</h1>
 <!-- Collapse 1 - Project User Table --> 
 <div class="panel-group" id="accordion">
@@ -6,8 +9,9 @@
    <div class="panel-heading">
       <h4 class="panel-title">
          <a data-toggle="collapse"  href="#collapse1">
-         Project User</a>
+         ${i18n('account.firstName')}</a>
       </h4>
+   </div>
    </div>
    <div id="collapse1" class="panel-collapse collapse in">
       <div class="container">
@@ -121,6 +125,11 @@
       </div>
    </div>
 </div>
+
+
+
+
+
 <!-- Collapse 2 - Data Upload --> 
 <script src='../assets/js/organizationDataUpload.js'></script>
 <div class="panel panel-default">
@@ -143,6 +152,8 @@
                   <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload files</button>
                </div>
             </form>
+            
+            
             <!-- Drop Zone -->
             <h4>Or drag and drop files below</h4>
             <div class="upload-drop-zone" id="drop-zone">
@@ -167,4 +178,4 @@
       <!-- /container -->
    </div>
 </div>
-</@layout.Layout>
+</@layout.peasyLayout>
