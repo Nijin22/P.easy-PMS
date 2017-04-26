@@ -1,4 +1,4 @@
-(function() {
+(function() {	
     var aa = "\n//# sourceURL=",
         ba = '<script type="text/javascript" src="',
         b = "American Samoa",
