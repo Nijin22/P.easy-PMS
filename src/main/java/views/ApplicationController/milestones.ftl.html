@@ -6,40 +6,123 @@
 
 <body>
 	<div id="wrapper">
-			<div id="page-wrapper">
-		<div class="page-header"><h1>${i18n("milestones.header")}</h1>
-		</div>
-		<div class="container">
-			<div class="row">
-				<div role="tabpanel">
-					<div class="col-sm-3">
-						<ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
-							<li role="presentation" class="brand-nav"><a
-								href="/projects/123">${i18n("projectsidebar.overview")}</a></li>
-							<li role="presentation" class="brand-nav"><a
-								href="/projects/123/tasks/123">${i18n("projectsidebar.taskoverview")}</a></li>
-							<li role="presentation" class="brand-nav"><a
-								href="/projects/123/members">${i18n("projectsidebar.members")}</a></li>
-							<li role="presentation" class="brand-nav"><a
-								href="/projects/123/report">${i18n("projectsidebar.report")}</a></li>
-							<li role="presentation" class="brand-nav active"><a
-								href="/projects/123/milestones">${i18n("projectsidebar.milestones")}</a></li>
-						</ul>
-					</div>
-					<div class="col-sm-9">
-						<div class="tab-content">
-							<div role="tabpanel" class="tab-pane active" id="tab1">
-								<h1>${i18n("milestones.content")}</h1>
-							<div class="panel-body">
-							<div id="chart_div"></div>
+		<div id="page-wrapper">
+			<div class="page-header">
+				<h1>${i18n("milestones.header")}</h1>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div role="tabpanel">
+						<div class="col-sm-3">
+							<ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
+								<li role="presentation" class="brand-nav"><a
+									href="/projects/123">${i18n("projectsidebar.overview")}</a></li>
+								<li role="presentation" class="brand-nav"><a
+									href="/projects/123/tasks/123">${i18n("projectsidebar.taskoverview")}</a></li>
+								<li role="presentation" class="brand-nav"><a
+									href="/projects/123/members">${i18n("projectsidebar.members")}</a></li>
+								<li role="presentation" class="brand-nav"><a
+									href="/projects/123/report">${i18n("projectsidebar.report")}</a></li>
+								<li role="presentation" class="brand-nav active"><a
+									href="/projects/123/milestones">${i18n("projectsidebar.milestones")}</a></li>
+							</ul>
 						</div>
+						<div class="col-sm-9">
+							<div class="tab-content">
+								<div role="tabpanel" class="tab-pane active" id="tab1">
+									<h1>${i18n("milestones.content")}</h1>
+									<div class="panel-body">
+										<div id="chart_div"></div>
+										<ul class="milestones">
+											<li><i class="milestone-success glyphicon glyphicon-ok"></i>
+												My first milestone !</li>
+											<p>Pending Gantt</p>
+											<div class="row">
+												<br />
+												<div class="col-md-12">
+													<h3>Project 1</h3>
+													<div class="progress">
+														<div class="one success-color"></div>
+														<div class="two success-color"></div>
+														<div class="three success-color"></div>
+														<div class="progress-bar progress-bar-success active"
+															style="width: 100%"></div>
+													</div>
+													<hr />
+													<h3>Project 2</h3>
+													<div class="progress">
+														<div class="one primary-color active"></div>
+														<div class="two primary-color active"></div>
+														<div class="three no-color active"></div>
+														<div class="progress-bar active" style="width: 70%;">70%</div>
+													</div>
+													<hr />
+													<h3>Project 3</h3>
+													<div class="progress">
+														<div class="one danger-color active"></div>
+														<div class="two no-color active"></div>
+														<div class="three no-color active"></div>
+														<div class="progress-bar progress-bar-danger active"
+															style="width: 30%">30%</div>
+													</div>
+													<hr />
+											</div>
+
+											<style>
+.one, .two, .three {
+	position: absolute;
+	margin-top: -10px;
+	z-index: 1;
+	height: 40px;
+	width: 40px;
+	border-radius: 25px;
+}
+
+.one {
+	left: 25%;
+}
+
+.two {
+	left: 50%;
+}
+
+.three {
+	left: 75%;
+}
+
+.primary-color {
+	background-color: #4989bd;
+}
+
+.success-color {
+	background-color: #5cb85c;
+}
+
+.danger-color {
+	background-color: #d9534f;
+}
+
+.warning-color {
+	background-color: #f0ad4e;
+}
+
+.info-color {
+	background-color: #5bc0de;
+}
+
+.no-color {
+	background-color: inherit;
+}
+</style>
+										</ul>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 </body>
 </@layout.peasyLayout> 
