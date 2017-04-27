@@ -1,12 +1,6 @@
 /* Add additional stylesheets below
 -------------------------------------------------- */
 
-footer {
-    padding: 50px 0;
-    background-color: #f8f8f8;
-    
-}
-
 
  /* layout.css Style */
 .upload-drop-zone {
@@ -29,21 +23,24 @@ footer {
 }
 
 
-
-
- #project {
+#calendar {
+/* 		float: right; */
+        margin: 0 auto;
+		width: 1165px;
+		background-color: #f2f2f2;
+		  border-radius: 6px;
+        box-shadow: 0 1px 2px #C3C3C3;
+		}
+		
+		
+		
+<style>
+#project {
 	margin: 2%;
 }
 
-.spaceUnder {
-	padding-bottom: 1em;
-	border-spacing: 10px;
-}
 
-.form-control {
-	margin-left: 0.35cm;
-}
-
+/* Css for Filelisting and Uploading */
 #myInput {
 	background-image: url('/css/searchicon.png');
 	/* Add a search icon to input */
@@ -78,7 +75,4 @@ footer {
 	background-color: #f1f1f1;
 }
 
-table tr td:empty {
-	width: 5%;
-}
-
+</style>

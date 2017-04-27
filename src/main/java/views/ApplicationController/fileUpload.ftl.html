@@ -12,13 +12,13 @@ and open the template in the editor.
     </head>
     <body>
         <form method="post" enctype="multipart/form-data" action="/uploadFinish/123">
-            Please specify file to upload: <input type="file" name="upfile">
+            ${i18n('fileupload.specifyupload')} <input type="file" name="upfile">
             <br>
-           Type:
+           ${i18n('fileupload.type')}
         <select name="type">
-          <option>picture</option>
-          <option>TaskFile</option>
-          <option>ProjectFile</option>
+          <option>${i18n('fileupload.picture')}</option>
+          <option>${i18n('fileupload.taskfile')}</option>
+          <option>${i18n('fileupload.projectfile')}</option>
         </select>
             <br>
             <input type="submit" value="submit">
