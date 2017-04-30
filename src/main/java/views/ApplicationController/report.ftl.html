@@ -1,5 +1,6 @@
 <#import "../layout/peasyLayout.ftl.html" as layout>
 <@layout.peasyLayout "Report">
+
 <div id="project">
 	<div class="page-header">
 		<h1>${i18n("report.header")}</h1>
@@ -25,7 +26,6 @@
 					<div class="tab-content">
 						<div role="tabpanel" class="tab-pane active" id="tab1">
 							<p>
-							<h1>${i18n("report.content")}</h1>
 							<div class="container">
 								<div class="row"></div>
 							</div>
@@ -42,60 +42,29 @@
 									<i class="fa fa-bar-chart"></i> ${i18n("report.chart1")}
 								</div>
 								<!-- /.panel-heading -->
+
+
 								<div class="panel-body">
-									<div id="chart-donut" class="chart">
-										<svg height="300" version="1.1" width="436"
-											xmlns="http://www.w3.org/2000/svg"
-											style="overflow: hidden; position: relative; left: -0.40625px;">
-												<defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs>
-												<path fill="none" stroke="#3498db"
-												d="M218,243.33333333333331A93.33333333333333,93.33333333333333,0,0,0,311.3333330454699,150.00733038285082"
-												stroke-width="2" opacity="0"
-												style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
-												<path fill="#3498db" stroke="#ffffff"
-												d="M218,246.33333333333331A96.33333333333333,96.33333333333333,0,0,0,314.3333330362171,150.0075660022996L352.99999958362605,150.01060287519496A135,135,0,0,1,218,285Z"
-												stroke-width="3"
-												style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
-												<path fill="none" stroke="#e74c3c"
-												d="M311.3333330454699,150.00733038285082A93.33333333333333,93.33333333333333,0,0,0,144.3054960170495,92.7266973728771"
-												stroke-width="2" opacity="1"
-												style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></path>
-												<path fill="#e74c3c" stroke="#ffffff"
-												d="M314.3333330362171,150.0075660022996A96.33333333333333,96.33333333333333,0,0,0,141.9367441033118,90.88576978843386L107.45824402557427,64.09004605931564A140,140,0,0,1,357.99999956820477,150.01099557427625Z"
-												stroke-width="3"
-												style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
-												<path fill="none" stroke="#2ecc71"
-												d="M144.3054960170495,92.7266973728771A93.33333333333333,93.33333333333333,0,0,0,160.72090959672028,223.69000552099322"
-												stroke-width="2" opacity="0"
-												style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
-												<path fill="#2ecc71" stroke="#ffffff"
-												d="M141.9367441033118,90.88576978843386A96.33333333333333,96.33333333333333,0,0,0,158.87979597661484,226.05861284131086L135.1498870952561,256.5873294142938A135,135,0,0,1,111.40616388180376,67.15825870005436Z"
-												stroke-width="3"
-												style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
-												<path fill="none" stroke="#f39c12"
-												d="M160.72090959672028,223.69000552099322A93.33333333333333,93.33333333333333,0,0,0,217.97067846904892,243.33332872751785"
-												stroke-width="2" opacity="0"
-												style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
-												<path fill="#f39c12" stroke="#ffffff"
-												d="M158.87979597661484,226.05861284131086A96.33333333333333,96.33333333333333,0,0,0,217.96973599126835,246.3333285794738L217.95758849987433,284.9999933380169A135,135,0,0,1,135.1498870952561,256.5873294142938Z"
-												stroke-width="3"
-												style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
-												<text x="218" y="140" text-anchor="middle" font="10px "
-												Arial"" stroke="none" fill="#000000"
-												style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: 800; font-size: 8px; line-height: normal; font-family: Arial;"
-												font-size="10px" font-weight="800"
-												transform="matrix(2.7809,0,0,2.7809,-388.2322,-264.2661)"
-												stroke-width="0.3595982142857143">
-												<tspan dy="5.203125"
-												style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">${i18n("report.projectprogress")}</tspan></text>
-												<text x="218" y="160" text-anchor="middle" font="10px "
-												Arial"" stroke="none" fill="#000000"
-												style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: normal; font-family: Arial;"
-												font-size="14px"
-												transform="matrix(1.9871,0,0,1.9871,-215.1958,-150.2145)"
-												stroke-width="0.5032366071428571">
-												<tspan dy="4.859375"
-												style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">40%</tspan></text></svg>
+
+		 <h5>Planned employees</h5>		
+		 <h6>Max Muster</h6>					
+ <div class="progress">
+  <div class="progress-bar progress-bar-success" role="progressbar" style="width:40%">
+    Free Space (4 days)
+  </div>
+  <div class="progress-bar progress-bar-warning" role="progressbar" style="width:60%">
+    Plannend (6 days)
+  </div>
+  </div>
+  		 <h6>John Doe</h6>					
+ <div class="progress">
+  <div class="progress-bar progress-bar-success" role="progressbar" style="width:30%">
+    Free Space (3 days)
+  </div>
+  <div class="progress-bar progress-bar-warning" role="progressbar" style="width:70%">
+    Plannend (7 days)
+  </div>
+  </div>
 									</div>
 									<!-- /panel -->
 								</div>
