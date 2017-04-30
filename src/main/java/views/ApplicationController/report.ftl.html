@@ -1,6 +1,48 @@
 <#import "../layout/peasyLayout.ftl.html" as layout>
 <@layout.peasyLayout "Report">
+<head>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+	google.charts.load("current", {
+		packages : [ "corechart" ]
+	});
+	google.charts.setOnLoadCallback(drawChart);
+	function drawChart() {
+		var data = google.visualization
+				.arrayToDataTable([ [ 'Task', 'Hours per Day' ],
+						[ 'Finished', 2 ], [ 'Open', 12 ] ]);
 
+		var options = {
+			title : 'Milestones',
+			pieHole : 0.4,
+		};
+
+		var chart = new google.visualization.PieChart(document
+				.getElementById('donutchart'));
+		chart.draw(data, options);
+	}
+</script>
+<script type="text/javascript">
+	google.charts.load("current", {
+		packages : [ "corechart" ]
+	});
+	google.charts.setOnLoadCallback(drawChart);
+	function drawChart() {
+		var data = google.visualization
+				.arrayToDataTable([ [ 'Task', 'Hours per Day' ],
+						[ 'Finished', 32 ], [ 'Open', 42 ] ]);
+
+		var options = {
+			title : 'Tasks',
+			pieHole : 0.4,
+		};
+
+		var chart = new google.visualization.PieChart(document
+				.getElementById('donutchart1'));
+		chart.draw(data, options);
+	}
+</script>
+</head>
 <div id="project">
 	<div class="page-header">
 		<h1>${i18n("report.header")}</h1>
@@ -35,7 +77,7 @@
 
 					<!-- /.row -->
 					<div class="row">
-						<!-- /.col-lg-8 -->
+						<!-- /.col-lg-12 -->
 						<div class="col-lg-12">
 							<div class="panel panel-default">
 								<div class="panel-heading">
@@ -46,37 +88,47 @@
 
 								<div class="panel-body">
 
-		 <h5>Planned employees</h5>		
-		 <h6>Max Muster</h6>					
- <div class="progress">
-  <div class="progress-bar progress-bar-success" role="progressbar" style="width:40%">
-    Free Space (4 days)
-  </div>
-  <div class="progress-bar progress-bar-warning" role="progressbar" style="width:60%">
-    Plannend (6 days)
-  </div>
-  </div>
-  		 <h6>John Doe</h6>					
- <div class="progress">
-  <div class="progress-bar progress-bar-success" role="progressbar" style="width:30%">
-    Free Space (3 days)
-  </div>
-  <div class="progress-bar progress-bar-warning" role="progressbar" style="width:70%">
-    Plannend (7 days)
-  </div>
-  </div>
+									<div class="container-fluid">
+										<div class="row">
+											<div class="col-md-6 col-sm-6">
+												<div id="donutchart" style="width: 400px; height: 250px;"></div>
+											</div>
+											<div class="col-md-6 col-sm-6">
+												<div id="donutchart1" style="width: 400px; height: 250px;"></div>
+											</div>
+										</div>
 									</div>
-									<!-- /panel -->
+									<h6>${i18n("report.employees")}</h6>
+									<h6>Max Muster</h6>
+									<div class="progress">
+										<div class="progress-bar progress-bar-success"
+											role="progressbar" style="width: 40%">Free Space (4
+											days)</div>
+										<div class="progress-bar progress-bar-warning"
+											role="progressbar" style="width: 60%">Plannend (6 days)
+										</div>
+									</div>
+									<h6>John Doe</h6>
+									<div class="progress">
+										<div class="progress-bar progress-bar-success"
+											role="progressbar" style="width: 30%">Free Space (3
+											days)</div>
+										<div class="progress-bar progress-bar-warning"
+											role="progressbar" style="width: 70%">Plannend (7 days)
+										</div>
+									</div>
 								</div>
-								<!-- /.panel-body -->
+								<!-- /panel -->
 							</div>
+							<!-- /.panel-body -->
 						</div>
 					</div>
-					<!-- /.row -->
 				</div>
+				<!-- /.row -->
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 
 </@layout.peasyLayout> 
