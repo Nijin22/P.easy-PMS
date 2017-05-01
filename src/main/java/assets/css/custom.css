@@ -1,44 +1,39 @@
 /* Add additional stylesheets below
 -------------------------------------------------- */
 
-
- /* layout.css Style */
+/* layout.css Style */
 .upload-drop-zone {
-  height: 200px;
-  border-width: 2px;
-  margin-bottom: 20px;
+	height: 200px;
+	border-width: 2px;
+	margin-bottom: 20px;
 }
 
 /* skin.css Style*/
 .upload-drop-zone {
-  color: #ccc;
-  border-style: dashed;
-  border-color: #ccc;
-  line-height: 200px;
-  text-align: center
-}
-.upload-drop-zone.drop {
-  color: #222;
-  border-color: #222;
+	color: #ccc;
+	border-style: dashed;
+	border-color: #ccc;
+	line-height: 200px;
+	text-align: center
 }
 
+.upload-drop-zone.drop {
+	color: #222;
+	border-color: #222;
+}
 
 #calendar {
-/* 		float: right; */
-        margin: 0 auto;
-		width: 1165px;
-		background-color: #f2f2f2;
-		  border-radius: 6px;
-        box-shadow: 0 1px 2px #C3C3C3;
-		}
-		
-		
-		
-<style>
+	/* 		float: right; */
+	margin: 0 auto;
+	width: 1165px;
+	background-color: #f2f2f2;
+	border-radius: 6px;
+	box-shadow: 0 1px 2px #C3C3C3;
+}
+
 #project {
 	margin: 2%;
 }
-
 
 /* Css for Filelisting and Uploading */
 #myInput {
@@ -75,4 +70,55 @@
 	background-color: #f1f1f1;
 }
 
-</style>
+/* dashboard.css Style*/
+.chat {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.chat li {
+	margin-bottom: 10px;
+	padding-bottom: 5px;
+	border-bottom: 1px dotted #999999;
+}
+
+.huge {
+	font-size: 40px;
+}
+
+.panel-green {
+	border-color: #5cb85c;
+}
+
+.panel-green>.panel-heading {
+	border-color: #5cb85c;
+	color: white;
+	background-color: #5cb85c;
+}
+
+.panel-green>a {
+	color: #5cb85c;
+}
+
+.panel-green>a:hover {
+	color: #3d8b3d;
+}
+
+.panel-yellow {
+	border-color: #f0ad4e;
+}
+
+.panel-yellow>.panel-heading {
+	border-color: #f0ad4e;
+	color: white;
+	background-color: #f0ad4e;
+}
+
+.panel-yellow>a {
+	color: #f0ad4e;
+}
+
+.panel-yellow>a:hover {
+	color: #df8a13;
+}
