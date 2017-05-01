@@ -6,10 +6,12 @@ import java.util.Optional;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import filters.LoginFilter;
 import models.beans.PeasyUser;
 import models.manager.UserManager;
 import models.manager.exceptions.UserAlreadyExistsException;
 import ninja.Context;
+import ninja.FilterWith;
 import ninja.Result;
 import ninja.Results;
 import ninja.exceptions.BadRequestException;
@@ -112,33 +114,33 @@ public class UserController {
 		try {
 			if (userManager.verifyLogin(email.get(), passwordCleartext.get())) {
 				// Credentials correct
-				
+
 				// Set session
 				PeasyUser user = userManager.getUser(email.get());
 				context.getSession().put("email", user.getEmailAddress());
 				context.getSession().put("firstName", user.getFirstName());
 				context.getSession().put("lastName", user.getLastName());
-				
+
 				flashScope.success("login.success");
 				return Results.redirect("/dashboard");
 			} else {
 				// Credentials false
 				flashScope.error("login.failed");
-				;
 				return Results.redirect("/login");
 			}
 		} catch (GeneralSecurityException e) {
 			throw new InternalServerErrorException("Error when hashing password");
 		}
 	}
-	
-	public Result logout(Context context){
+
+	public Result logout(Context context) {
 		context.getSession().clear();
 		context.getFlashScope().success("logout.success");
 		return Results.redirect("/");
 	}
-	
-	public Result account(Context context){
+
+	@FilterWith(LoginFilter.class)
+	public Result account(Context context) {
 		return Results.html();
 	}
 
