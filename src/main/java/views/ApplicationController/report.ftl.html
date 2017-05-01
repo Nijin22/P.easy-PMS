@@ -1,110 +1,134 @@
-<#import "../layout/Layout.ftl.html" as layout> <@layout.Layout "Login
-page">
+<#import "../layout/peasyLayout.ftl.html" as layout>
+<@layout.peasyLayout "Report">
+<head>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+	google.charts.load("current", {
+		packages : [ "corechart" ]
+	});
+	google.charts.setOnLoadCallback(drawChart);
+	function drawChart() {
+		var data = google.visualization
+				.arrayToDataTable([ [ 'Task', 'Hours per Day' ],
+						[ 'Finished', 2 ], [ 'Open', 12 ] ]);
+
+		var options = {
+			title : 'Milestones',
+			pieHole : 0.4,
+		};
+
+		var chart = new google.visualization.PieChart(document
+				.getElementById('donutchart'));
+		chart.draw(data, options);
+	}
+</script>
+<script type="text/javascript">
+	google.charts.load("current", {
+		packages : [ "corechart" ]
+	});
+	google.charts.setOnLoadCallback(drawChart);
+	function drawChart() {
+		var data = google.visualization
+				.arrayToDataTable([ [ 'Task', 'Hours per Day' ],
+						[ 'Finished', 32 ], [ 'Open', 42 ] ]);
+
+		var options = {
+			title : 'Tasks',
+			pieHole : 0.4,
+		};
+
+		var chart = new google.visualization.PieChart(document
+				.getElementById('donutchart1'));
+		chart.draw(data, options);
+	}
+</script>
+</head>
 <div id="project">
 	<div class="page-header">
-		<h1>Project 1 - Report</h1>
+		<h1>${i18n("report.header")}</h1>
 	</div>
 	<div class="container">
 		<div class="row">
 			<div role="tabpanel">
 				<div class="col-sm-3">
 					<ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
-						<li role="presentation" class="brand-nav"><a href="/projects/123">Overview</a></li>
-						<li role="presentation" class="brand-nav"><a href="/projects/123/tasks/123">Task
-								Overview</a></li>
-						<li role="presentation" class="brand-nav"><a href="/projects/123/members">Members</a></li>
-						<li role="presentation" class="brand-nav active"><a href="/projects/123/report">Report</a></li>
-						<li role="presentation" class="brand-nav"><a href="/projects/123/milestones">Milestones</a></li>
+						<li role="presentation" class="brand-nav"><a
+							href="/projects/123">${i18n("projectsidebar.overview")}</a></li>
+						<li role="presentation" class="brand-nav"><a
+							href="/projects/123/tasks/123">${i18n("projectsidebar.taskoverview")}</a></li>
+						<li role="presentation" class="brand-nav"><a
+							href="/projects/123/members">${i18n("projectsidebar.members")}</a></li>
+						<li role="presentation" class="brand-nav active"><a
+							href="/projects/123/report">${i18n("projectsidebar.report")}</a></li>
+						<li role="presentation" class="brand-nav"><a
+							href="/projects/123/milestones">${i18n("projectsidebar.milestones")}</a></li>
 					</ul>
 				</div>
 				<div class="col-sm-9">
 					<div class="tab-content">
 						<div role="tabpanel" class="tab-pane active" id="tab1">
 							<p>
-							<h1>Content of Report</h1>
 							<div class="container">
-	<div class="row">                   
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                <span class="sr-only">60% Complete</span>
-            </div>
-            <span class="progress-type">HTML / HTML5</span>
-            <span class="progress-completed">60%</span>
-        </div>
-        <div class="progress">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                <span class="sr-only">40% Complete (success)</span>
-            </div>
-            <span class="progress-type">ASP.Net</span>
-            <span class="progress-completed">40%</span>
-        </div>
-        <div class="progress">
-            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                <span class="sr-only">20% Complete (info)</span>
-            </div>
-            <span class="progress-type">Java</span>
-            <span class="progress-completed">20%</span>
-        </div>
-        <div class="progress">
-            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                <span class="sr-only">60% Complete (warning)</span>
-            </div>
-            <span class="progress-type">JavaScript / jQuery</span>
-            <span class="progress-completed">60%</span>
-        </div>
-        <div class="progress">
-            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                <span class="sr-only">80% Complete (danger)</span>
-            </div>
-            <span class="progress-type">CSS / CSS3</span>
-            <span class="progress-completed">80%</span>
-            
-            <style>
-            body {
-    margin: 30px 0px;
-}
-.progress {
-    position: relative;
-    right: 170px; 
-    left: 170px; 
-	height: 25px;
-}
-.progress > .progress-type {
-	position: absolute;
-	left: 0px;
-	font-weight: 800;
-	padding: 3px 30px 2px 10px;
-	color: rgb(255, 255, 255);
-	background-color: rgba(25, 25, 25, 0.2);
-}
-.progress > .progress-completed {
-	position: absolute;
-	right: 0px;
-	font-weight: 800;
-	padding: 3px 10px 2px;
-}
-</style>
-        </div>
-	</div>
-</div>
-							</p>
+								<div class="row"></div>
+							</div>
+						</div>
+					</div>
+					<!-- /panel -->
+
+					<!-- /.row -->
+					<div class="row">
+						<!-- /.col-lg-12 -->
+						<div class="col-lg-12">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<i class="fa fa-bar-chart"></i> ${i18n("report.chart1")}
+								</div>
+								<!-- /.panel-heading -->
+
+
+								<div class="panel-body">
+
+									<div class="container-fluid">
+										<div class="row">
+											<div class="col-md-6 col-sm-6">
+												<div id="donutchart" style="width: 400px; height: 250px;"></div>
+											</div>
+											<div class="col-md-6 col-sm-6">
+												<div id="donutchart1" style="width: 400px; height: 250px;"></div>
+											</div>
+										</div>
+									</div>
+									<h6>${i18n("report.employees")}</h6>
+									<h6>Max Muster</h6>
+									<div class="progress">
+										<div class="progress-bar progress-bar-success"
+											role="progressbar" style="width: 40%">Free Space (4
+											days)</div>
+										<div class="progress-bar progress-bar-warning"
+											role="progressbar" style="width: 60%">Plannend (6 days)
+										</div>
+									</div>
+									<h6>John Doe</h6>
+									<div class="progress">
+										<div class="progress-bar progress-bar-success"
+											role="progressbar" style="width: 30%">Free Space (3
+											days)</div>
+										<div class="progress-bar progress-bar-warning"
+											role="progressbar" style="width: 70%">Plannend (7 days)
+										</div>
+									</div>
+								</div>
+								<!-- /panel -->
+							</div>
+							<!-- /.panel-body -->
 						</div>
 					</div>
 				</div>
+				<!-- /.row -->
 			</div>
 		</div>
 	</div>
 </div>
+</div>
 
-
-<style>
-#project {
-	margin: 2%;
-	
-	
-}
-</style>
-
-
-
-</@layout.Layout>
+</@layout.peasyLayout> 

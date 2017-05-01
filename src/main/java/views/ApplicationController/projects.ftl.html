@@ -1,10 +1,10 @@
-<#import "../layout/Layout.ftl.html" as layout> <@layout.Layout "Login
-page">
+<#import "../layout/peasyLayout.ftl.html" as layout>
+<@layout.peasyLayout "Projects">
 <link rel="stylesheet" href="../assets/css/projects.css">
 
 <div id="projectContent">
 	<div class="page-header">
-		<h1>Projects</h1>
+		<h1>${i18n("projects.header")}</h1>
 	</div>
 
 	<input type="text" id="myInput" onkeyup="myFunction()"
@@ -12,16 +12,16 @@ page">
 
 	<table id="myTable">
 		<tr class="header">
-			<th style="width: 18%;">Projectname</th>
-			<th style="width: 10%;">In Time</th>
-			<th style="width: 18%;">Status</th>
-			<th style="width: 18%;">Left Time</th>
-			<th style="width: 18%;">Budget</th>
-			<th style="width: 18%;">Deadline</th>
+			<th style="width: 18%;">${i18n("projects.projectname")}</th>
+			<th style="width: 10%;">${i18n("projects.time")}</th>
+			<th style="width: 18%;">${i18n("projects.status")}</th>
+			<th style="width: 18%;">${i18n("projects.timeleft")}</th>
+			<th style="width: 18%;">${i18n("projects.budget")}</th>
+			<th style="width: 18%;">${i18n("projects.deadline")}</th>
 		</tr>
 		<tr>
 			<td>Projekt 2</td>
-			<td>In Time {green}</td>
+			<td style="color:#00cd66">In Time</td>
 			<td>80%</td>
 			<td>22</td>
 			<td>21212</td>
@@ -29,7 +29,7 @@ page">
 		</tr>
 		<tr>
 			<td>Projekt 1</td>
-			<td>In Time {green}</td>
+			<td style="color:#00cd66">In Time</td>
 			<td>80%</td>
 			<td>22</td>
 			<td>21212</td>
@@ -60,4 +60,4 @@ page">
 		}
 	}
 </script>
-</@layout.Layout>
+</@layout.peasyLayout>
