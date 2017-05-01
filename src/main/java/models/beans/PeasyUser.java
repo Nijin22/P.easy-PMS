@@ -176,10 +176,5 @@ public class PeasyUser implements Serializable {
     public String toString() {
         return "PeasyUser{" + "emailAddress=" + emailAddress + ", firstName=" + firstName + ", lastName=" + lastName + '}';
     }
-    
-
-    
-
-
 
 }

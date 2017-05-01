@@ -18,7 +18,7 @@
             <div class="form-group">
                <label class="col-lg-3 control-label">${i18n('account.email')}</label>
                <div class="col-lg-8">
-                  <input name="email" class="form-control" type="text" value="${email}" disabled>
+                  <input name="email" class="form-control" type="text" value="${user.emailAddress}" disabled>
                </div>
             </div>
             <div class="form-group">
@@ -30,19 +30,19 @@
             <div class="form-group">
                <label class="col-lg-3 control-label">${i18n('account.firstName')}</label>
                <div class="col-lg-8">
-                  <input name="firstName" class="form-control" type="text" value=${firstName}>
+                  <input name="firstName" class="form-control" type="text" value=${user.firstName}>
                </div>
             </div>
             <div class="form-group">
                <label class="col-lg-3 control-label">${i18n('account.lastName')}</label>
                <div class="col-lg-8">
-                  <input name="lastName" class="form-control" type="text" value=${lastName}>
+                  <input name="lastName" class="form-control" type="text" value=${user.lastName}>
                </div>
             </div>
             <div class="form-group">
             	<label class="col-lg-3 control-label">${i18n('account.formOfAddress')}</label>
             	<div class="col-lg-8">
-                	<input class="form-control" type="text" value="${formOfAddress}">
+                	<input class="form-control" type="text" value="${user.formOfAddress}">
                </div>
             </div>
             <div class="form-group">

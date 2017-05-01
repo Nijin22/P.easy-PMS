@@ -142,9 +142,17 @@ public class UserController {
 	@FilterWith(LoginFilter.class)
 	public Result account(Context context) {
 		Result result = Results.html();
+		PeasyUser user = userManager.getUser(context.getSession().get("email"));
 		
-		result.render("formOfAddress", "FORM OF ADDRWESSS HERE");
-		
+		System.out.println("debug. FOA:" + user.getFormOfAddress());
+
+		result.render("user", user);
+		if (user.getOrganisation() != null) {
+			result.render("organisation", user.getOrganisation().getName());
+		} else {
+			result.render("organisation", "-");
+		}
+
 		return result;
 	}
 
