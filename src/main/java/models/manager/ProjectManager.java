@@ -62,7 +62,7 @@ public class ProjectManager {
      * @return Project
      * @throws NoSuchElementException
      */
-    @UnitOfWork
+    @Transactional
     public Project getProject(long projectId) throws NoSuchElementException {
         EntityManager entityManager = entitiyManagerProvider.get();
         Project project = entityManager.find(Project.class, projectId);
@@ -258,7 +258,7 @@ public class ProjectManager {
      * @param taskId
      * @return Task, which found by Id
      */
-    @UnitOfWork
+    @Transactional
     public Task getTask(long taskId) {
         EntityManager entityManager = entitiyManagerProvider.get();
         Task task = entityManager.find(Task.class, taskId);
@@ -268,6 +268,7 @@ public class ProjectManager {
         } else {
             return task;
         }
+      
     }
 
     /**
