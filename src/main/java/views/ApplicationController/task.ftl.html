@@ -1,21 +1,25 @@
-<#import "../layout/Layout.ftl.html" as layout> <@layout.Layout "Login
-page">
-<link rel="stylesheet" href="../assets/css/task.css">
+<#import "../layout/peasyLayout.ftl.html" as layout>
+<@layout.peasyLayout "Register page">
+
 <div id="project">
 	<div class="page-header">
-		<h1>Project 1 - Task 1</h1>
+		<h1>${i18n('task.title')}</h1>
 	</div>
 	<div class="container">
 		<div class="row">
 			<div role="tabpanel">
 				<div class="col-sm-3">
 					<ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
-						<li role="presentation" class="brand-nav"><a href="/projects/123">Overview</a></li>
-						<li role="presentation" class="brand-nav active"><a href="/projects/123/tasks/123">Task
-								Overview</a></li>
-						<li role="presentation" class="brand-nav"><a href="/projects/123/members">Members</a></li>
-						<li role="presentation" class="brand-nav"><a href="/projects/123/report">Report</a></li>
-						<li role="presentation" class="brand-nav"><a href="/projects/123/milestones">Milestones</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/123">${i18n("projectsidebar.overview")}</a></li>
+							<li role="presentation" class="brand-nav active"><a
+								href="/projects/123/tasks/123">${i18n("projectsidebar.taskoverview")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/123/members" >${i18n("projectsidebar.members")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/123/report">${i18n("projectsidebar.report")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/123/milestones">${i18n("projectsidebar.milestones")}</a></li>
 					</ul>
 				</div>
 				<div class="col-sm-9">
@@ -24,8 +28,8 @@ page">
 							<p>
 								<!--Button Project Description Start -->
 								<button class="btn btn-primary" data-toggle="collapse"
-									data-target="#details1">Task Description</button>
-							<div id="details1" class="collapse">Project Description ...
+									data-target="#details1">${i18n('task.taskDescription')}</button>
+							<div id="details1" class="collapse">
 								eget id metus. Mauris quis convallis elit, ac convallis augue.
 								Pellentesque ornare cursus nibh quis fermentum. Morbi faucibus
 								at tortor sed volutpat. Etiam at ex molestie turpis aliquam
@@ -73,45 +77,44 @@ page">
 							<!--Start Input Parameters of Project -->
 							<TABLE>
 								<TR class="spaceUnder">
-									<TD><strong>Task Dependency</strong></TD>
+									<TD><strong>${i18n('task.taskDependency')}</strong></TD>
 									<TD><input class="form-control" type="text" value="Task 2"
 										id="example-date-input"></TD>
 									<TD></TD>
-									<TD><strong>Expected Effort</strong></TD>
+									<TD><strong>${i18n('task.taskEffort')}</strong></TD>
 									<TD><input class="form-control" type="text"
 										value="2011-08-19" id="example-date-input"></TD>
 
 								</TR>
 								<TR class="spaceUnder">
-									<TD><strong>Members</strong></TD>
+									<TD><strong>${i18n('task.taskMembers')}</strong></TD>
 									<TD><input class="form-control" type="text"
 										value="Member 1" id="example-date-input"></TD>
 									<TD></TD>
-									<TD><strong>Start of Taskt</strong></TD>
+									<TD><strong>${i18n('task.taskStart')}</strong></TD>
 									<TD><input class="form-control" type="date"
 										value="2011-08-19" id="example-date-input"></TD>
 								</TR>
 								<TR class="spaceUnder">
-									<TD><strong>Budget of Project</strong></TD>
+									<TD><strong>${i18n('task.taskBudget')}</strong></TD>
 									<TD><input class="form-control" type="number" value="42"
 										id="example-number-input"></TD>
 									<TD></TD>
-									<TD><strong>Progress</strong></TD>
+									<TD><strong>${i18n('task.taskProgress')}</strong></TD>
 									<TD><input class="form-control" type="text" value="80%"
 										id="example-date-input"></TD>
 								</TR>
-								</TR>
 								<TR class="spaceUnder">
-									<TD><strong>Milestone</strong></TD>
+									<TD><strong>${i18n('task.taskMilestone')}</strong></TD>
 									<TD><input class="form-control" type="text" value="42"
 										id="example-number-input"></TD>
 									<TD></TD>
-									<TD><strong>Costs</strong></TD>
+									<TD><strong>${i18n('task.taskCosts')}</strong></TD>
 									<TD><input class="form-control" type="text" value="1231"
 										id="example-date-input"></TD>
 								</TR>
 								<TR class="spaceUnder">
-									<TD><strong>Realized Effort</strong></TD>
+									<TD><strong>${i18n('task.taskRealEffort')}</strong></TD>
 									<TD><input class="form-control" type="text" value="42"
 										id="example-number-input"></TD>
 								</TR>
@@ -130,7 +133,7 @@ page">
 
 							<table id="myTable">
 								<tr class="header">
-									<th style="width: 90%;">Files</th>
+									<th style="width: 90%;">${i18n('task.files')}</th>
 									<th style="width: 10%;"></th>
 
 								</tr>
@@ -153,10 +156,9 @@ page">
 									id="file" class="custom-file-input"> <span
 									class="custom-file-control"></span>
 								</label>
-								<button type="submit" class="btn btn-primary">Submit</button>
+								<button type="submit" class="btn btn-primary">${i18n('task.submit')}</button>
 							</form>
 							<!--End Fileupload -->
-							</p>
 						</div>
 					</div>
 				</div>
@@ -188,12 +190,14 @@ page">
 		}
 	}
 </script>
+
 <style>
-#project {
+
+ #project {
 	margin: 2%;
 }
 
-tr.spaceUnder>td {
+.spaceUnder {
 	padding-bottom: 1em;
 	border-spacing: 10px;
 }
@@ -202,7 +206,6 @@ tr.spaceUnder>td {
 	margin-left: 0.35cm;
 }
 
-/* Css for Filelisting and Uploading */
 #myInput {
 	background-image: url('/css/searchicon.png');
 	/* Add a search icon to input */
@@ -242,4 +245,6 @@ table tr td:empty {
 }
 </style>
 
-</@layout.Layout>
+</@layout.peasyLayout>
+
+

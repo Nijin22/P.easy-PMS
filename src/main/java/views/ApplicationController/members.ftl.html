@@ -1,8 +1,9 @@
-<#import "../layout/Layout.ftl.html" as layout> <@layout.Layout "Members
-page">
+<#import "../layout/peasyLayout.ftl.html" as layout>
+<@layout.peasyLayout "Members">
+
 <div id="project">
 	<div class="page-header">
-		<h1>Project 1 - Members</h1>
+		<h1>${i18n('members.projectMembers')}</h1>
 	</div>
 	<div class="container">
 		<div class="row">
@@ -10,126 +11,130 @@ page">
 				<div class="col-sm-3">
 					<ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
 						<li role="presentation" class="brand-nav"><a
-							href="/projects/123">Overview</a></li>
-						<li role="presentation" class="brand-nav"><a
-							href="/projects/123/tasks/123">Task Overview</a></li>
-						<li role="presentation" class="brand-nav active"><a
-							href="/projects/123/members">Members</a></li>
-						<li role="presentation" class="brand-nav"><a
-							href="/projects/123/report">Report</a></li>
-						<li role="presentation" class="brand-nav"><a
-							href="/projects/123/milestones">Milestones</a></li>
+								href="/projects/123">${i18n("projectsidebar.overview")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/123/tasks/123">${i18n("projectsidebar.taskoverview")}</a></li>
+							<li role="presentation" class="brand-nav active"><a
+								href="/projects/123/members" >${i18n("projectsidebar.members")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/123/report">${i18n("projectsidebar.report")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/123/milestones">${i18n("projectsidebar.milestones")}</a></li>
 					</ul>
 				</div>
-				<div class="col-sm-9">
-					<div class="tab-content">
-						<div role="tabpanel" class="tab-pane active" id="tab1">
-							<p>
-								<!--Start Members List-->
-								<input type="text" id="myInput" onkeyup="myFunction()"
-									placeholder="Search for Member">
-							<table id="myTable">
-								<tr class="header">
-									<th style="width: 18%;">Firstname</th>
-									<th style="width: 18%;">Lastname</th>
-									<th style="width: 18%;">E-Mail</th>
-									<th style="width: 18%;">Workpackage</th>
-									<th style="width: 10%;"></th>
-								</tr>
-								<tr>
-									<td>Engin</td>
-									<td>Aslan</td>
-									<td>tugrul.aslan@peasy.de</td>
-									<td>W1,W2,...</td>
-									<td><a href=""><span class="glyphicon glyphicon-pencil"></span></a>
-									<a href=""><span class="glyphicon glyphicon-trash"></span></a></td>
-								</tr>
-								<tr>
-									<td>Tugrul</td>
-									<td>Aslan</td>
-									<td>tugrul.aslan@peasy.de</td>
-									<td>W1,W2,...</td>
-									<td><a href=""><span class="glyphicon glyphicon-pencil"></span></a>
-									<a href=""><span class="glyphicon glyphicon-trash"></span></a></td>
-								</tr>
-							</table>
-							<!--End Members List-->
-							</p>
-
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+				
+				
+	 <div class="container">
+         <div class="row">
+            <div class="col-md-8">
+               <h4></h4>
+               <div class="table-responsive">
+                  <table id="mytable" class="table table-bordred table-striped">
+                     <thead>
+                        <th><input type="checkbox" id="checkall" /></th>
+                        <th>${i18n('members.firstName')}</th>
+                        <th>${i18n('members.lastName')}</th>
+                        <th>${i18n('members.email')}</th>
+                        <th>${i18n('members.editRow')}</th>
+                        <th>${i18n('members.deleteRow')}</th>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td><input type="checkbox" class="checkthis" /></td>
+                           <td>Max</td>
+                           <td>Mustermann</td>
+                           <td>Mustermann@gmail.com</td>
+                           <td>
+                              <p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p>
+                           </td>
+                           <td>
+                              <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p>
+                           </td>
+                        </tr>
+                        <tr>
+                        <tr>
+                           <td><input type="checkbox" class="checkthis" /></td>
+                           <td>Max</td>
+                           <td>Mustermann</td>
+                           <td>Mustermann@gmail.com</td>
+                           <td>
+                              <p data-placement="top" data-toggle="tooltip" title=${i18n('members.tooltipEdit')}><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p>
+                           </td>
+                           <td>
+                              <p data-placement="top" data-toggle="tooltip" title=${i18n('members.tooltipDelete')}><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <div class="form-group">
+                     <label class="col-md-0 control-label"></label>
+                     <div class="col-md-0">
+                        <input type="button" class="btn btn-primary" value=${i18n('members.addUser')}>
+                        <span></span>
+                        <input type="reset" class="btn btn-default" value=${i18n('members.cancelUser')}>
+                     </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <ul class="pagination pull-right">
+                     <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                     <li class="active"><a href="#">1</a></li>
+                     <li><a href="#">2</a></li>
+                     <li><a href="#">3</a></li>
+                     <li><a href="#">4</a></li>
+                     <li><a href="#">5</a></li>
+                     <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                  <h4 class="modal-title custom_align" id="Heading">${i18n('members.editYourDetail')}</h4>
+               </div>
+               <div class="modal-body">
+                  <div class="form-group">
+                     <input class="form-control " type="text" placeholder="Max">
+                  </div>
+                  <div class="form-group">
+                     <input class="form-control " type="text" placeholder="Mustermann">
+                  </div>
+                  <div class="form-group">
+                     <input class="form-control " type="text" placeholder="Mustermann@gmail.com">
+                  </div>
+               </div>
+               <div class="modal-footer ">
+                  <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> ${i18n('members.editUpdateButton')}</button>
+               </div>
+            </div>
+            <!-- /.modal-content --> 
+         </div>
+         <!-- /.modal-dialog --> 
+      </div>
+      <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                  <h4 class="modal-title custom_align" id="Heading">${i18n('members.deleteThisEntry')}</h4>
+               </div>
+               <div class="modal-body">
+                  <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> ${i18n('members.sureToDelete')}</div>
+               </div>
+               <div class="modal-footer ">
+                  <button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>${i18n('members.yesDelete')}</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> ${i18n('members.noDelete')}</button>
+               </div>
+            </div>
+            <!-- /.modal-content --> 
+         </div>
+         <!-- /.modal-dialog --> 
+      </div>
+   </div>
 </div>
-
-
-<style>
-#project {
-	margin: 2%;
-}
-
-
-/* Css for Filelisting and Uploading */
-#myInput {
-	background-image: url('/css/searchicon.png');
-	/* Add a search icon to input */
-	background-position: 10px 12px; /* Position the search icon */
-	background-repeat: no-repeat; /* Do not repeat the icon image */
-	width: 30%;
-	Full-width font-size: 16px; /* Increase font-size */
-	padding: 12px 20px 12px 40px; /* Add some padding */
-	border: 1px solid #ddd; /* Add a grey border */
-	margin-bottom: 12px; /* Add some space below the input */
-}
-
-#myTable {
-	border-collapse: collapse; /* Collapse borders */
-	width: 100%; /* Full-width */
-	border: 1px solid #ddd; /* Add a grey border */
-	font-size: 18px; /* Increase font-size */
-}
-
-#myTable th, #myTable td {
-	text-align: left; /* Left-align text */
-	padding: 12px; /* Add padding */
-}
-
-#myTable tr {
-	/* Add a bottom border to all table rows */
-	border-bottom: 1px solid #ddd;
-}
-
-#myTable tr.header, #myTable tr:hover {
-	/* Add a grey background color to the table header and on hover */
-	background-color: #f1f1f1;
-}
-
-</style>
-
-
-<script>
-	function myFunction() {
-		// Declare variables 
-		var input, filter, table, tr, td, i;
-		input = document.getElementById("myInput");
-		filter = input.value.toUpperCase();
-		table = document.getElementById("myTable");
-		tr = table.getElementsByTagName("tr");
-
-		// Loop through all table rows, and hide those who don't match the search query
-		for (i = 0; i < tr.length; i++) {
-			td = tr[i].getElementsByTagName("td")[0];
-			if (td) {
-				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-					tr[i].style.display = "";
-				} else {
-					tr[i].style.display = "none";
-				}
-			}
-		}
-	}
-</script>
-
-</@layout.Layout>
+</div>
+</div>
+</@layout.peasyLayout>

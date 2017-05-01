@@ -1,74 +1,124 @@
 /* Add additional stylesheets below
 -------------------------------------------------- */
 
-footer {
-    padding: 50px 0;
-    background-color: #f8f8f8;
-    
-}
-
- <style>
- /* layout.css Style */
+/* layout.css Style */
 .upload-drop-zone {
-  height: 200px;
-  border-width: 2px;
-  margin-bottom: 20px;
+	height: 200px;
+	border-width: 2px;
+	margin-bottom: 20px;
 }
 
 /* skin.css Style*/
 .upload-drop-zone {
-  color: #ccc;
-  border-style: dashed;
-  border-color: #ccc;
-  line-height: 200px;
-  text-align: center
+	color: #ccc;
+	border-style: dashed;
+	border-color: #ccc;
+	line-height: 200px;
+	text-align: center
 }
+
 .upload-drop-zone.drop {
-  color: #222;
-  border-color: #222;
+	color: #222;
+	border-color: #222;
+}
+
+#calendar {
+	/* 		float: right; */
+	margin: 0 auto;
+	width: 1165px;
+	background-color: #f2f2f2;
+	border-radius: 6px;
+	box-shadow: 0 1px 2px #C3C3C3;
+}
+
+#project {
+	margin: 2%;
+}
+
+/* Css for Filelisting and Uploading */
+#myInput {
+	background-image: url('/css/searchicon.png');
+	/* Add a search icon to input */
+	background-position: 10px 12px; /* Position the search icon */
+	background-repeat: no-repeat; /* Do not repeat the icon image */
+	width: 30%;
+	Full-width font-size: 16px; /* Increase font-size */
+	padding: 12px 20px 12px 40px; /* Add some padding */
+	border: 1px solid #ddd; /* Add a grey border */
+	margin-bottom: 12px; /* Add some space below the input */
+}
+
+#myTable {
+	border-collapse: collapse; /* Collapse borders */
+	width: 100%; /* Full-width */
+	border: 1px solid #ddd; /* Add a grey border */
+	font-size: 18px; /* Increase font-size */
+}
+
+#myTable th, #myTable td {
+	text-align: left; /* Left-align text */
+	padding: 12px; /* Add padding */
+}
+
+#myTable tr {
+	/* Add a bottom border to all table rows */
+	border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+	/* Add a grey background color to the table header and on hover */
+	background-color: #f1f1f1;
 }
 
 /* dashboard.css Style*/
 .chat {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.chat li {
-  margin-bottom: 10px;
-  padding-bottom: 5px;
-  border-bottom: 1px dotted #999999;
-}
-.huge {
-  font-size: 40px;
-}
-.panel-green {
-  border-color: #5cb85c;
-}
-.panel-green > .panel-heading {
-  border-color: #5cb85c;
-  color: white;
-  background-color: #5cb85c;
-}
-.panel-green > a {
-  color: #5cb85c;
-}
-.panel-green > a:hover {
-  color: #3d8b3d;
-}
-.panel-yellow {
-  border-color: #f0ad4e;
-}
-.panel-yellow > .panel-heading {
-  border-color: #f0ad4e;
-  color: white;
-  background-color: #f0ad4e;
-}
-.panel-yellow > a {
-  color: #f0ad4e;
-}
-.panel-yellow > a:hover {
-  color: #df8a13;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
-</style> 
+.chat li {
+	margin-bottom: 10px;
+	padding-bottom: 5px;
+	border-bottom: 1px dotted #999999;
+}
+
+.huge {
+	font-size: 40px;
+}
+
+.panel-green {
+	border-color: #5cb85c;
+}
+
+.panel-green>.panel-heading {
+	border-color: #5cb85c;
+	color: white;
+	background-color: #5cb85c;
+}
+
+.panel-green>a {
+	color: #5cb85c;
+}
+
+.panel-green>a:hover {
+	color: #3d8b3d;
+}
+
+.panel-yellow {
+	border-color: #f0ad4e;
+}
+
+.panel-yellow>.panel-heading {
+	border-color: #f0ad4e;
+	color: white;
+	background-color: #f0ad4e;
+}
+
+.panel-yellow>a {
+	color: #f0ad4e;
+}
+
+.panel-yellow>a:hover {
+	color: #df8a13;
+}
