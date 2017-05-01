@@ -137,6 +137,10 @@ public class UserController {
 		context.getFlashScope().success("logout.success");
 		return Results.redirect("/");
 	}
+	
+	public Result account(Context context){
+		return Results.html();
+	}
 
 	public void setUserManager(UserManager userManager) {
 		this.userManager = userManager;

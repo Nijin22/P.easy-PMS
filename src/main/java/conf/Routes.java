@@ -48,7 +48,6 @@ public class Routes implements ApplicationRoutes {
         //p.easy templates GET
         ///////////////////////////////////////////////////////////////////////          
         //dynamic 
-        router.GET().route("/account").with(ApplicationController::account);
         router.GET().route("/dashboard").with(ApplicationController::dashboard);
         router.GET().route("/forgotPassword").with(ApplicationController::forgotPassword);
         router.GET().route("/myCalender").with(ApplicationController::myCalender);
@@ -63,12 +62,13 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/projects/{projectID}/tasks").with(ApplicationController::tasks);
         router.GET().route("/upload").with(ApplicationController::fileUpload);
 
-        // Handling Registration / Sessions
+        // Handling user specifics + registration + sessions
         router.GET().route("/register").with(UserController::register);
         router.POST().route("/register").with(UserController::registerAction);
         router.GET().route("/login").with(UserController::login);
         router.POST().route("/login").with(UserController::loginAction);
         router.GET().route("/logout").with(UserController::logout);
+        router.GET().route("/account").with(UserController::account);
        
         //static
     	router.GET().route("/").with(ApplicationController::index);
