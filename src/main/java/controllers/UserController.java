@@ -141,7 +141,11 @@ public class UserController {
 
 	@FilterWith(LoginFilter.class)
 	public Result account(Context context) {
-		return Results.html();
+		Result result = Results.html();
+		
+		result.render("formOfAddress", "FORM OF ADDRWESSS HERE");
+		
+		return result;
 	}
 
 	public void setUserManager(UserManager userManager) {
