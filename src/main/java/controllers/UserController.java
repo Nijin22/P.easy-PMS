@@ -144,8 +144,6 @@ public class UserController {
 		Result result = Results.html();
 		PeasyUser user = userManager.getUser(context.getSession().get("email"));
 		
-		System.out.println("debug. FOA:" + user.getFormOfAddress());
-
 		result.render("user", user);
 		if (user.getOrganisation() != null) {
 			result.render("organisation", user.getOrganisation().getName());
