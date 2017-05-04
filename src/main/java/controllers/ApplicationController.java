@@ -57,6 +57,11 @@ public class ApplicationController {
 		return Results.html();
 
 	}
+	
+	public Result editProject() {
+		return Results.html();
+
+	}
 
 	public Result project() {
 		return Results.html();
