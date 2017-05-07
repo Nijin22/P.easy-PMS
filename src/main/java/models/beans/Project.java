@@ -37,6 +37,8 @@ public class Project {
     private PeasyUser projectManager;
     @OneToMany(mappedBy = "project",fetch = FetchType.EAGER)
     private Set<ProjectFile> projectFiles;
+    @OneToMany(mappedBy = "project",fetch = FetchType.EAGER)
+    private Set<Milestone> milestones;
 
     public Project() {
 
@@ -142,10 +144,19 @@ public class Project {
         this.projectFiles = projectFiles;
     }
     
-    
+    public Set<Milestone> getMilestones() {
+		return milestones;
+	}
 
-    
-    @Override
+	public void setMilestones(Set<Milestone> milestones) {
+		this.milestones = milestones;
+	}
+
+	public void setTasks(Set<Task> tasks) {
+		this.tasks = tasks;
+	}
+
+	@Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;

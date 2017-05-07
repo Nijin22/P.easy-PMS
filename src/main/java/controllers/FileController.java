@@ -15,8 +15,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.beans.ProfilePicture;
 import models.beans.ProjectFile;
+import models.beans.Task;
 import models.beans.TaskFile;
 import models.manager.FileManager;
+import models.manager.ProjectManager;
 import models.manager.enums.FileType;
 import ninja.Context;
 import ninja.Renderable;
@@ -38,8 +40,12 @@ public class FileController {
     @Inject
     FileManager fileManager;
 
+    @Inject
+    ProjectManager projectManager;
+
     @Inject 
     NinjaProperties ninjaProperties;
+    
     private static final Logger LOG = Logger.getLogger(FileController.class.getName());
 
     @FileProvider(DiskFileItemProvider.class)
@@ -57,9 +63,11 @@ public class FileController {
         
         if(type.equals("project")){
         	return Results.redirect("/projects/"+idOfOwner);
-        } else if(type.equals("project")){
-        	return Results.redirect("/projects/1/tasks"+idOfOwner);
+        } else if(type.equals("task")){
+        	Task task = projectManager.getTask(Long.parseLong(idOfOwner));
+        	return Results.redirect("/projects/" + task.getProject().getProjectId() + "/tasks/" + idOfOwner);
         }else{
+        	//it is a profilePicture
         	return null;
         }
         
@@ -126,7 +134,14 @@ public class FileController {
                 
         fileManager.deleteFile(Long.parseLong(fileId), type);
         
-        return Results.redirect("/projects/"+idOfOwner);
+        if(type.equals("project")){
+            return Results.redirect("/projects/"+idOfOwner);
+        }else if(type.equals("task")){
+        	Task task = projectManager.getTask(Long.parseLong(idOfOwner));
+        	return Results.redirect("/projects/" + task.getProject().getProjectId() + "/tasks/" + idOfOwner);       
+        }else{
+        	return null;
+        }
 
     }
 

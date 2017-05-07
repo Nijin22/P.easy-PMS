@@ -1,6 +1,8 @@
 package conf;
 
 import java.security.GeneralSecurityException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.inject.Singleton;
 
@@ -10,9 +12,12 @@ import ninja.utils.NinjaProperties;
 import com.google.inject.Inject;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import models.beans.Milestone;
 import models.beans.Organisation;
 
 import models.beans.PeasyUser;
@@ -45,9 +50,10 @@ public class StartupActions {
 
 	/**
 	 * Generates example data (users, project, ...) when using dev or test mode.
+	 * @throws ParseException 
 	 */
 	@Start(order = 50)
-	public void generateDummyDataWhenInTest() {
+	public void generateDummyDataWhenInTest() throws ParseException {
 		if (!ninjaProperties.isProd()) {
 			// as long as we are not in a production environment...
 			try {
@@ -60,6 +66,7 @@ public class StartupActions {
                                 projectManager.updateProject(project.getProjectId(), "Project Description");
                                 projectManager.updateProjectParameters(project.getProjectId(),"2017-08-19","2018-08-19","100000");
                                 System.out.println("Example Project created: " + project.toString());
+                               
                                 //create 3 Blogentries
                                 projectManager.createBlogEntry(project.getProjectId(), manager.getEmailAddress(), "TitleManager", "TextManager");
                                 projectManager.createBlogEntry(project.getProjectId(), user.getEmailAddress(), "TitleUser1", "TextUser1");
@@ -73,8 +80,25 @@ public class StartupActions {
                                 projectManager.addMemberToProject(project.getProjectId(), member2.getEmailAddress());
                                 projectManager.addMemberToProject(project.getProjectId(), member3.getEmailAddress());
                                 
+                                //create Milestones
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                                Date d1 = sdf.parse("21/12/2017");
+                                Date d2 = sdf.parse("01/12/2017");
+                                Milestone milestone1  = projectManager.createMilestone(project.getProjectId(), "Milestone1 ", d1);
+                                Milestone milestone2  = projectManager.createMilestone(project.getProjectId(), "Milestone2 ", d2);
+
+                                //create Tasks
                                 Task task = projectManager.createTask(project.getProjectId(), "Task 1");
-                                projectManager.updateTask(task.getTaskId(), "Task 1", "Description Task 1 ", 80);
+                                projectManager.updateTask(task.getTaskId(), "Task 1", "Description Task 1 ", 80, milestone1.getMileStoneId());
+                                
+                                Task task2 = projectManager.createTask(project.getProjectId(), "Task 2");
+                                projectManager.updateTask(task.getTaskId(), "Task 2", "Description Task 1 ", 20, milestone1.getMileStoneId());
+                                
+                                Task task3 = projectManager.createTask(project.getProjectId(), "Task 3");
+                                projectManager.updateTask(task.getTaskId(), "Task 3", "Description Task 1 ", 10, milestone2.getMileStoneId());
+                                
+                                Task task4 = projectManager.createTask(project.getProjectId(), "Task 4");
+                                projectManager.updateTask(task.getTaskId(), "Task 4", "Description Task 1 ", 0, milestone2.getMileStoneId());
                                 
                                 //Upload 2 Files
                                 File file1 = new File("src/test/resources/StartupFile1.pdf");

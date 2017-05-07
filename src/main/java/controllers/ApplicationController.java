@@ -75,6 +75,7 @@ public class ApplicationController {
         
         //Project Parameters
         result.render("project", project);
+        result.render("milestones", project.getMilestones());
        
         return result;
 	}

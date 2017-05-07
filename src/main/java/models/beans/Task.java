@@ -28,35 +28,11 @@ public class Task implements Serializable {
     private static final long serialVersionUID = 1L;
     @OneToMany(mappedBy = "task",fetch = FetchType.EAGER)
     private Set<TaskFile> taskFiles;
+    @ManyToOne
+    Milestone milestone;
 
     public Task() {
         super();
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (int) (taskId ^ (taskId >>> 32));
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        Task other = (Task) obj;
-        if (taskId != other.taskId) {
-            return false;
-        }
-        return true;
     }
 
     public long getTaskId() {
@@ -123,7 +99,46 @@ public class Task implements Serializable {
         this.taskFiles = taskFiles;
     }
     
-    
+    public Milestone getMilestone() {
+		return milestone;
+	}
 
+	public void setMilestone(Milestone milestone) {
+		this.milestone = milestone;
+	}
+
+	@Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (int) (taskId ^ (taskId >>> 32));
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Task other = (Task) obj;
+        if (taskId != other.taskId) {
+            return false;
+        }
+        return true;
+    }
+
+	@Override
+	public String toString() {
+		return "Task [taskId=" + taskId + ", name=" + name + ", description=" + description + ", progress=" + progress
+				+ ", project=" + project + ", milestone=" + milestone + "]";
+	}
+
+    
 
 }

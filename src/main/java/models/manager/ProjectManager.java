@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.NoSuchElementException;
 
-
+import models.beans.Milestone;
 import models.beans.PeasyUser;
 import models.beans.Project;
 import models.beans.ProjectBlogEntry;
@@ -102,6 +102,80 @@ public class ProjectManager {
         }
     }
     
+    /**
+    *
+    * @param projectId
+    * @param name
+    * @param deadline
+    * @return created Milestone
+    * @throws NoSuchElementException
+    */
+   @Transactional
+   public Milestone createMilestone(long projectId, String name, Date deadline) throws NoSuchElementException {
+       //description can be null, so no exception handling is requiered
+
+       EntityManager entityManager = entitiyManagerProvider.get();
+       Project project = entityManager.find(Project.class, projectId);
+
+       if (project == null) {
+           throw new NoSuchElementException("Project with projectId " + projectId + "is not in the database");
+       } else {
+    	   //create Milestone
+    	   Milestone milestone = new Milestone();
+    	   milestone.setName(name);
+    	   milestone.setDeadline(deadline);
+    	   milestone.setProject(project);
+    	   entityManager.persist(milestone);
+    	   
+    	   //assign Milestone to User
+    	   project.getMilestones().add(milestone);
+           return milestone;
+       }
+   }
+    
+   
+   /**
+   *
+   * @param milestoneId
+   * @return Milestone
+   * @throws NoSuchElementException
+   */
+  @Transactional
+  public  Milestone getMilestone(long milestoneId) throws NoSuchElementException {
+      EntityManager entityManager = entitiyManagerProvider.get();
+      Milestone milestone = entityManager.find(Milestone.class, milestoneId);
+
+      if (milestone == null) {
+          throw new NoSuchElementException("Milestone with milestoneId " + milestoneId + "is not in the database");
+      } else {
+          return milestone;
+      }
+
+  }
+  
+  /**
+*
+* @param milestoneId
+* @param name
+* @param deadline
+* @return updated Milestone
+* @throws NoSuchElementException
+*/
+@Transactional
+public Milestone updateMilestone(long milestoneId, String name, Date deadline) throws NoSuchElementException {
+
+  EntityManager entityManager = entitiyManagerProvider.get();
+  Milestone milestone = entityManager.find(Milestone.class, milestoneId);
+
+  if (milestone == null) {
+      throw new NoSuchElementException("Milestone with milestoneId " + milestoneId + "is not in the database");
+  } else {
+      //set new description to project
+	  milestone.setDeadline(deadline);
+	  milestone.setName(name);
+      return milestone;
+  }
+}
     
         /**
      *
@@ -309,11 +383,12 @@ public class ProjectManager {
      * @param name
      * @param description
      * @param progress
+     * @param milestone
      * @return Updated Task
      * @throws NoSuchElementException
      */
     @Transactional
-    public Task updateTask(long taskId, String name, String description, int progress) throws NoSuchElementException {
+    public Task updateTask(long taskId, String name, String description, int progress, long milestoneId) throws NoSuchElementException {
         //only name can't be null, description and progress can be null
         if (name.isEmpty()) {
             throw new IllegalArgumentException("Name can't be empty");
@@ -321,6 +396,8 @@ public class ProjectManager {
 
         EntityManager entityManager = entitiyManagerProvider.get();
         Task task = entityManager.find(Task.class, taskId);
+        Milestone milestone = entityManager.find(Milestone.class, milestoneId);
+
 
         if (task == null) {
             throw new NoSuchElementException("Task with taskId " + taskId + "is not in the database");
@@ -328,6 +405,8 @@ public class ProjectManager {
             task.setName(name);
             task.setDescription(description);
             task.setProgress(progress);
+            task.setMilestone(milestone);
+            milestone.getTasks().add(task);
             return task;
         }
     }
