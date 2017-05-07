@@ -246,12 +246,12 @@ public class ProjectManagerTest extends NinjaTest {
             assertEquals(projectTasks.size(), 1);
            
             //test assign user to Task 
-            Task taskUserAssign = pm.assignUserToTask(createdProject.getProjectId(),manager.getEmailAddress());
+            Task taskUserAssign = pm.assignUserToTask(projectTaskUpdated.getTaskId(),manager.getEmailAddress());
             log.log(Level.INFO, "Size of Users in Task: {0}", taskUserAssign.getUsers().size());
             assertEquals(taskUserAssign.getUsers().size(), 1);
             
             //test unassign user to Task 
-            Task taskUserUnassign = pm.unassignUserFromTask(createdProject.getProjectId(),manager.getEmailAddress());
+            Task taskUserUnassign = pm.unassignUserFromTask(projectTaskUpdated.getTaskId(),manager.getEmailAddress());
             log.log(Level.INFO, "Size of Users in Task: {0}", taskUserAssign.getUsers().size());
             assertEquals(taskUserUnassign.getUsers().size(), 0);
 

@@ -69,6 +69,9 @@ public class UserManager {
 		}
 
 	}
+	
+	
+	
 
 	/**
 	 * Retrieve a user from the database / cache
@@ -106,6 +109,28 @@ public class UserManager {
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
 		user.setFormOfAddress(formOfAddress);
+
+		return user;
+	}
+	
+	
+	/**
+	 * Update a user in the database. Note, that you NEED to supply all fields.
+	 * If they are left empty, they will be overwritten to empty.
+	 * 
+	 * @param email
+	 * @param firstName
+	 * @param lastName
+	 * @param formOfAddress
+	 * @return The updated user
+	 */
+	@Transactional
+	public PeasyUser updateUserFromOrg(String email, String firstName, String lastName) {
+		EntityManager entityManager = entitiyManagerProvider.get();
+		PeasyUser user = entityManager.find(PeasyUser.class, email);
+
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
 
 		return user;
 	}

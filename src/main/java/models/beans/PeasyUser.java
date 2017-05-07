@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.lang.String;
 import javax.persistence.*;
 import models.beans.Project;
+
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -22,7 +24,7 @@ public class PeasyUser implements Serializable {
     private String formOfAddress;
     private String passwordInDb;
     private static final long serialVersionUID = 1L;
-    @ManyToMany(mappedBy = "projectMembers")
+    @ManyToMany(mappedBy = "projectMembers",fetch = FetchType.EAGER)
     private Set<Project> projects;
     @ManyToMany(mappedBy = "users")
     private Set<Task> tasks;

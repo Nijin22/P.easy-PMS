@@ -7,6 +7,10 @@ import javax.persistence.EntityManager;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.persist.Transactional;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.NoSuchElementException;
 
 
@@ -94,6 +98,34 @@ public class ProjectManager {
         } else {
             //set new description to project
             project.setDescription(description);
+            return project;
+        }
+    }
+    
+    
+        /**
+     *
+     * @param projectId
+     * @param start
+     * @param deadline
+     * @param budget
+     * @return updated Project
+     * @throws NoSuchElementException
+     */
+    @Transactional
+    public Project updateProjectParameters(long projectId, String start, String deadline, String budget) throws NoSuchElementException {
+        //description can be null, so no exception handling is requiered
+
+        EntityManager entityManager = entitiyManagerProvider.get();
+        Project project = entityManager.find(Project.class, projectId);
+
+        if (project == null) {
+            throw new NoSuchElementException("Project with projectId " + projectId + "is not in the database");
+        } else {
+            //set new description to project
+            project.setBudget(budget);
+            project.setDeadline(deadline);
+            project.setStart(start);
             return project;
         }
     }
@@ -397,6 +429,11 @@ public class ProjectManager {
         }
 
         ProjectBlogEntry blogEntry = new ProjectBlogEntry();
+        
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        
+        blogEntry.setCreationDate(dateFormat.format(date));
         blogEntry.setTitle(title);
         blogEntry.setText(text);
         blogEntry.setAuthor(author);

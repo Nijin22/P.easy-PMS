@@ -50,6 +50,25 @@ public class OrganisationManager {
         
         return organisation;
     }
+    
+        /**
+     *
+     * @param id
+     * @return organization bean
+     * @throws NoSuchElementException
+     */
+    @Transactional
+    public Organisation getOrganisation(int id)throws NoSuchElementException {
+        
+        EntityManager entityManager = entitiyManagerProvider.get();
+        Organisation organisation = entityManager.find(Organisation.class, id);
+
+        if (organisation == null) {
+            throw new NoSuchElementException("Organisation with id " + id + "is not in the database");
+        } else {
+            return organisation;
+        }
+    }
 
     /**
      *
@@ -124,13 +143,15 @@ public class OrganisationManager {
         
         EntityManager entityManager = entitiyManagerProvider.get();
         Organisation organisation = entityManager.find(Organisation.class, organisationId);
+        PeasyUser peasyUser = entityManager.find(PeasyUser.class, user.getEmailAddress());
+
         
         if (organisation == null) {
             throw new NoSuchElementException();
         } else {
             //add User to organization
             organisation.getUsers().add(user);
-            user.setOrganisation(organisation);
+            peasyUser.setOrganisation(organisation);
             return organisation;
         }
         
@@ -144,19 +165,23 @@ public class OrganisationManager {
      * @throws IllegalArgumentException
      */
     @Transactional
-    public Organisation removeUser(int organisationId, PeasyUser user) throws IllegalArgumentException {
+    public Organisation removeUser(int organisationId, String email) throws IllegalArgumentException {
         //check bean user is not null
-        if (user == null) {
+        if (email.isEmpty()) {
             throw new IllegalArgumentException();
         }
         
         EntityManager entityManager = entitiyManagerProvider.get();
         Organisation organisation = entityManager.find(Organisation.class, organisationId);
+        PeasyUser user = entityManager.find(PeasyUser.class, email);
+
         
         if (organisation == null) {
-            throw new NoSuchElementException();
-        } else {
-            //add User to organization
+            throw new NoSuchElementException("No Organisation found in database!");
+        }else if(user == null){
+        	throw new NoSuchElementException("No User found in database!");
+        }else {
+            //remove User from organization
             organisation.getUsers().remove(user);
             user.setOrganisation(null);
             return organisation;

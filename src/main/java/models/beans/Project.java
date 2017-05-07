@@ -1,5 +1,6 @@
 package models.beans;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -23,11 +24,14 @@ public class Project {
     private String name;
     private String description;
     private ProjectStatus status;
+    private String start;
+    private String deadline;
+    private String budget;
     @OneToMany(mappedBy = "project",fetch = FetchType.EAGER)
     private Set<Task> tasks;
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project",fetch = FetchType.EAGER)
     private Set<ProjectBlogEntry> blogEntries;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<PeasyUser> projectMembers;
     @ManyToOne
     private PeasyUser projectManager;
@@ -102,6 +106,30 @@ public class Project {
         return projectManager;
     }
 
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
+    public String getBudget() {
+        return budget;
+    }
+
+    public void setBudget(String budget) {
+        this.budget = budget;
+    }
+
     public void setProjectManager(PeasyUser projectManager) {
         this.projectManager = projectManager;
     }
@@ -149,8 +177,10 @@ public class Project {
 
     @Override
     public String toString() {
-        return "Project{" + "projectId=" + projectId + ", name=" + name + ", status=" + status + '}';
+        return "Project{" + "projectId=" + projectId + ", name=" + name + ", description=" + description + ", status=" + status + ", start=" + start + ", deadline=" + deadline + ", budget=" + budget + '}';
     }
+
+
 
 
     
