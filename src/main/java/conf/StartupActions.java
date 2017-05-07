@@ -92,13 +92,13 @@ public class StartupActions {
                                 projectManager.updateTask(task.getTaskId(), "Task 1", "Description Task 1 ", 80, milestone1.getMileStoneId());
                                 
                                 Task task2 = projectManager.createTask(project.getProjectId(), "Task 2");
-                                projectManager.updateTask(task.getTaskId(), "Task 2", "Description Task 1 ", 20, milestone1.getMileStoneId());
+                                projectManager.updateTask(task2.getTaskId(), "Task 2", "Description Task 1 ", 20, milestone1.getMileStoneId());
                                 
                                 Task task3 = projectManager.createTask(project.getProjectId(), "Task 3");
-                                projectManager.updateTask(task.getTaskId(), "Task 3", "Description Task 1 ", 10, milestone2.getMileStoneId());
+                                projectManager.updateTask(task3.getTaskId(), "Task 3", "Description Task 1 ", 10, milestone2.getMileStoneId());
                                 
                                 Task task4 = projectManager.createTask(project.getProjectId(), "Task 4");
-                                projectManager.updateTask(task.getTaskId(), "Task 4", "Description Task 1 ", 0, milestone2.getMileStoneId());
+                                projectManager.updateTask(task4.getTaskId(), "Task 4", "Description Task 1 ", 0, milestone2.getMileStoneId());
                                 
                                 //Upload 2 Files
                                 File file1 = new File("src/test/resources/StartupFile1.pdf");
