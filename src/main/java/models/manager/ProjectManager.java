@@ -255,7 +255,7 @@ public Milestone updateMilestone(long milestoneId, String name, Date deadline) t
      * @return Tasks of a Project
      * @throws NoSuchElementException
      */
-    @UnitOfWork
+    @Transactional
     public Set<Task> getProjectTasks(long projectId) throws NoSuchElementException {
         EntityManager entityManager = entitiyManagerProvider.get();
         Project project = entityManager.find(Project.class, projectId);
@@ -390,7 +390,7 @@ public Milestone updateMilestone(long milestoneId, String name, Date deadline) t
     @Transactional
     public Task updateTask(long taskId, String name, String description, int progress, long milestoneId) throws NoSuchElementException {
         //only name can't be null, description and progress can be null
-        if (name.isEmpty()) {
+        if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Name can't be empty");
         }
 

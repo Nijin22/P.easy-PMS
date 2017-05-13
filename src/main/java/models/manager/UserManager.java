@@ -162,7 +162,7 @@ public class UserManager {
 	 * @return true, if login is okay!
 	 * @throws GeneralSecurityException
 	 */
-	@UnitOfWork
+	@Transactional
 	public boolean verifyLogin(String email, String passwordCleartext) throws GeneralSecurityException {
 		EntityManager entityManager = entitiyManagerProvider.get();
 		PeasyUser user = entityManager.find(PeasyUser.class, email);
@@ -184,7 +184,7 @@ public class UserManager {
 	 *            The email address of the user
 	 * @return
 	 */
-	@UnitOfWork
+	@Transactional
 	public Set<Project> getProjectsWhereUserIsMember(String email) {
 		EntityManager entityManager = entitiyManagerProvider.get();
 		PeasyUser user = entityManager.find(PeasyUser.class, email);

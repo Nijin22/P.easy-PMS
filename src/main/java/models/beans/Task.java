@@ -2,6 +2,7 @@ package models.beans;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -21,13 +22,14 @@ public class Task implements Serializable {
     private float progress;
     @ManyToOne
     private Project project;
+    
     @ManyToMany
-    private Set<PeasyUser> users;
+    private Set<PeasyUser> users = new HashSet<>();
     @OneToMany(mappedBy = "task")
-    private Set<TaskBlogEntry> blogEntries;
+    private Set<TaskBlogEntry> blogEntries = new HashSet<>();
     private static final long serialVersionUID = 1L;
-    @OneToMany(mappedBy = "task",fetch = FetchType.EAGER)
-    private Set<TaskFile> taskFiles;
+    @OneToMany(mappedBy = "task")
+    private Set<TaskFile> taskFiles= new HashSet<>();
     @ManyToOne
     Milestone milestone;
 

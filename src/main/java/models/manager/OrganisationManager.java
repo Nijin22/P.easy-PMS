@@ -167,7 +167,7 @@ public class OrganisationManager {
     @Transactional
     public Organisation removeUser(int organisationId, String email) throws IllegalArgumentException {
         //check bean user is not null
-        if (email.isEmpty()) {
+        if (email == null || email.isEmpty()) {
             throw new IllegalArgumentException();
         }
         

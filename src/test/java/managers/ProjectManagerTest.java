@@ -6,10 +6,15 @@
 package managers;
 
 import java.security.GeneralSecurityException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import models.beans.Milestone;
 import models.beans.PeasyUser;
 import models.beans.Project;
 import models.beans.ProjectBlogEntry;
@@ -128,14 +133,14 @@ public class ProjectManagerTest extends NinjaTest {
     public void testUpdateTaskException2() {
         ProjectManager pm = getInjector().getInstance(ProjectManager.class);
         log.info("Start Testing Fail Test 1: name is null");
-        pm.updateTask(111222333, "","Description",0);
+        pm.updateTask(111222333, "","Description",0,0);
     }
 
     @Test(expected = NoSuchElementException.class)
     public void testUpdateTaskException1() {
         ProjectManager pm = getInjector().getInstance(ProjectManager.class);
         log.info("Start Testing Fail Test 1: task does not exist in database");
-        pm.updateTask(111222333,"Task 1","Description",90);
+        pm.updateTask(111222333,"Task 1","Description",90,0);
     }
     
     @Test(expected = NoSuchElementException.class)
@@ -235,9 +240,16 @@ public class ProjectManagerTest extends NinjaTest {
             //test get task
             Task projectgetTask = pm.getTask(projectCreatedTask.getTaskId());
             assertEquals(projectgetTask.getName(), projectCreatedTask.getName());
-
+           
+            //create Date for Milestone
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date d1 = sdf.parse("21/12/2017");
+            
+            //create Milsestone
+            Milestone milestone= pm.createMilestone(createdProject.getProjectId(), "Milestone1", d1);
+            
             //test update task
-            Task projectTaskUpdated = pm.updateTask(projectCreatedTask.getTaskId(),"Task 1","description",80);
+            Task projectTaskUpdated = pm.updateTask(projectCreatedTask.getTaskId(),"Task 1","description",80, milestone.getMileStoneId());
             assertEquals(projectTaskUpdated.getDescription(), "description");
             
             //test get Project tasks
@@ -273,14 +285,17 @@ public class ProjectManagerTest extends NinjaTest {
             pm.deleteTask(projectCreatedTask.getTaskId());
             //check with integration test, wether task is deleted
             
-            //delete project
-            pm.deleteProject(createdProject.getProjectId());
+            //delete project, is not supported
+            //pm.deleteProject(createdProject.getProjectId());
             //check with integration test, wether project is deleted
 
             
         } catch (GeneralSecurityException | UserAlreadyExistsException e) {
             fail(e.getMessage());
-        }
+        } catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
     }
 

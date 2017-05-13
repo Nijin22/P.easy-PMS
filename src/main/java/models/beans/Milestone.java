@@ -1,6 +1,7 @@
 package models.beans;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -24,8 +25,8 @@ public class Milestone {
 	private float progress;
 	@ManyToOne
 	private Project project;
-	@OneToMany(mappedBy = "milestone", fetch = FetchType.EAGER)
-	private Set<Task> tasks;
+	@OneToMany(mappedBy = "milestone")
+	private Set<Task> tasks = new HashSet<>();
 	
 	public Long getMileStoneId() {
 		return mileStoneId;

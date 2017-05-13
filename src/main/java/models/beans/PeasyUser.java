@@ -24,10 +24,10 @@ public class PeasyUser implements Serializable {
     private String formOfAddress;
     private String passwordInDb;
     private static final long serialVersionUID = 1L;
-    @ManyToMany(mappedBy = "projectMembers",fetch = FetchType.EAGER)
-    private Set<Project> projects;
+    @ManyToMany(mappedBy = "projectMembers")
+    private Set<Project> projects = new HashSet<>();
     @ManyToMany(mappedBy = "users")
-    private Set<Task> tasks;
+    private Set<Task> tasks = new HashSet<>();
     @OneToMany(mappedBy = "projectManager")
     private Set<Project> projectsWhereUserIsManager;
     @ManyToOne()

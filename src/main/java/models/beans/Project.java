@@ -27,18 +27,19 @@ public class Project {
     private String start;
     private String deadline;
     private String budget;
-    @OneToMany(mappedBy = "project",fetch = FetchType.EAGER)
-    private Set<Task> tasks;
-    @OneToMany(mappedBy = "project",fetch = FetchType.EAGER)
-    private Set<ProjectBlogEntry> blogEntries;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<PeasyUser> projectMembers;
+    
+    @OneToMany(mappedBy = "project")
+    private Set<Task> tasks = new HashSet<>();
+    @OneToMany(mappedBy = "project")
+    private Set<ProjectBlogEntry> blogEntries = new HashSet<>();
+    @ManyToMany()
+    private Set<PeasyUser> projectMembers = new HashSet<>();
     @ManyToOne
     private PeasyUser projectManager;
-    @OneToMany(mappedBy = "project",fetch = FetchType.EAGER)
-    private Set<ProjectFile> projectFiles;
-    @OneToMany(mappedBy = "project",fetch = FetchType.EAGER)
-    private Set<Milestone> milestones;
+    @OneToMany(mappedBy = "project")
+    private Set<ProjectFile> projectFiles = new HashSet<>();
+    @OneToMany(mappedBy = "project")
+    private Set<Milestone> milestones = new HashSet<>();
 
     public Project() {
 
