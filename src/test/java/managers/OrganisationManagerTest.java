@@ -88,7 +88,7 @@ public class OrganisationManagerTest extends NinjaTest {
     public void testUpdateOrganisationUserAddException2() {
         OrganisationManager om = getInjector().getInstance(OrganisationManager.class);
         log.info("Start Testing Fail Test 2: organisation does not exist in database");
-        om.addUser(111222333, new PeasyUser());
+        om.addUser(111222333, new PeasyUser("","","",""));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -98,11 +98,11 @@ public class OrganisationManagerTest extends NinjaTest {
         om.removeUser(111222333, null);
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testUpdateOrganisationUserRemoveException2() {
         OrganisationManager om = getInjector().getInstance(OrganisationManager.class);
         log.info("Start Testing Fail Test 2: organisation does not exist in database");
-        om.removeUser(111222333, new PeasyUser());
+        om.removeUser(111222333, "");
     }
 
     @Test
@@ -132,7 +132,7 @@ public class OrganisationManagerTest extends NinjaTest {
             assertTrue(updatedOrgUserAdd.getUsers().contains(admin));
 
             //Test Add user to Organisation
-            Organisation updatedOrgUserRemove = om.removeUser(createdOrg.getOrganisationId(), admin);
+            Organisation updatedOrgUserRemove = om.removeUser(createdOrg.getOrganisationId(), admin.getEmailAddress());
             assertFalse(updatedOrgUserRemove.getUsers().contains(admin));
             
             

@@ -2,6 +2,7 @@ package models.beans;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -20,8 +21,8 @@ public class Organisation implements Serializable {
     private String name;
     @OneToOne
     private PeasyUser organisationAdmin;
-    @OneToMany(mappedBy = "organisation")
-    private Set<PeasyUser> users;
+    @OneToMany(mappedBy = "organisation",fetch = FetchType.EAGER)
+    private Set<PeasyUser> users = new HashSet<>();
     private static final long serialVersionUID = 1L;
 
     public Organisation() {
@@ -62,7 +63,7 @@ public class Organisation implements Serializable {
 
     @Override
     public String toString() {
-        return "Organisation{" + "organisationId=" + organisationId + ", name=" + name + ", organisationAdmin=" + organisationAdmin.toString() + ", userSize=" + users.size() + '}';
+        return "Organisation{" + "organisationId=" + organisationId + ", name=" + name + ", organisationAdmin=" + organisationAdmin.toString() + '}';
     }
     
       @Override
