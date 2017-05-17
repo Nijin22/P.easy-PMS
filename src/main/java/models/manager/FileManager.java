@@ -106,7 +106,8 @@ public class FileManager {
         }
 
         if (saveFile.exists()) {
-            log.log(Level.WARNING, "File with Filename {0} exists already!", saveFile.getName());
+            //saveFile.delete();
+            log.log(Level.WARNING, "File with Filename {0} exists already! ", saveFile.getName());
             throw new IllegalArgumentException("File with Filename " + saveFile.getName() + " exists already!");
         }
         saveFile.createNewFile();
@@ -396,7 +397,7 @@ public class FileManager {
         projectFile.setProject(null);
 
         entityManager.remove(projectFile);
-
+        
         log.log(Level.INFO, projectFile.toString());
 
     }

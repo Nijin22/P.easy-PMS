@@ -45,23 +45,23 @@
 </head>
 <div id="project">
 	<div class="page-header">
-		<h1>${i18n("report.header")}</h1>
+		<h1>${project.name} - ${i18n("report.header")}</h1>
 	</div>
 	<div class="container">
 		<div class="row">
 			<div role="tabpanel">
 				<div class="col-sm-3">
 					<ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
-						<li role="presentation" class="brand-nav"><a
-							href="/projects/123">${i18n("projectsidebar.overview")}</a></li>
-						<li role="presentation" class="brand-nav"><a
-							href="/projects/123/tasks/123">${i18n("projectsidebar.taskoverview")}</a></li>
-						<li role="presentation" class="brand-nav"><a
-							href="/projects/123/members">${i18n("projectsidebar.members")}</a></li>
-						<li role="presentation" class="brand-nav active"><a
-							href="/projects/123/report">${i18n("projectsidebar.report")}</a></li>
-						<li role="presentation" class="brand-nav"><a
-							href="/projects/123/milestones">${i18n("projectsidebar.milestones")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}">${i18n("projectsidebar.overview")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}/tasks/1">${i18n("projectsidebar.taskoverview")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}/members" >${i18n("projectsidebar.members")}</a></li>
+							<li role="presentation" class="brand-nav active"><a
+								href="/projects/${project.projectId}/report">${i18n("projectsidebar.report")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}/milestones">${i18n("projectsidebar.milestones")}</a></li>
 					</ul>
 				</div>
 				<div class="col-sm-9">

@@ -69,6 +69,9 @@ public class UserManager {
 		}
 
 	}
+	
+	
+	
 
 	/**
 	 * Retrieve a user from the database / cache
@@ -109,6 +112,28 @@ public class UserManager {
 
 		return user;
 	}
+	
+	
+	/**
+	 * Update a user in the database. Note, that you NEED to supply all fields.
+	 * If they are left empty, they will be overwritten to empty.
+	 * 
+	 * @param email
+	 * @param firstName
+	 * @param lastName
+	 * @param formOfAddress
+	 * @return The updated user
+	 */
+	@Transactional
+	public PeasyUser updateUserFromOrg(String email, String firstName, String lastName) {
+		EntityManager entityManager = entitiyManagerProvider.get();
+		PeasyUser user = entityManager.find(PeasyUser.class, email);
+
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+
+		return user;
+	}
 
 	/**
 	 * Updates the password of a user
@@ -137,7 +162,7 @@ public class UserManager {
 	 * @return true, if login is okay!
 	 * @throws GeneralSecurityException
 	 */
-	@UnitOfWork
+	@Transactional
 	public boolean verifyLogin(String email, String passwordCleartext) throws GeneralSecurityException {
 		EntityManager entityManager = entitiyManagerProvider.get();
 		PeasyUser user = entityManager.find(PeasyUser.class, email);
@@ -159,7 +184,7 @@ public class UserManager {
 	 *            The email address of the user
 	 * @return
 	 */
-	@UnitOfWork
+	@Transactional
 	public Set<Project> getProjectsWhereUserIsMember(String email) {
 		EntityManager entityManager = entitiyManagerProvider.get();
 		PeasyUser user = entityManager.find(PeasyUser.class, email);

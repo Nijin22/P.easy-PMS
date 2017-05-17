@@ -18,8 +18,8 @@ public abstract class BlogEntry implements Serializable {
 	private int BlogEntryId;
 	private String title;
 	private String text;
-	private Date creationDate;
-	@ManyToOne(fetch = FetchType.LAZY)
+	private String creationDate;
+	@ManyToOne(fetch = FetchType.EAGER)
 	private PeasyUser author;
 	private static final long serialVersionUID = 1L;
 
@@ -73,11 +73,11 @@ public abstract class BlogEntry implements Serializable {
 		this.text = text;
 	}
 
-	public Date getCreationDate() {
+	public String getCreationDate() {
 		return this.creationDate;
 	}
 
-	public void setCreationDate(Date creationDate) {
+	public void setCreationDate(String creationDate) {
 		this.creationDate = creationDate;
 	}
 

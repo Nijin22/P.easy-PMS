@@ -4,24 +4,24 @@
 	<div id="wrapper">
 		<div id="page-wrapper">
 			<div class="page-header">
-				<h1>${i18n("milestones.header")}</h1>
+				<h1>${project.name} - ${i18n("milestones.header")}</h1>
 			</div>
 			<div class="container">
 				<div class="row">
 					<div role="tabpanel">
 						<div class="col-sm-3">
-							<ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
-								<li role="presentation" class="brand-nav"><a
-									href="/projects/123">${i18n("projectsidebar.overview")}</a></li>
-								<li role="presentation" class="brand-nav"><a
-									href="/projects/123/tasks/123">${i18n("projectsidebar.taskoverview")}</a></li>
-								<li role="presentation" class="brand-nav"><a
-									href="/projects/123/members">${i18n("projectsidebar.members")}</a></li>
-								<li role="presentation" class="brand-nav"><a
-									href="/projects/123/report">${i18n("projectsidebar.report")}</a></li>
-								<li role="presentation" class="brand-nav active"><a
-									href="/projects/123/milestones">${i18n("projectsidebar.milestones")}</a></li>
-							</ul>
+					<ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}">${i18n("projectsidebar.overview")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}/tasks/1">${i18n("projectsidebar.taskoverview")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}/members" >${i18n("projectsidebar.members")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}/report">${i18n("projectsidebar.report")}</a></li>
+							<li role="presentation" class="brand-nav active"><a
+								href="/projects/${project.projectId}/milestones">${i18n("projectsidebar.milestones")}</a></li>
+					</ul>
 						</div>
 						<div class="col-sm-9">
 							<div class="btn-toolbar">
@@ -31,7 +31,6 @@
     <table class="table">
       <thead>
         <tr>
-          <th>#</th>
           <th>Milestone</th>
           <th>In Time</th>
           <th>Status</th>
@@ -42,19 +41,30 @@
         </tr>
       </thead>
       <tbody>
+      <#list milestones as milestone>
         <tr>
+<<<<<<< HEAD
           <td>1</td>
           <td>Ninja Frame 1 finished</td>
            <td style="color:#00cd66">In Time</td>
+=======
+          <td>${milestone.name}</td>
+          <td>In Time</td>
+>>>>>>> dev
           <td>90%</td>
-			<td>22 Days</td>
-			<td>Task 3</td>
-			<td>22.08.2017</td>
+		  <td>22 Days</td>
+		  <td>
+			<#list milestone.tasks as task>
+			${task.name}
+			</#list>
+		  </td>
+		  <td>${milestone.deadline}</td>
           <td>
               <a href="user.html"><i class="icon-pencil"></i></a>
               <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
           </td>
         </tr>
+<<<<<<< HEAD
         <tr>
           <td>2</td>
           <td>Ninja Pages finished</td>
@@ -95,6 +105,10 @@
           </td>
         </tr>
       </tbody>
+=======
+        </#list>
+        </tbody>
+>>>>>>> dev
     </table>
 </div>
 									</div>
