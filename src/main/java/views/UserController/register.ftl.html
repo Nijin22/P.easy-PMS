@@ -1,90 +1,92 @@
-	<#import "../layout/peasyLayout.ftl.html" as layout>
-	<@layout.peasyLayout "Register">
-	
-    <div id="legend">
-      <legend class="">${i18n('register.panelTitle')}</legend>
-    </div>
-    
 
-    
-    
-    <form class="form-horizontal" action='' method="POST">
-        <div class="control-group">
-  <label class="control-label" for="title">${i18n('register.title')}</label>
-  <div class="controls">
-    <select id="title" name="title" class="form-control">
-      <option value="Miss">${i18n('register.titleMiss')}</option>
-      <option value="Mr">${i18n('register.titleMr')}</option>
-      <option value="Mrs">${i18n('register.titleMrs')}</option>
-      <option value="Ms">${i18n('register.titleMs')}</option>
-      <option value="Dr">${i18n('register.titleDr')}</option>
-      <option value="Other">${i18n('register.titleOther')}</option>
-    </select>
-    <p class="help-block">${i18n('register.descriptionTitle')}</p>
-  </div>
+<#import "../layout/peasyLayout.ftl.html" as layout>
+<@layout.peasyLayout "Register">
+
+<div id="legend">
+	<legend class="">${i18n('register.panelTitle')}</legend>
 </div>
-    
-    
-    
-    
-  
-    
-    
-    <div class="control-group">
-      <!-- Username -->
-      <label class="control-label"  for="first_name">${i18n('register.firstName')}</label>
-      <div class="controls">
-        <input type="text" id="first_name" name="first_name" placeholder="" class="form-control">
-        <p class="help-block">${i18n('register.descriptionFirstName')}</p>
-      </div>
-    </div>
-    
-    <div class="control-group">
-      <!-- Username -->
-      <label class="control-label"  for="last_name">${i18n('register.lastName')}</label>
-      <div class="controls">
-        <input type="text" id="last_name" name="last_name" placeholder="" class="form-control">
-        <p class="help-block">${i18n('register.descriptionLastName')}</p>
-      </div>
-    </div>
- 
-    <div class="control-group">
-      <!-- E-mail -->
-      <label class="control-label" for="email">${i18n('register.EmailAdress')}</label>
-      <div class="controls">
-        <input type="text" id="email" name="email" placeholder="" class="form-control">
-        <p class="help-block">${i18n('register.descriptionEmail')}</p>
-      </div>
-    </div>
- 
-    <div class="control-group">
-      <!-- Password-->
-      <label class="control-label" for="password">${i18n('register.password')}</label>
-      <div class="controls">
-        <input type="password" id="password" name="password" placeholder="" class="form-control">
-        <p class="help-block">${i18n('register.descriptionPassword')}</p>
-      </div>
-    </div>
- 
-    <div class="control-group">
-      <!-- Password -->
-      <label class="control-label"  for="password_confirm">${i18n('register.confirmPassword')}</label>
-      <div class="controls">
-        <input type="password" id="password_confirmation" name="password_confirmation" placeholder="" class="form-control">
-        <p class="help-block">${i18n('register.descriptionConfirmPassword')}</p>
-      </div>
-    </div>
- 
-    <div class="control-group">
-      <!-- Button -->
-      <div class="controls">
-        <button class="btn btn-success">${i18n('register.registerButton')}</button>
-      </div>
-    </div>
-    
-     </form>
 
 
 
-	
+
+<form class="form-horizontal" action='' method="POST">
+
+	<div class="control-group">
+		<label class="control-label" for="title">${i18n('register.title')}</label>
+		<div class="controls">
+			<select id="title" name="title" class="form-control">
+				<option value="Miss">${i18n('register.titleMiss')}</option>
+				<option value="Mr">${i18n('register.titleMr')}</option>
+				<option value="Mrs">${i18n('register.titleMrs')}</option>
+				<option value="Ms">${i18n('register.titleMs')}</option>
+				<option value="Dr">${i18n('register.titleDr')}</option>
+				<option value="Other">${i18n('register.titleOther')}</option>
+			</select>
+			<p class="help-block">${i18n('register.descriptionTitle')}</p>
+		</div>
+	</div>
+
+
+	<div class="control-group">
+		<!-- Username -->
+		<label class="control-label" for="first_name">${i18n('register.firstName')}</label>
+		<div class="controls">
+			<input type="text" id="first_name" name="first_name" placeholder=""
+				class="form-control">
+			<p class="help-block">${i18n('register.descriptionFirstName')}</p>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<!-- Username -->
+		<label class="control-label" for="last_name">${i18n('register.lastName')}</label>
+		<div class="controls">
+			<input type="text" id="last_name" name="last_name" placeholder=""
+				class="form-control">
+			<p class="help-block">${i18n('register.descriptionLastName')}</p>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<!-- E-mail -->
+		<label class="control-label" for="email">${i18n('register.EmailAdress')}</label>
+		<div class="controls">
+			<input type="text" id="email" name="email" placeholder=""
+				class="form-control">
+			<p class="help-block">${i18n('register.descriptionEmail')}</p>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<!-- Password-->
+		<label class="control-label" for="password">${i18n('register.password')}</label>
+		<div class="controls">
+			<input type="password" id="password" name="password" placeholder=""
+				class="form-control">
+			<p class="help-block">${i18n('register.descriptionPassword')}</p>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<!-- Password -->
+		<label class="control-label" for="password_confirm">${i18n('register.confirmPassword')}</label>
+		<div class="controls">
+			<input type="password" id="password_confirmation"
+				name="password_confirmation" placeholder="" class="form-control">
+			<p class="help-block">${i18n('register.descriptionConfirmPassword')}</p>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<!-- Button -->
+		<div class="controls">
+			<button class="btn btn-success">${i18n('register.registerButton')}</button>
+		</div>
+	</div>
+
+</form>
+
+
+
+
 </@layout.peasyLayout>
