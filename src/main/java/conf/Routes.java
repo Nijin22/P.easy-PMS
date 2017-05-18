@@ -52,12 +52,7 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/dashboard").with(ApplicationController::dashboard);
         router.GET().route("/forgotPassword").with(ApplicationController::forgotPassword);
         router.GET().route("/myCalender").with(ApplicationController::myCalender);
-<<<<<<< HEAD
-        router.GET().route("/organization").with(ApplicationController::organization);
-        router.GET().route("/editProject").with(ApplicationController::editProject);
-=======
         router.GET().route("/organization/{id}").with(ApplicationController::organization);
->>>>>>> dev
        
         router.GET().route("/projects").with(ApplicationController::projects);
         router.GET().route("/projects/{projectID}").with(ApplicationController::project);

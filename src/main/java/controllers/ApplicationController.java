@@ -85,21 +85,6 @@ public class ApplicationController {
 
 	}
 
-<<<<<<< HEAD
-	public Result organization() {
-		return Results.html();
-
-	}
-	
-	public Result editProject() {
-		return Results.html();
-
-	}
-
-	public Result project() {
-		return Results.html();
-
-=======
 	public Result organization(@PathParam("id") String id) {
                 Result result = Results.html();
                 //eigentlich org vom user auslesen.
@@ -149,7 +134,6 @@ public class ApplicationController {
          
         
          return result;
->>>>>>> dev
 	}
 
 	public Result projects() {
