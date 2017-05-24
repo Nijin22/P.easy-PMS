@@ -1,241 +1,490 @@
 <#import "../layout/peasyLayout.ftl.html" as layout>
 <@layout.peasyLayout "Projects">
-<link rel="stylesheet" href="../assets/css/project.css">
+
+
+
+
 <div id="project">
-    <div class="page-header">
-        <h1>Project 1</h1>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div role="tabpanel">
-                <div class="col-sm-3">
-                    <ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
-                       <li role="presentation" class="brand-nav active"><a
-								href="/projects/123">${i18n("projectsidebar.overview")}</a></li>
-							<li role="presentation" class="brand-nav"><a
-								href="/projects/123/tasks/123">${i18n("projectsidebar.taskoverview")}</a></li>
-							<li role="presentation" class="brand-nav"><a
-								href="/projects/123/members">${i18n("projectsidebar.members")}</a></li>
-							<li role="presentation" class="brand-nav"><a
-								href="/projects/123/report">${i18n("projectsidebar.report")}</a></li>
-							<li role="presentation" class="brand-nav"><a
-								href="/projects/123/milestones">${i18n("projectsidebar.milestones")}</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-9">
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-panel active" id="tab1">
-                            <p>
-                                <!--Button Project Description Start -->
-                                <button class="btn btn-primary" data-toggle="collapse"
-                                        data-target="#details1">${i18n("project.description")}</button>
-                            <div id="details1" class="collapse">${i18n("project.description")}
-                                eget id metus. Mauris quis convallis elit, ac convallis augue.
-                                Pellentesque ornare cursus nibh quis fermentum. Morbi faucibus
-                                at tortor sed volutpat. Etiam at ex molestie turpis aliquam
-                                auctor. Nulla consequat tristique augue, vel vr sit amet,
-                                consectetur adipiscing elit. Mauris tincidunt feugiat lorem, at
-                                ornare tellus faucibus ut. Curabitur eget metus dapibus nibh
-                                laoreet lacinia eget id metus. Mauris quis convallis elit, ac
-                                convallis augue. Pellentesque ornare cursus nibh quis fermentum.
-                                Morbi faucibus at tortor sed volutpat. Etiam at ex molestie
-                                turpis aliquam auctor. Nulla consequat tristique augue, vel vr
-                                sit amet, consectetur adipiscing elit. Mauris tincidunt feugiat
-                                lorem, at ornare tellus faucibus ut. Curabitur eget metus
-                                dapibus nibh laoreet lacinia eget id metus. Mauris quis
-                                convallis elit, ac convallis augue. Pellentesque ornare cursus
-                                nibh quis fermentum. Morbi faucibus at tortor sed volutpat.
-                                Etiam at ex molestie turpis aliquam auctor. Nulla consequat
-                                tristique augue, vel vr sit amet, consectetur adipiscing elit.
-                                Mauris tincidunt feugiat lorem, at ornare tellus faucibus ut.
-                                Curabitur eget metus dapibus nibh laoreet lacinia eget id metus.
-                                Mauris quis convallis elit, ac convallis augue. Pellentesque
-                                ornare cursus nibh quis fermentum. Morbi faucibus at tortor sed
-                                volutpat. Etiam at ex molestie turpis aliquam auctor. Nulla
-                                consequat tristique augue, vel vr sit amet, consectetur
-                                adipiscing elit. Mauris tincidunt feugiat lorem, at ornare
-                                tellus faucibus ut. Curabitur eget metus dapibus nibh laoreet
-                                lacinia eget id metus. Mauris quis convallis elit, ac convallis
-                                augue. Pellentesque ornare cursus nibh quis fermentum. Morbi
-                                faucibus at tortor sed volutpat. Etiam at ex molestie turpis
-                                aliquam auctor. Nulla consequat tristique augue, vel v dapibus
-                                nibh laoreet lacinia eget id metus. Mauris quis convallis elit,
-                                ac convallis augue. Pellentesque ornare cursus nibh quis
-                                fermentum. Morbi faucibus at tortor sed volutpat. Etiam at ex
-                                molestie turpis aliquam auctor. Nulla consequat tristique augue,
-                                vel venenatis massa fringilla sit amet. Morbi egestas turpis
-                                facilisis sem faucibus finibus.</div>
-                                
-                                
-                                
-                            <br>
-                            <!-- Buttom Project Description End -->
+	<div class="page-header">
 
-                            <!--Start Input Parameters of Project -->
-                            <TABLE>
-                                <TR class="spaceUnder">
+		<div id=title>
+			<h1 id="projectName">Project 1
+			</h1>
+<button class="btn btn-primary btn-xs" data-title="editName"
+					onclick="editNameButton()" id='editNameButton'>
+					<span class="glyphicon glyphicon-pencil"></span>
+				</button>
+
+		</div>
+
+
+
+
+		<div id=newNameForm style="display: none;">
+			<div class="form-group">
+				<label for="newName1">Select a project name</label> <input
+					type="text" class="form-control" id="newNameText">
+			</div>
+
+			<input type='button' onclick="saveNameButton()" id='saveNameButton'
+				class="btn btn-success pull-right" value='Save'> <br>
+
+
+		</div>
+
+		<br>
+
+
+		<script>
+			function editNameButton() {
+				$('#newNameForm').toggle('show');
+				$('h1').toggle('hide');
+				$('editNameButton').toggle('hide');
+				//if ($("h1").text() == $("#newNameText").text()) {
+				//$("h1").clone().appendTo("#newNameText");
+				$('#newNameText').val($('#projectName').html());
+
+			}
+
+			function saveNameButton() {
+				$('#newNameForm').toggle('hide');
+				$('h1').toggle('show');
+				$('#projectName').text($('#newNameText').val());
+			}
+		</script>
+
+	</div>
+	<div class="container">
+		<div class="row">
+			<div role="tabpanel">
+				<div class="col-sm-3">
+					<ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
+						<li role="presentation" class="brand-nav active"><a
+							href="/projects/123">${i18n("projectsidebar.overview")}</a></li>
+						<li role="presentation" class="brand-nav"><a
+							href="/projects/123/tasks/123">${i18n("projectsidebar.taskoverview")}</a></li>
+						<li role="presentation" class="brand-nav"><a
+							href="/projects/123/members">${i18n("projectsidebar.members")}</a></li>
+						<li role="presentation" class="brand-nav"><a
+							href="/projects/123/report">${i18n("projectsidebar.report")}</a></li>
+						<li role="presentation" class="brand-nav"><a
+							href="/projects/123/milestones">${i18n("projectsidebar.milestones")}</a></li>
+					</ul>
+				</div>
+				<div class="col-sm-9">
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-panel active" id="tab1">
+							<p>
+								<!--Button Project Description Start -->
+
+
+								<button class="btn btn-primary" data-toggle="collapse"
+									data-target="#descriptionText">${i18n("project.description")}</button>
+							<div id="descriptionText" class="collapse">
+								<div class="textDescription" id="textDescritpion">Testext</div>
+
+								<br> <input type='button' onclick="editButton()"
+									id='editButton' class="btn btn-primary pull-right" value='Edit'>
+								<br>
+								<div id="editDescription" style="display: none;">
+									<div class="form-group">
+										<label for=" Email1msg">Edit Description</label>
+										<textarea class="form-control" id="textareaDescription"
+											rows="5"></textarea>
+									</div>
+									<input type='button' onclick="saveButton()" id='saveButton'
+										class="btn btn-success pull-right" value='Save'> <br>
+
+
+
+								</div>
+							</div>
+
+
+
+
+							<script>
+								function editButton() {
+									$('#editDescription').toggle('show');
+									$('#textDescritpion').toggle('hide');
+									$('#editButton').toggle('hide');
+									if ($("#textDescription").text() == $(
+											"#textareaDescription").text()) {
+										$("#textDescritpion").clone().appendTo(
+												"#textareaDescription");
+									}
+								}
+
+								function saveButton() {
+									$('#textDescritpion').text($('#textareaDescription').val());
+									$('#editDescription').toggle('hide');
+									$('#textDescritpion').toggle('show');
+									$('#editButton').toggle('show');
+
+								}
+							</script>
+
+
+
+							<br>
+							<hr>
+
+
+							<!-- Buttom Project Description End -->
+
+							<!--Start Input Parameters of Project -->
+							<TABLE>
+								<TR class="spaceUnder">
 									<TD><strong>${i18n("project.projectstart")}</strong></TD>
-                                    <TD><input class="form-control" type="date"
-                                               value="2011-08-19" id="example-date-input"></TD>
-                                </TR>
-                                <TR class="spaceUnder">
-                                    <TD><strong>${i18n("project.projectdeadline")}</strong></TD>
-                                    <TD><input class="form-control" type="date"
-                                               value="2011-08-19" id="example-date-input"></TD>
-                                </TR>
-                                <TR class="spaceUnder">
-                                    <TD><strong>${i18n("project.projectbudget")}</strong></TD>
-                                    <TD><input class="form-control" type="number" value="42"
-                                               id="example-number-input"></TD>
-                                </TR>
-                            </TABLE>
-                            <!--End Input Parameters of Project -->
-                            <hr>
-                            <!--Start Block -->
-                            <!--http://bootsnipp.com/snippets/40W9n-->
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">
-                                    <span class="glyphicon glyphicon-comment"></span> ${i18n("project.blog")}
-                                </div>
-                                <div class="panel-body body-panel">
-                                    <ul class="chat">
-                                        <li class="left clearfix"><span class="chat-img pull-left">
-                                                <a href=""><span class="glyphicon glyphicon-trash"></span></a>
-                                            </span>
-                                            <div class="chat-body clearfix">
-                                                <div class="header">
-                                                    <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
-                                                        <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
-                                                </div>
-                                                <p>
-                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                                    dolor, quis ullamcorper ligula sodales.
-                                                </p>
-                                            </div>
-                                        </li>
-                                        <li class="right clearfix"><span class="chat-img pull-right">
-                                                <a href=""><span class="glyphicon glyphicon-trash"></span></a>
-                                            </span>
-                                            <div class="chat-body clearfix">
-                                                <div class="header">
-                                                    <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago</small>
-                                                    <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                                </div>
-                                                <p>
-                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                                    dolor, quis ullamcorper ligula sodales.
-                                                </p>
-                                            </div>
-                                        </li>
-                                        <li class="left clearfix"><span class="chat-img pull-left">
-                                                <a href=""><span class="glyphicon glyphicon-trash"></span></a>
-                                            </span>
-                                            <div class="chat-body clearfix">
-                                                <div class="header">
-                                                    <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
-                                                        <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
-                                                </div>
-                                                <p>
-                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                                    dolor, quis ullamcorper ligula sodales.
-                                                </p>
-                                            </div>
-                                        </li>
-                                        <li class="right clearfix"><span class="chat-img pull-right">
-                                                <a href=""><span class="glyphicon glyphicon-trash"></span></a>
-                                            </span>
-                                            <div class="chat-body clearfix">
-                                                <div class="header">
-                                                    <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>15 mins ago</small>
-                                                    <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                                </div>
-                                                <p>
-                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                                    dolor, quis ullamcorper ligula sodales.
-                                                </p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="panel-footer clearfix">
-                                    <textarea class="form-control" rows="1" placeholder="${i18n("project.typeYourTitle")}"></textarea>
-                                    <br>
-                                    <textarea class="form-control" rows="2" placeholder="${i18n("project.typeYourMessage")}"></textarea>
-                                    <span class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-xs-12" style="margin-top: 10px">
-                                        <button class="btn btn-warning btn-lg btn-block" id="btn-chat">${i18n("project.addblog")}</button>
-                                    </span>
-                                </div>
-                            </div>
+									<TD><input class="form-control" type="date"
+										value="2011-08-19" id="example-date-input"></TD>
+								</TR>
+								<TR class="spaceUnder">
+									<TD><strong>${i18n("project.projectdeadline")}</strong></TD>
+									<TD><input class="form-control" type="date"
+										value="2011-08-19" id="example-date-input"></TD>
+								</TR>
+								<TR class="spaceUnder">
+									<TD><strong>${i18n("project.projectbudget")}</strong></TD>
+									<TD><input class="form-control" type="number" value="42"
+										id="example-number-input"></TD>
+								</TR>
+							</TABLE>
+							<!--End Input Parameters of Project -->
+							<hr>
+							<!--Start Block -->
 
-                            <!-- End Block -->
-                            <hr>
-                            <!--start Fileupload list -->
 
-                            <input type="text" id="myInput" onkeyup="myFunction()"
-                                   placeholder="${i18n("project.fileSearch")}">
-                            <!-- 							<div class="form-group has-feedback"> -->
-                            <!-- 							    <input type="text" class="form-control"  onkeyup="myFunction()" -->
-                            <!-- 															placeholder="File Search" /> -->
-                            <!-- 							    <i class="glyphicon glyphicon-search form-control-feedback"></i> -->
-                            <!-- 							</div> -->
+							<div class="container">
+								<div class="row">
+									<div class="col-md-8">
+										<h4></h4>
+										<div class="table-responsive">
+											<table id="mytable" class="table table-bordred table-striped">
+												<thead>
+													<th><input type="checkbox" id="checkall" /></th>
+													<th>${i18n('members.firstName')}</th>
+													<th>${i18n('members.lastName')}</th>
+													<th>${i18n('members.email')}</th>
+													<th>${i18n('members.editRow')}</th>
+													<th>${i18n('members.deleteRow')}</th>
+												</thead>
+												<tbody>
+													<tr>
+														<td><input type="checkbox" class="checkthis" /></td>
+														<td>Max</td>
+														<td>Mustermann</td>
+														<td>Mustermann@gmail.com</td>
+														<td>
+															<p data-placement="top" data-toggle="tooltip"
+																title="Edit">
+																<button class="btn btn-primary btn-xs" data-title="Edit"
+																	data-toggle="modal" data-target="#edit">
+																	<span class="glyphicon glyphicon-pencil"></span>
+																</button>
+															</p>
+														</td>
+														<td>
+															<p data-placement="top" data-toggle="tooltip"
+																title="Delete">
+																<button class="btn btn-danger btn-xs"
+																	data-title="Delete" data-toggle="modal"
+																	data-target="#delete">
+																	<span class="glyphicon glyphicon-trash"></span>
+																</button>
+															</p>
+														</td>
+													</tr>
+													<tr>
+													<tr>
+														<td><input type="checkbox" class="checkthis" /></td>
+														<td>Max</td>
+														<td>Mustermann</td>
+														<td>Mustermann@gmail.com</td>
+														<td>
+															<p data-placement="top" data-toggle="tooltip"
+																title="${i18n('members.tooltipEdit')}">
+																<button class="btn btn-primary btn-xs" data-title="Edit"
+																	data-toggle="modal" data-target="#edit">
+																	<span class="glyphicon glyphicon-pencil"></span>
+																</button>
+															</p>
+														</td>
+														<td>
+															<p data-placement="top" data-toggle="tooltip"
+																title="${i18n('members.tooltipDelete')}">
+																<button class="btn btn-danger btn-xs"
+																	data-title="Delete" data-toggle="modal"
+																	data-target="#delete">
+																	<span class="glyphicon glyphicon-trash"></span>
+																</button>
+															</p>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<div class="form-group">
+												<label class="col-md-0 control-label"></label>
+												<div class="col-md-0">
+													<input type="button" class="btn btn-primary"
+														value="${i18n('members.addUser')}"> <span></span>
+													<input type="reset" class="btn btn-default"
+														value="${i18n('members.cancelUser')}">
+												</div>
+											</div>
+											<div class="clearfix"></div>
+											<ul class="pagination pull-right">
+												<li class="disabled"><a href="#"><span
+														class="glyphicon glyphicon-chevron-left"></span></a></li>
+												<li class="active"><a href="#">1</a></li>
+												<li><a href="#">2</a></li>
+												<li><a href="#">3</a></li>
+												<li><a href="#">4</a></li>
+												<li><a href="#">5</a></li>
+												<li><a href="#"><span
+														class="glyphicon glyphicon-chevron-right"></span></a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal fade" id="edit" tabindex="-1" role="dialog"
+								aria-labelledby="edit" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal"
+												aria-hidden="true">
+												<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+											</button>
+											<h4 class="modal-title custom_align" id="Heading">"${i18n('members.editYourDetail')}"</h4>
+										</div>
+										<div class="modal-body">
+											<div class="form-group">
+												<input class="form-control " type="text" placeholder="Max">
+											</div>
+											<div class="form-group">
+												<input class="form-control " type="text"
+													placeholder="Mustermann">
+											</div>
+											<div class="form-group">
+												<input class="form-control " type="text"
+													placeholder="Mustermann@gmail.com">
+											</div>
+										</div>
+										<div class="modal-footer ">
+											<button type="button" class="btn btn-warning btn-lg"
+												style="width: 100%;">
+												<span class="glyphicon glyphicon-ok-sign"></span>
+												"${i18n('members.editUpdateButton')}"
+											</button>
+										</div>
+									</div>
+									<!-- /.modal-content -->
+								</div>
+								<!-- /.modal-dialog -->
+							</div>
+							<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+								aria-labelledby="edit" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal"
+												aria-hidden="true">
+												<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+											</button>
+											<h4 class="modal-title custom_align" id="Heading">"${i18n('members.deleteThisEntry')}"</h4>
+										</div>
+										<div class="modal-body">
+											<div class="alert alert-danger">
+												<span class="glyphicon glyphicon-warning-sign"></span>
+												"${i18n('members.sureToDelete')}"
+											</div>
+										</div>
+										<div class="modal-footer ">
+											<button type="button" class="btn btn-success">
+												<span class="glyphicon glyphicon-ok-sign"></span>"${i18n('members.yesDelete')}"
+											</button>
+											<button type="button" class="btn btn-default"
+												data-dismiss="modal">
+												<span class="glyphicon glyphicon-remove"></span>
+												"${i18n('members.noDelete')}"
+											</button>
+										</div>
+									</div>
+									<!-- /.modal-content -->
+								</div>
+								<!-- /.modal-dialog -->
+							</div>
 
-                            <table id="myTable">
-                                <tr class="header">
-                                    <th style="width: 90%;">Files</th>
-                                    <th style="width: 10%;"></th>
+							<hr>
 
-                                </tr>
-                                <tr>
-                                    <td><a href="">File 1</a></td>
-                                    <td><a href=""><span class="glyphicon glyphicon-trash"></span></a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">File 2</a></td>
-                                    <td><a href=""><span class="glyphicon glyphicon-trash"></span></a></td>
-                                </tr>
-                            </table>
-                            <!--End FileUpload list-->
-                            <br>
-                            <!--Start Fileupload -->
-                            <form method="post" enctype="multipart/form-data"
-                                  action="/uploadFinish">
-                                <!-- 								Please specify file to upload: <input type="file" name="upfile"> -->
-                                <br> <label class="custom-file"> <input type="file"
-                                                                        id="file" class="custom-file-input"> <span
-                                                                        class="custom-file-control"></span>
-                                </label>
-                                <button type="submit" class="btn btn-primary">${i18n("project.submit")}</button>
-                            </form>
-                            <!--End Fileupload -->
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+							<!--http://bootsnipp.com/snippets/40W9n-->
+							<div class="panel panel-primary">
+								<div class="panel-heading">
+									<span class="glyphicon glyphicon-comment"></span>
+									${i18n("project.blog")}
+								</div>
+								<div class="panel-body body-panel">
+									<ul class="chat">
+										<li class="left clearfix"><span
+											class="chat-img pull-left"> <a href=""><span
+													class="glyphicon glyphicon-trash"></span></a>
+										</span>
+											<div class="chat-body clearfix">
+												<div class="header">
+													<strong class="primary-font">Jack Sparrow</strong> <small
+														class="pull-right text-muted"> <span
+														class="glyphicon glyphicon-time"></span>12 mins ago
+													</small>
+												</div>
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing
+													elit. Curabitur bibendum ornare dolor, quis ullamcorper
+													ligula sodales.</p>
+											</div></li>
+										<li class="right clearfix"><span
+											class="chat-img pull-right"> <a href=""><span
+													class="glyphicon glyphicon-trash"></span></a>
+										</span>
+											<div class="chat-body clearfix">
+												<div class="header">
+													<small class=" text-muted"><span
+														class="glyphicon glyphicon-time"></span>13 mins ago</small> <strong
+														class="pull-right primary-font">Bhaumik Patel</strong>
+												</div>
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing
+													elit. Curabitur bibendum ornare dolor, quis ullamcorper
+													ligula sodales.</p>
+											</div></li>
+										<li class="left clearfix"><span
+											class="chat-img pull-left"> <a href=""><span
+													class="glyphicon glyphicon-trash"></span></a>
+										</span>
+											<div class="chat-body clearfix">
+												<div class="header">
+													<strong class="primary-font">Jack Sparrow</strong> <small
+														class="pull-right text-muted"> <span
+														class="glyphicon glyphicon-time"></span>14 mins ago
+													</small>
+												</div>
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing
+													elit. Curabitur bibendum ornare dolor, quis ullamcorper
+													ligula sodales.</p>
+											</div></li>
+										<li class="right clearfix"><span
+											class="chat-img pull-right"> <a href=""><span
+													class="glyphicon glyphicon-trash"></span></a>
+										</span>
+											<div class="chat-body clearfix">
+												<div class="header">
+													<small class=" text-muted"><span
+														class="glyphicon glyphicon-time"></span>15 mins ago</small> <strong
+														class="pull-right primary-font">Bhaumik Patel</strong>
+												</div>
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing
+													elit. Curabitur bibendum ornare dolor, quis ullamcorper
+													ligula sodales.</p>
+											</div></li>
+									</ul>
+								</div>
+								<div class="panel-footer clearfix">
+									<textarea class="form-control" rows="1" placeholder="${i18n("project.typeYourTitle")}"></textarea>
+									<br>
+									<textarea class="form-control" rows="2" placeholder="${i18n("project.typeYourMessage")}"></textarea>
+									<span
+										class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-xs-12"
+										style="margin-top: 10px">
+										<button class="btn btn-warning btn-lg btn-block" id="btn-chat">${i18n("project.addblog")}</button>
+									</span>
+								</div>
+							</div>
+
+							<!-- End Block -->
+							<hr>
+							<!--start Fileupload list -->
+
+							<input type="text" id="myInput" onkeyup="myFunction()"
+								placeholder="${i18n("project.fileSearch")}">
+							<!-- 							<div class="form-group has-feedback"> -->
+							<!-- 							    <input type="text" class="form-control"  onkeyup="myFunction()" -->
+							<!-- 															placeholder="File Search" /> -->
+							<!-- 							    <i class="glyphicon glyphicon-search form-control-feedback"></i> -->
+							<!-- 							</div> -->
+
+							<table id="myTable">
+								<tr class="header">
+									<th style="width: 90%;">Files</th>
+									<th style="width: 10%;"></th>
+
+								</tr>
+								<tr>
+									<td><a href="">File 1</a></td>
+									<td><a href=""><span class="glyphicon glyphicon-trash"></span></a></td>
+								</tr>
+								<tr>
+									<td><a href="">File 2</a></td>
+									<td><a href=""><span class="glyphicon glyphicon-trash"></span></a></td>
+								</tr>
+							</table>
+							<!--End FileUpload list-->
+							<br>
+							<!--Start Fileupload -->
+							<form method="post" enctype="multipart/form-data"
+								action="/uploadFinish">
+								<!-- 								Please specify file to upload: <input type="file" name="upfile"> -->
+								<br> <label class="custom-file"> <input type="file"
+									id="file" class="custom-file-input"> <span
+									class="custom-file-control"></span>
+								</label>
+								<button type="submit" class="btn btn-primary">${i18n("project.submit")}</button>
+							</form>
+							<!--End Fileupload -->
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+		</div>
+	</div>
 </div>
 
 <script>
-    function myFunction() {
-        // Declare variables 
-        var input, filter, table, tr, td, i;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
+	function myFunction() {
+		// Declare variables 
+		var input, filter, table, tr, td, i;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("myTable");
+		tr = table.getElementsByTagName("tr");
 
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-</script>
-</@layout.peasyLayout>
+		// Loop through all table rows, and hide those who don't match the search query
+		for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[0];
+			if (td) {
+				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
+	}
+</script> </@layout.peasyLayout> 
