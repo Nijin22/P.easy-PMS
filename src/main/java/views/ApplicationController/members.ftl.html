@@ -3,7 +3,7 @@
 
 <div id="project">
 	<div class="page-header">
-		<h1>${i18n('members.projectMembers')}</h1>
+		<h1>${project.name} - ${i18n('members.projectMembers')}</h1>
 	</div>
 	<div class="container">
 		<div class="row">
@@ -11,15 +11,15 @@
 				<div class="col-sm-3">
 					<ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
 						<li role="presentation" class="brand-nav"><a
-								href="/projects/123">${i18n("projectsidebar.overview")}</a></li>
+								href="/projects/${project.projectId}">${i18n("projectsidebar.overview")}</a></li>
 							<li role="presentation" class="brand-nav"><a
-								href="/projects/123/tasks/123">${i18n("projectsidebar.taskoverview")}</a></li>
+								href="/projects/${project.projectId}/tasks/1">${i18n("projectsidebar.taskoverview")}</a></li>
 							<li role="presentation" class="brand-nav active"><a
-								href="/projects/123/members" >${i18n("projectsidebar.members")}</a></li>
+								href="/projects/${project.projectId}/members" >${i18n("projectsidebar.members")}</a></li>
 							<li role="presentation" class="brand-nav"><a
-								href="/projects/123/report">${i18n("projectsidebar.report")}</a></li>
+								href="/projects/${project.projectId}/report">${i18n("projectsidebar.report")}</a></li>
 							<li role="presentation" class="brand-nav"><a
-								href="/projects/123/milestones">${i18n("projectsidebar.milestones")}</a></li>
+								href="/projects/${project.projectId}/milestones">${i18n("projectsidebar.milestones")}</a></li>
 					</ul>
 				</div>
 				
@@ -31,7 +31,6 @@
                <div class="table-responsive">
                   <table id="mytable" class="table table-bordred table-striped">
                      <thead>
-                        <th><input type="checkbox" id="checkall" /></th>
                         <th>${i18n('members.firstName')}</th>
                         <th>${i18n('members.lastName')}</th>
                         <th>${i18n('members.email')}</th>
@@ -39,11 +38,11 @@
                         <th>${i18n('members.deleteRow')}</th>
                      </thead>
                      <tbody>
+                     <#list members as member>
                         <tr>
-                           <td><input type="checkbox" class="checkthis" /></td>
-                           <td>Max</td>
-                           <td>Mustermann</td>
-                           <td>Mustermann@gmail.com</td>
+                           <td>${member.firstName}</td>
+                           <td>${member.lastName}</td>
+                           <td>${member.emailAddress}</td>
                            <td>
                               <p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p>
                            </td>
@@ -51,19 +50,7 @@
                               <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p>
                            </td>
                         </tr>
-                        <tr>
-                        <tr>
-                           <td><input type="checkbox" class="checkthis" /></td>
-                           <td>Max</td>
-                           <td>Mustermann</td>
-                           <td>Mustermann@gmail.com</td>
-                           <td>
-                              <p data-placement="top" data-toggle="tooltip" title="${i18n('members.tooltipEdit')}"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p>
-                           </td>
-                           <td>
-                              <p data-placement="top" data-toggle="tooltip" title="${i18n('members.tooltipDelete')}"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p>
-                           </td>
-                        </tr>
+                        </#list>
                      </tbody>
                   </table>
                   <div class="form-group">

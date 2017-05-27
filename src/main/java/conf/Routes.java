@@ -52,7 +52,7 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/dashboard").with(ApplicationController::dashboard);
         router.GET().route("/forgotPassword").with(ApplicationController::forgotPassword);
         router.GET().route("/myCalender").with(ApplicationController::myCalender);
-        router.GET().route("/organization").with(ApplicationController::organization);
+        router.GET().route("/organization/{id}").with(ApplicationController::organization);
         router.GET().route("/projects").with(ApplicationController::projects);
         router.GET().route("/projects/{projectID}").with(ApplicationController::project);
         router.GET().route("/projects/{projectID}/members").with(ApplicationController::members);
@@ -81,7 +81,8 @@ public class Routes implements ApplicationRoutes {
         //FILE RESOURCE
         router.POST().route("/uploadFinish/{idOfOwner}").with(FileController::uploadFinish);
         router.GET().route("/download/{fileId}/{type}").with(FileController::downloadFinish);
-        router.DELETE().route("/delete/{fileId}").with(FileController::deleteFinish);
+        //Get beacause <a> link can't do a delete call
+        router.GET().route("/delete/{type}/{fileId}/{idOfOwner}").with(FileController::deleteFinish);
 
         
         ///////////////////////////////////////////////////////////////////////

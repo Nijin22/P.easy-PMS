@@ -1,8 +1,6 @@
 /* Add additional stylesheets below
 -------------------------------------------------- */
 
-
-
 /* layout.css Style */
 .upload-drop-zone {
 	height: 200px;
@@ -18,8 +16,6 @@
 	line-height: 200px;
 	text-align: center
 }
-
-
 
 .upload-drop-zone.drop {
 	color: #222;
@@ -127,7 +123,6 @@
 	color: #df8a13;
 }
 
-
 .detailBox {
 	width: 850px;
 	border: 1px solid #bbb;
@@ -209,4 +204,18 @@
 .actionBox {
 	border-top: 1px dotted #bbb;
 	padding: 10px;
+}
+
+.panel-yellow>.panel-heading {
+	border-color: #f0ad4e;
+	color: white;
+	background-color: #f0ad4e;
+}
+
+.panel-yellow>a {
+	color: #f0ad4e;
+}
+
+.panel-yellow>a:hover {
+	color: #df8a13;
 }

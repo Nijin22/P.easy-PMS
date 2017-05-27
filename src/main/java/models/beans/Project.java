@@ -1,5 +1,6 @@
 package models.beans;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -23,16 +24,22 @@ public class Project {
     private String name;
     private String description;
     private ProjectStatus status;
-    @OneToMany(mappedBy = "project",fetch = FetchType.EAGER)
-    private Set<Task> tasks;
+    private String start;
+    private String deadline;
+    private String budget;
+    
     @OneToMany(mappedBy = "project")
-    private Set<ProjectBlogEntry> blogEntries;
-    @ManyToMany
-    private Set<PeasyUser> projectMembers;
+    private Set<Task> tasks = new HashSet<>();
+    @OneToMany(mappedBy = "project")
+    private Set<ProjectBlogEntry> blogEntries = new HashSet<>();
+    @ManyToMany()
+    private Set<PeasyUser> projectMembers = new HashSet<>();
     @ManyToOne
     private PeasyUser projectManager;
-    @OneToMany(mappedBy = "project",fetch = FetchType.EAGER)
-    private Set<ProjectFile> projectFiles;
+    @OneToMany(mappedBy = "project")
+    private Set<ProjectFile> projectFiles = new HashSet<>();
+    @OneToMany(mappedBy = "project")
+    private Set<Milestone> milestones = new HashSet<>();
 
     public Project() {
 
@@ -102,6 +109,30 @@ public class Project {
         return projectManager;
     }
 
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
+    public String getBudget() {
+        return budget;
+    }
+
+    public void setBudget(String budget) {
+        this.budget = budget;
+    }
+
     public void setProjectManager(PeasyUser projectManager) {
         this.projectManager = projectManager;
     }
@@ -114,10 +145,19 @@ public class Project {
         this.projectFiles = projectFiles;
     }
     
-    
+    public Set<Milestone> getMilestones() {
+		return milestones;
+	}
 
-    
-    @Override
+	public void setMilestones(Set<Milestone> milestones) {
+		this.milestones = milestones;
+	}
+
+	public void setTasks(Set<Task> tasks) {
+		this.tasks = tasks;
+	}
+
+	@Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -149,8 +189,10 @@ public class Project {
 
     @Override
     public String toString() {
-        return "Project{" + "projectId=" + projectId + ", name=" + name + ", status=" + status + '}';
+        return "Project{" + "projectId=" + projectId + ", name=" + name + ", description=" + description + ", status=" + status + ", start=" + start + ", deadline=" + deadline + ", budget=" + budget + '}';
     }
+
+
 
 
     
