@@ -2,15 +2,11 @@ package controllers;
 
 import com.google.inject.Inject;
 
-import java.util.HashSet;
 import java.util.Set;
-import models.beans.BlogEntry;
 import models.beans.Organisation;
-import models.beans.PeasyUser;
 import models.beans.Project;
 import models.beans.ProjectBlogEntry;
 import models.beans.Task;
-import models.manager.FileManager;
 import models.manager.OrganisationManager;
 import models.manager.ProjectManager;
 import ninja.Result;

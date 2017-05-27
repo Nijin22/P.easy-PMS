@@ -1,14 +1,16 @@
 <#import "../layout/peasyLayout.ftl.html" as layout>
 <@layout.peasyLayout "Projects">
 
-<link rel="stylesheet" href="../assets/css/projects.css">
-
 <div id="projectContent">
 	<div class="page-header">
 		<h1>${i18n("projects.header")}</h1>
 	</div>
-
-	<input type="text" id="myInput" onkeyup="myFunction()"
+	      <div class="container">
+         <div class="row">
+            <div class="col-md-14">
+               <h4></h4>
+               <div class="table-responsive">
+               	<input type="text" id="myInput" onkeyup="myFunction()"
 		placeholder="Search for Projectname">
 
 	<table id="myTable">
@@ -19,25 +21,103 @@
 			<th style="width: 18%;">${i18n("projects.timeleft")}</th>
 			<th style="width: 18%;">${i18n("projects.budget")}</th>
 			<th style="width: 18%;">${i18n("projects.deadline")}</th>
+			<th style="width: 18%;">${i18n("projects.edit")}<itth>
+
 		</tr>
-		<tr>
-			<td>Projekt 2</td>
-			<td style="color:#00cd66">In Time</td>
-			<td>80%</td>
-			<td>22</td>
-			<td>21212</td>
-			<td>01.02.1017</td>
-		</tr>
-		<tr>
-			<td>Projekt 1</td>
-			<td style="color:#00cd66">In Time</td>
-			<td>80%</td>
-			<td>22</td>
-			<td>21212</td>
-			<td>01.02.1017</td>
-		</tr>
-	</table>
-</div>
+		
+                     <tbody>
+                        <tr>
+                           <td>Projekt 1</td>
+                           <td style="color:#00cd66">In Time</td>
+                           <td>Abgeschlossen</td>
+                           <td>22 Stunden</td>
+                           <td>22000€</td>
+                           <td>21.12.2017</td>
+                           <td>
+                              <p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p>
+                           </td>
+                        </tr>
+                        <tr>
+                        <tr>
+                           <td>Weltherrschaft übernehmen</td>
+                           <td style="color:#00cd66">In Time</td>
+                           <td>In Bearbeitung</td>
+                           <td>2 Stunden</td>
+                            <td>200000000€</td>
+                           <td>21.12.2017</td>
+                           <td>
+                              <p data-placement="top" data-toggle="tooltip" title=${i18n('organization.tooltipEdit')}><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <div class="form-group">
+                     <label class="col-md-0 control-label"></label>
+                     <div class="col-md-0">
+                        <input type="button" class="btn btn-primary" value="${i18n('projects.addUser')}">            
+                     </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <ul class="pagination pull-right">
+                     <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                     <li class="active"><a href="#">1</a></li>
+                     <li><a href="#">2</a></li>
+                     <li><a href="#">3</a></li>
+                     <li><a href="#">4</a></li>
+                     <li><a href="#">5</a></li>
+                     <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                  <h4 class="modal-title custom_align" id="Heading">${i18n('projects.editYourDetail')}</h4>
+               </div>
+               <div class="modal-body">
+                  <div class="form-group">
+                     <input class="form-control " type="text" placeholder="Max">
+                  </div>
+                  <div class="form-group">
+                     <input class="form-control " type="text" placeholder="Mustermann">
+                  </div>
+                  <div class="form-group">
+                     <input class="form-control " type="text" placeholder="Mustermann@gmail.com"></textarea>
+                  </div>
+               </div>
+               <div class="modal-footer ">
+                  <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> ${i18n('projects.editUpdateButton')}</button>
+               </div>
+            </div>
+            <!-- /.modal-content --> 
+         </div>
+         <!-- /.modal-dialog --> 
+      </div>
+      <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                  <h4 class="modal-title custom_align" id="Heading">${i18n('organization.deleteThisEntry')}</h4>
+               </div>
+               <div class="modal-body">
+                  <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> ${i18n('projects.sureToDelete')}</div>
+               </div>
+               <div class="modal-footer ">
+                  <button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>${i18n('projects.yesDelete')}</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> ${i18n('projects.noDelete')}</button>
+               </div>
+            </div>
+            <!-- /.modal-content --> 
+         </div>
+         <!-- /.modal-dialog --> 
+      </div>
+   </div>
+	
 
 <script>
 	function myFunction() {
