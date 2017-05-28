@@ -123,6 +123,13 @@
 	color: #df8a13;
 }
 
+
+textarea {
+    width:100%;
+    max-width:100%;
+    min-width:100%;
+    max-height:30%;
+}
 .detailBox {
 	width: 850px;
 	border: 1px solid #bbb;
@@ -218,4 +225,5 @@
 
 .panel-yellow>a:hover {
 	color: #df8a13;
+
 }

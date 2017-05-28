@@ -34,6 +34,10 @@ public class ApplicationController {
 
 	public Result impress() {
 		return Results.html();
+		
+	}
+	public Result editProject() {
+			return Results.html();
 
 	}
 

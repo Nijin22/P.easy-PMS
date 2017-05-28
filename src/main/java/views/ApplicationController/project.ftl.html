@@ -1,9 +1,5 @@
 <#import "../layout/peasyLayout.ftl.html" as layout>
 <@layout.peasyLayout "Projects">
-
-
-
-
 <div id="project">
 	<div class="page-header">
 
@@ -16,8 +12,6 @@
 				</button>
 
 		</div>
-
-
 
 
 		<div id=newNameForm style="display: none;">
@@ -57,20 +51,20 @@
 	<div class="container">
 		<div class="row">
 			<div role="tabpanel">
-				<div class="col-sm-3">
-					<ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
-						<li role="presentation" class="brand-nav active"><a
-							href="/projects/123">${i18n("projectsidebar.overview")}</a></li>
-						<li role="presentation" class="brand-nav"><a
-							href="/projects/123/tasks/123">${i18n("projectsidebar.taskoverview")}</a></li>
-						<li role="presentation" class="brand-nav"><a
-							href="/projects/123/members">${i18n("projectsidebar.members")}</a></li>
-						<li role="presentation" class="brand-nav"><a
-							href="/projects/123/report">${i18n("projectsidebar.report")}</a></li>
-						<li role="presentation" class="brand-nav"><a
-							href="/projects/123/milestones">${i18n("projectsidebar.milestones")}</a></li>
-					</ul>
-				</div>
+                <div class="col-sm-3">
+                    <ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
+                       <li role="presentation" class="brand-nav active"><a
+								href="/projects/${project.projectId}">${i18n("projectsidebar.overview")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}/tasks/1">${i18n("projectsidebar.taskoverview")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}/members">${i18n("projectsidebar.members")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}/report">${i18n("projectsidebar.report")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}/milestones">${i18n("projectsidebar.milestones")}</a></li>
+                    </ul>
+                </div>
 				<div class="col-sm-9">
 					<div class="tab-content">
 						<div role="tabpanel" class="tab-panel active" id="tab1">
@@ -319,85 +313,44 @@
 
 							<hr>
 
-							<!--http://bootsnipp.com/snippets/40W9n-->
-							<div class="panel panel-primary">
-								<div class="panel-heading">
-									<span class="glyphicon glyphicon-comment"></span>
-									${i18n("project.blog")}
-								</div>
-								<div class="panel-body body-panel">
-									<ul class="chat">
-										<li class="left clearfix"><span
-											class="chat-img pull-left"> <a href=""><span
-													class="glyphicon glyphicon-trash"></span></a>
-										</span>
-											<div class="chat-body clearfix">
-												<div class="header">
-													<strong class="primary-font">Jack Sparrow</strong> <small
-														class="pull-right text-muted"> <span
-														class="glyphicon glyphicon-time"></span>12 mins ago
-													</small>
-												</div>
-												<p>Lorem ipsum dolor sit amet, consectetur adipiscing
-													elit. Curabitur bibendum ornare dolor, quis ullamcorper
-													ligula sodales.</p>
-											</div></li>
-										<li class="right clearfix"><span
-											class="chat-img pull-right"> <a href=""><span
-													class="glyphicon glyphicon-trash"></span></a>
-										</span>
-											<div class="chat-body clearfix">
-												<div class="header">
-													<small class=" text-muted"><span
-														class="glyphicon glyphicon-time"></span>13 mins ago</small> <strong
-														class="pull-right primary-font">Bhaumik Patel</strong>
-												</div>
-												<p>Lorem ipsum dolor sit amet, consectetur adipiscing
-													elit. Curabitur bibendum ornare dolor, quis ullamcorper
-													ligula sodales.</p>
-											</div></li>
-										<li class="left clearfix"><span
-											class="chat-img pull-left"> <a href=""><span
-													class="glyphicon glyphicon-trash"></span></a>
-										</span>
-											<div class="chat-body clearfix">
-												<div class="header">
-													<strong class="primary-font">Jack Sparrow</strong> <small
-														class="pull-right text-muted"> <span
-														class="glyphicon glyphicon-time"></span>14 mins ago
-													</small>
-												</div>
-												<p>Lorem ipsum dolor sit amet, consectetur adipiscing
-													elit. Curabitur bibendum ornare dolor, quis ullamcorper
-													ligula sodales.</p>
-											</div></li>
-										<li class="right clearfix"><span
-											class="chat-img pull-right"> <a href=""><span
-													class="glyphicon glyphicon-trash"></span></a>
-										</span>
-											<div class="chat-body clearfix">
-												<div class="header">
-													<small class=" text-muted"><span
-														class="glyphicon glyphicon-time"></span>15 mins ago</small> <strong
-														class="pull-right primary-font">Bhaumik Patel</strong>
-												</div>
-												<p>Lorem ipsum dolor sit amet, consectetur adipiscing
-													elit. Curabitur bibendum ornare dolor, quis ullamcorper
-													ligula sodales.</p>
-											</div></li>
-									</ul>
-								</div>
-								<div class="panel-footer clearfix">
-									<textarea class="form-control" rows="1" placeholder="${i18n("project.typeYourTitle")}"></textarea>
-									<br>
-									<textarea class="form-control" rows="2" placeholder="${i18n("project.typeYourMessage")}"></textarea>
-									<span
-										class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-xs-12"
-										style="margin-top: 10px">
-										<button class="btn btn-warning btn-lg btn-block" id="btn-chat">${i18n("project.addblog")}</button>
-									</span>
-								</div>
-							</div>
+                            <!--Start Block -->
+                            <!--http://bootsnipp.com/snippets/40W9n-->
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <span class="glyphicon glyphicon-comment"></span> ${i18n("project.blog")}
+                                </div>
+                                <div class="panel-body body-panel">
+                                    <ul class="chat">
+                                    <#list blogEntries as blogentry>
+                                        <li class="left clearfix"><span class="chat-img pull-left">
+                                                <a href=""><span class="glyphicon glyphicon-trash"></span></a>
+                                            </span>
+                                            <div class="chat-body clearfix">
+                                                <div class="header">
+                                                    <strong class="primary-font">${blogentry.author.firstName} ${blogentry.author.lastName}- ${blogentry.title}</strong> <small class="pull-right text-muted">
+                                                        <span class="glyphicon glyphicon-time"></span>${blogentry.creationDate}</small>
+                                                </div>
+                                                <p>
+                                                     ${blogentry.text}
+                                                </p>
+                                            </div>
+                                        </li>
+                                        </#list>
+<!--                                         if user then right like facebook -->
+<!--                                         <li class="right clearfix"><span class="chat-img pull-right"> -->
+                                    </ul>
+                                </div>
+                                <div class="panel-footer clearfix">
+                                <form method="post" action=''>
+                                    <textarea name="title" class="form-control" rows="1" placeholder="${i18n("project.typeYourTitle")}"></textarea>
+                                    <br>
+                                    <textarea name="text" class="form-control" rows="2" placeholder="${i18n("project.typeYourMessage")}"></textarea>
+                                    <span class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-xs-12" style="margin-top: 10px">
+                                        <button onclick="www.google.de" class="btn btn-warning btn-lg btn-block" id="btn-chat">${i18n("project.addblog")}</button>
+                                    </span>
+                                    </form>
+                                </div>
+                            </div>
 
 							<!-- End Block -->
 							<hr>
@@ -411,34 +364,33 @@
 							<!-- 							    <i class="glyphicon glyphicon-search form-control-feedback"></i> -->
 							<!-- 							</div> -->
 
-							<table id="myTable">
-								<tr class="header">
-									<th style="width: 90%;">Files</th>
-									<th style="width: 10%;"></th>
+							                            <table id="myTable">
+                                <tr class="header">
+                                    <th style="width: 80%;">Files</th>
+                                    <th style="width: 10%;"></th>
+                                    <th style="width: 10%;"></th>
 
-								</tr>
-								<tr>
-									<td><a href="">File 1</a></td>
-									<td><a href=""><span class="glyphicon glyphicon-trash"></span></a></td>
-								</tr>
-								<tr>
-									<td><a href="">File 2</a></td>
-									<td><a href=""><span class="glyphicon glyphicon-trash"></span></a></td>
-								</tr>
-							</table>
+                                </tr>
+                                <#list files as file>
+                                <tr>
+                                    <td><a href="">${file.title}</a></td>
+                                    <td><a href='/download/${file.fileId}/project'><span class="glyphicon glyphicon-download"></span></a></td>
+                                    <td><a href="/delete/project/${file.fileId}/${project.projectId}" data-method="delete"><span class="glyphicon glyphicon-trash"></span></a></td>
+                                </tr>
+							</#list>
+                            </table>
 							<!--End FileUpload list-->
 							<br>
-							<!--Start Fileupload -->
-							<form method="post" enctype="multipart/form-data"
-								action="/uploadFinish">
-								<!-- 								Please specify file to upload: <input type="file" name="upfile"> -->
-								<br> <label class="custom-file"> <input type="file"
-									id="file" class="custom-file-input"> <span
-									class="custom-file-control"></span>
-								</label>
-								<button type="submit" class="btn btn-primary">${i18n("project.submit")}</button>
-							</form>
-							<!--End Fileupload -->
+ <!--Start Fileupload -->
+                            <form method="post" enctype="multipart/form-data"
+                                  action='/uploadFinish/${project.projectId}'>
+                                <br> <label class="custom-file"> 
+                                <input type="file" name="file" class="custom-file-input"> <span class="custom-file-control"></span>
+                                <input type="text" name="type" value ="project" style="visibility: hidden">
+                                </label>
+                                <button type="submit" class="btn btn-primary">${i18n("project.submit")}</button>
+                            </form>
+                            <!--End Fileupload -->
 
 
 						</div>
@@ -451,6 +403,7 @@
 
 		</div>
 	</div>
+
 </div>
 
 <script>
