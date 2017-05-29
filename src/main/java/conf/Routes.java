@@ -25,6 +25,7 @@ import com.google.inject.Inject;
 
 import controllers.ApplicationController;
 import controllers.FileController;
+import controllers.ProjectController;
 import controllers.UserController;
 
 public class Routes implements ApplicationRoutes {
@@ -59,8 +60,9 @@ public class Routes implements ApplicationRoutes {
 
         router.GET().route("/projects").with(ApplicationController::projects);
         router.GET().route("/projects/{projectID}").with(ApplicationController::project);
-        router.GET().route("/projects/{projectID}/members").with(ApplicationController::members);
+//        router.GET().route("/projects/{projectID}/members").with(ApplicationController::members);
         router.GET().route("/projects/{projectID}/milestones").with(ApplicationController::milestones);
+        router.GET().route("/projects/{projectID}/milestones/{milestoneID}").with(ApplicationController::milestone);
         router.GET().route("/projects/{projectID}/report").with(ApplicationController::report);
         router.GET().route("/projects/{projectID}/tasks/{taskID}").with(ApplicationController::task);
         router.GET().route("/projects/{projectID}/tasks").with(ApplicationController::tasks);
@@ -87,6 +89,14 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/download/{fileId}/{type}").with(FileController::downloadFinish);
         //Get beacause <a> link can't do a delete call
         router.GET().route("/delete/{type}/{fileId}/{idOfOwner}").with(FileController::deleteFinish);
+        
+        //AJAX Calls - Project
+        router.POST().route("/changeProjectname/{projectId}/newName/{newName}").with(ProjectController::changeProjectname);
+        router.POST().route("/changeProjectDescription/{projectId}/newDescription/{description}").with(ProjectController::changeProjectname);
+
+        router.POST().route("/changeProject/{projectId}/projectStart/{projectStart}").with(ProjectController::changeProjectname);
+        router.POST().route("/changeProject/{projectId}/projectDeadline/{projectDeadline}").with(ProjectController::changeProjectname);
+        router.POST().route("/changeProject/{projectId}/projectBudget/{projectBudget}").with(ProjectController::changeProjectname);
 
         
         ///////////////////////////////////////////////////////////////////////

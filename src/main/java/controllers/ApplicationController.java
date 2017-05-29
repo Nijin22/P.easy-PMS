@@ -2,22 +2,30 @@ package controllers;
 
 import com.google.inject.Inject;
 
+import java.util.HashSet;
 import java.util.Set;
+
+import models.beans.Milestone;
 import models.beans.Organisation;
+import models.beans.PeasyUser;
 import models.beans.Project;
 import models.beans.ProjectBlogEntry;
 import models.beans.Task;
 import models.manager.OrganisationManager;
 import models.manager.ProjectManager;
+import models.manager.UserManager;
 import ninja.Result;
 import ninja.Results;
 import ninja.params.PathParam;
+import ninja.session.Session;
 
 public class ApplicationController {
     @Inject
     ProjectManager projectManager;
     @Inject
     OrganisationManager organisationManager;
+    @Inject
+    UserManager userManager;
 	public ApplicationController() {
 
 	}
@@ -79,6 +87,16 @@ public class ApplicationController {
        
         return result;
 	}
+	
+	
+	public Result milestone(@PathParam("milestoneID") String milestoneId) {
+        Result result = Results.html();
+        Milestone milestone = projectManager.getMilestone(Long.parseLong(milestoneId));
+        
+  
+        return result;
+	}
+
 
 	public Result myCalender() {
 		return Results.html();
@@ -110,7 +128,7 @@ public class ApplicationController {
             //Files
             System.out.println("Size of project-Files: " + project.getProjectFiles().size());
             result.render("files", project.getProjectFiles());
-            
+            result.render("members", project.getProjectMembers());
            
             return result;
 
@@ -136,9 +154,20 @@ public class ApplicationController {
          return result;
 	}
 
-	public Result projects() {
-		return Results.html();
+	public Result projects(Session session) {
 
+	    Result result = Results.html();
+	    String email = session.get("email");
+
+        PeasyUser peasyUser = userManager.getUser(email);
+        Set<Project> distinct = new HashSet<Project>(); 
+        distinct.addAll(peasyUser.getProject());
+        distinct.addAll(peasyUser.getProjectsWhereUserIsManager());
+
+        //Project 
+        result.render("projects", distinct);      
+        
+        return result;
 	}
 
 	public Result report(@PathParam("projectID") String projectId) {

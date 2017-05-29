@@ -63,10 +63,15 @@ public class StartupActions {
                                 //Project Controller Example data
                                 PeasyUser manager = userManager.createUser("manageruser@peasy.com", "Tug", "Bug", "123");               
                                 Project project = projectManager.createProject(manager, "Project 1");
+                                Project project2 = projectManager.createProject(user, "Project 2");
                                 projectManager.updateProject(project.getProjectId(), "Project Description");
+                                projectManager.updateProject(project2.getProjectId(), "Project Description");
                                 projectManager.updateProjectParameters(project.getProjectId(),"2017-08-19","2018-08-19","100000");
-                                System.out.println("Example Project created: " + project.toString());
+                                projectManager.updateProjectParameters(project2.getProjectId(),"2017-08-19","2018-08-19","100000");
                                
+                                projectManager.assignUserToProject(project.getProjectId(), user.getEmailAddress());
+                                projectManager.assignUserToProject(project2.getProjectId(), manager.getEmailAddress());
+
                                 //create 3 Blogentries
                                 projectManager.createBlogEntry(project.getProjectId(), manager.getEmailAddress(), "TitleManager", "TextManager");
                                 projectManager.createBlogEntry(project.getProjectId(), user.getEmailAddress(), "TitleUser1", "TextUser1");

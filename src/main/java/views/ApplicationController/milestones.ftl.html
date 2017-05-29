@@ -14,9 +14,9 @@
 								<li role="presentation" class="brand-nav"><a
 									href="/projects/${project.projectId}">${i18n("projectsidebar.overview")}</a></li>
 								<li role="presentation" class="brand-nav"><a
-									href="/projects/${project.projectId}/tasks/1">${i18n("projectsidebar.taskoverview")}</a></li>
-								<li role="presentation" class="brand-nav"><a
-									href="/projects/${project.projectId}/members">${i18n("projectsidebar.members")}</a></li>
+									href="/projects/${project.projectId}/tasks">${i18n("projectsidebar.taskoverview")}</a></li>
+<!-- 								<li role="presentation" class="brand-nav"><a -->
+<!-- 									href="/projects/${project.projectId}/members">${i18n("projectsidebar.members")}</a></li> -->
 								<li role="presentation" class="brand-nav"><a
 									href="/projects/${project.projectId}/report">${i18n("projectsidebar.report")}</a></li>
 								<li role="presentation" class="brand-nav active"><a
@@ -27,73 +27,78 @@
 							<div class="btn-toolbar">
 								<button class="btn btn-primary">New Milestone</button>
 							</div>
+							<br>
 							<div class="well">
 								<table class="table">
 									<thead>
 										<tr>
-											<th>Milestone</th>
 											<th>Name</th>
-											<th>Status</th>
-											<th>Finished</th>
-											<th>Left Time</th>
-											<th>Tasks</th>
+											<th>Progress</th>
 											<th>Deadline</th>
-											<th style="width: 36px;"></th>
+											<th>Delete</th>
 										</tr>
 									</thead>
 									<tbody>
+									<#list milestones as milestone>
 										<tr>
-											<td>1</td>
-											<td>Ninja Frame 1 finished</td>
-											<td style="color: #00cd66">In Time</td>
-											<td>90%</td>
-											<td>22 Days</td>
-											<td>Task 2</td>
-											<td>24.09.2017</td>
-											<td><a href="user.html"><i class="icon-pencil"></i></a>
-												<a href="#myModal" role="button" data-toggle="modal"><i
-													class="icon-remove"></i></a></td>
+											<td>${milestone.name}</td>
+											<td style="color: #00cd66" >${milestone.progress}%</td>
+											<td>${milestone.deadline}</td>
+											<td>	
+											<p data-placement="top" data-toggle="tooltip" title="Delete">
+												<button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete">
+													<span class="glyphicon glyphicon-trash"></span>
+												</button>
+											</p>
+											</td>
 										</tr>
-
-										<tr>
-											<td>2</td>
-											<td>Ninja Pages finished</td>
-											<td style="color: #00cd66">In Time</td>
-											<td>70%</td>
-											<td>22 Days</td>
-											<td>Task 6</td>
-											<td>25.08.2017</td>
-											<td><a href="user.html"><i class="icon-pencil"></i></a>
-												<a href="#myModal" role="button" data-toggle="modal"><i
-													class="icon-remove"></i></a></td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td>XY finished</td>
-											<td style="color: #00cd66">In Time</td>
-											<td>35%</td>
-											<td>22 Days</td>
-											<td>Task 12</td>
-											<td>08.09.2017</td>
-											<td><a href="user.html"><i class="icon-pencil"></i></a>
-												<a href="#myModal" role="button" data-toggle="modal"><i
-													class="icon-remove"></i></a></td>
-										</tr>
-										<tr>
-											<td>4</td>
-											<td>Project 50% finished</td>
-											<td style="color: #FF0000">Delayed</td>
-											<td>60%</td>
-											<td>22 Days</td>
-											<td>Task 3</td>
-											<td>13.09.2017</td>
-											<td><a href="user.html"><i class="icon-pencil"></i></a>
-												<a href="#myModal" role="button" data-toggle="modal"><i
-													class="icon-remove"></i></a></td>
-										</tr>
-									</tbody>
+										</#list>
+<!-- 										<tr> -->
+<!-- 											<td>4</td> -->
+<!-- 											<td>Project 50% finished</td> -->
+<!-- 											<td style="color: #FF0000">Delayed</td> -->
+<!-- 											<td>60%</td> -->
+<!-- 											<td>22 Days</td> -->
+<!-- 											<td>Task 3</td> -->
+<!-- 											<td>13.09.2017</td> -->
+<!-- 											<td><a href="user.html"><i class="icon-pencil"></i></a> -->
+<!-- 												<a href="#myModal" role="button" data-toggle="modal"><i -->
+<!-- 													class="icon-remove"></i></a></td> -->
+<!-- 										</tr> -->
 									</tbody>
 								</table>
+															<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+								aria-labelledby="edit" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal"
+												aria-hidden="true">
+												<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+											</button>
+											<h4 class="modal-title custom_align" id="Heading">"${i18n('members.deleteThisEntry')}"</h4>
+										</div>
+										<div class="modal-body">
+											<div class="alert alert-danger">
+												<span class="glyphicon glyphicon-warning-sign"></span>
+												"${i18n('members.sureToDelete')}"
+											</div>
+										</div>
+										<div class="modal-footer ">
+											<button type="button" class="btn btn-success">
+												<span class="glyphicon glyphicon-ok-sign"></span>"${i18n('members.yesDelete')}"
+											</button>
+											<button type="button" class="btn btn-default"
+												data-dismiss="modal">
+												<span class="glyphicon glyphicon-remove"></span>
+												"${i18n('members.noDelete')}"
+											</button>
+										</div>
+									</div>
+									<!-- /.modal-content -->
+								</div>
+								<!-- /.modal-dialog -->
+							</div>
 							</div>
 						</div>
 					</div>
