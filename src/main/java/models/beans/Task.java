@@ -19,6 +19,9 @@ public class Task implements Serializable {
     private long taskId;
     private String name;
     private String description;
+    private String effort;
+    private String start;
+
     private float progress;
     @ManyToOne
     private Project project;
@@ -107,6 +110,22 @@ public class Task implements Serializable {
 
 	public void setMilestone(Milestone milestone) {
 		this.milestone = milestone;
+	}
+
+	public String getEffort() {
+		return effort;
+	}
+
+	public void setEffort(String effort) {
+		this.effort = effort;
+	}
+
+	public String getStart() {
+		return start;
+	}
+
+	public void setStart(String start) {
+		this.start = start;
 	}
 
 	@Override

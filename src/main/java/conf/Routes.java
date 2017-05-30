@@ -92,11 +92,15 @@ public class Routes implements ApplicationRoutes {
         
         //AJAX Calls - Project
         router.POST().route("/changeProjectname/{projectId}/newName/{newName}").with(ProjectController::changeProjectname);
-        router.POST().route("/changeProjectDescription/{projectId}/newDescription/{description}").with(ProjectController::changeProjectname);
+        router.POST().route("/changeProjectDescription/{projectId}/newDescription/{description}").with(ProjectController::changeProjectDescription);
 
-        router.POST().route("/changeProject/{projectId}/projectStart/{projectStart}").with(ProjectController::changeProjectname);
-        router.POST().route("/changeProject/{projectId}/projectDeadline/{projectDeadline}").with(ProjectController::changeProjectname);
-        router.POST().route("/changeProject/{projectId}/projectBudget/{projectBudget}").with(ProjectController::changeProjectname);
+        router.POST().route("/changeProject/{projectId}/projectStart/{projectStart}").with(ProjectController::changeProjectStart);
+        router.POST().route("/changeProject/{projectId}/projectDeadline/{projectDeadline}").with(ProjectController::changeProjectEnd);
+        router.POST().route("/changeProject/{projectId}/projectBudget/{projectBudget}").with(ProjectController::changeProjectBudget);
+        
+        router.POST().route("/changeProject/{projectId}/deleteMember/{email}").with(ProjectController::deleteUserFromProject);
+        router.POST().route("/changeProject/{projectId}/addMember/{email}").with(ProjectController::addUsertoProject);
+
 
         
         ///////////////////////////////////////////////////////////////////////

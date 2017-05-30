@@ -3,6 +3,7 @@ package controllers;
 import com.google.inject.Inject;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import models.beans.Milestone;
@@ -93,6 +94,8 @@ public class ApplicationController {
         Result result = Results.html();
         Milestone milestone = projectManager.getMilestone(Long.parseLong(milestoneId));
         
+        result.render("project",milestone.getProject());
+        
   
         return result;
 	}
@@ -129,6 +132,32 @@ public class ApplicationController {
             System.out.println("Size of project-Files: " + project.getProjectFiles().size());
             result.render("files", project.getProjectFiles());
             result.render("members", project.getProjectMembers());
+            
+    		List<PeasyUser> peasyUsers = projectManager.getAllPeasyusers();
+    		
+    		Set<PeasyUser> peasyUserswithoutCurrentProject = new HashSet<>();
+    		
+    		
+    		for(PeasyUser peasyUser : peasyUsers){
+    			int a = 0;
+    			for(Project assignedProject : peasyUser.getProjects()){
+    				if(assignedProject.getProjectId().equals(Long.parseLong(projectId))){
+    					System.out.println("ass " + peasyUser.toString());
+    					 a = 1;
+    				}	
+    			}
+    			if(a==0){
+    				peasyUserswithoutCurrentProject.add(peasyUser);
+    			}    			
+    		}
+    	
+    		for(PeasyUser peasyUser : peasyUsers){
+    			
+    			System.out.println("ALL " + peasyUser.toString());
+    			
+    		}
+    		
+            result.render("users",peasyUserswithoutCurrentProject);
            
             return result;
 
@@ -181,9 +210,21 @@ public class ApplicationController {
         return result;
 	}
 
-	public Result tasks() {
-		return Results.html();
-
+	public Result tasks(@PathParam("projectID") String projectId) {
+		
+		//projectId is not needed until now
+		
+		 Result result = Results.html();
+         Project project = projectManager.getProject(Long.parseLong(projectId));
+       
+         //Project 
+         result.render("project", project);      
+        
+         //Tasks 
+         result.render("tasks", project.getTasks());      
+        
+         
+         return result;
 	}
 
 

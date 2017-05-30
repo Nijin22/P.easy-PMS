@@ -11,6 +11,7 @@ import com.google.inject.persist.Transactional;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import models.beans.Milestone;
@@ -125,6 +126,21 @@ public class ProjectManager {
       }
 
   }
+  
+  
+  /**
+  *
+  * @return List<PeasyUser>
+  */
+ @Transactional
+ public  List<PeasyUser> getAllPeasyusers() {
+     EntityManager entityManager = entitiyManagerProvider.get();
+     List<PeasyUser> listPersons = entityManager.createQuery("SELECT p FROM PeasyUser p").getResultList(); 
+     
+         return listPersons;
+
+ }
+
    
   
   /**
@@ -157,7 +173,7 @@ public class ProjectManager {
    * @throws NoSuchElementException
    */
   @Transactional
-  public Project changeProjectnDescription(long projectId,String description) throws NoSuchElementException {
+  public Project changeProjectDescription(long projectId,String description) throws NoSuchElementException {
       EntityManager entityManager = entitiyManagerProvider.get();
       Project project = entityManager.find(Project.class, projectId);
 
@@ -165,7 +181,7 @@ public class ProjectManager {
       if (project == null) {
           throw new NoSuchElementException("Project with projectId " + projectId + "is not in the database");
       } else {
-      	project.setName(description);
+      	project.setDescription(description);
           return project;
       }
 

@@ -70,24 +70,24 @@
 
 <div id="project">
 	<div class="page-header">
-		<h1>Tasks</h1>
+		<h1>${project.name} - Tasks</h1>
 	</div>
 	<div class="container">
 		<div class="row">
 			<div role="tabpanel">
 				<div class="col-sm-3">
-							<ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
-								<li role="presentation" class="brand-nav"><a
-									href="/projects/123">${i18n("projectsidebar.overview")}</a></li>
-								<li role="presentation" class="brand-nav active"><a
-									href="/projects/123/tasks/123">${i18n("projectsidebar.taskoverview")}</a></li>
-<!-- 								<li role="presentation" class="brand-nav"><a -->
-<!-- 									href="/projects/123/members">${i18n("projectsidebar.members")}</a></li> -->
-								<li role="presentation" class="brand-nav"><a
-									href="/projects/123/report">${i18n("projectsidebar.report")}</a></li>
-								<li role="presentation" class="brand-nav"><a
-									href="/projects/123/milestones">${i18n("projectsidebar.milestones")}</a></li>
-							</ul>
+					<ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
+					   <li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}">${i18n("projectsidebar.overview")}</a></li>
+							<li role="presentation" class="brand-nav active"><a
+								href="/projects/${project.projectId}/tasks">${i18n("projectsidebar.taskoverview")}</a></li>
+<!-- 							<li role="presentation" class="brand-nav"><a -->
+<!-- 								href="/projects/${project.projectId}/members" >${i18n("projectsidebar.members")}</a></li> -->
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}/report">${i18n("projectsidebar.report")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}/milestones">${i18n("projectsidebar.milestones")}</a></li>
+					</ul>
 				</div>
 				<div class="col-sm-9">
 					<div class="tab-content">
@@ -114,54 +114,28 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>Task</th>
 					<th>Name</th>
+					<th>Progress</th>
+					<th>Milestone</th>
 					<th>Start</th>
-					<th>Task Member</th>
-					<th>Budget</th>
-					<th>Costs</th>
-					<th>Status</th>
-					<th>Edit</th>
-					<th style="width: 36px;"></th>
+					<th>Effort</th>
 				</tr>
 			</thead>
 			<tbody>
+			<#list tasks as task>
 				<tr>
-					<td>1</td>
-					<td>Ninja Pages design</td>
-					<td>15.06.2017</td>
-					<td>John Doe</td>
-					<td>1300</td>
-					<td>492</td>
-					<td>70%</td>
-					<td><p data-placement="top" data-toggle="tooltip" title="Edit">
-							<button class="btn btn-primary btn-xs" data-title="Edit"
-								data-toggle="modal" data-target="#edit">
-								<span class="glyphicon glyphicon-pencil"></span>
-							</button>
-						</p></td>
+					<td>${task.name}</td>
+					<td>${task.progress}</td>
+					<td>${task.milestone.name}</td>
+					<td>${task.progress}</td>
+					<td>${task.progress}</td>
+					
 				</tr>
-				<td>2</td>
-				<td>Ninja Pages Style</td>
-				<td>25.06.2017</td>
-				<td>John Deer</td>
-				<td>1589</td>
-				<td>600</td>
-				<td>70%</td>
-				<td><p data-placement="top" data-toggle="tooltip" title="Edit">
-						<button class="btn btn-primary btn-xs" data-title="Edit"
-							data-toggle="modal" data-target="#edit">
-							<span class="glyphicon glyphicon-pencil"></span>
-						</button>
-					</p></td>
+			</#list>
 			</tbody>
 		</table>
 	</div>
 							
-
-				
-							
-
 
 						</div>
 					</div>
