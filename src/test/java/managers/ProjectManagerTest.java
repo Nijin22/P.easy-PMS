@@ -241,12 +241,12 @@ public class ProjectManagerTest extends NinjaTest {
             Task projectgetTask = pm.getTask(projectCreatedTask.getTaskId());
             assertEquals(projectgetTask.getName(), projectCreatedTask.getName());
            
-            //create Date for Milestone
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            Date d1 = sdf.parse("21/12/2017");
+//            //create Date for Milestone
+//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//            Date d1 = sdf.parse("21/12/2017");
             
             //create Milsestone
-            Milestone milestone= pm.createMilestone(createdProject.getProjectId(), "Milestone1", d1);
+            Milestone milestone= pm.createMilestone(createdProject.getProjectId(), "Milestone1", "21/12/2017");
             
             //test update task
             Task projectTaskUpdated = pm.updateTask(projectCreatedTask.getTaskId(),"Task 1","description",80, milestone.getMileStoneId());
@@ -292,10 +292,7 @@ public class ProjectManagerTest extends NinjaTest {
             
         } catch (GeneralSecurityException | UserAlreadyExistsException e) {
             fail(e.getMessage());
-        } catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        }
 
     }
 

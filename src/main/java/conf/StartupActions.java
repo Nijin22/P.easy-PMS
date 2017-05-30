@@ -86,11 +86,11 @@ public class StartupActions {
                                 projectManager.addMemberToProject(project.getProjectId(), member3.getEmailAddress());
                                 
                                 //create Milestones
-                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                Date d1 = sdf.parse("21/12/2017");
-                                Date d2 = sdf.parse("01/12/2017");
-                                Milestone milestone1  = projectManager.createMilestone(project.getProjectId(), "Milestone1 ", d1);
-                                Milestone milestone2  = projectManager.createMilestone(project.getProjectId(), "Milestone2 ", d2);
+//                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//                                Date d1 = sdf.parse("21/12/2017");
+//                                Date d2 = sdf.parse("01/12/2017");
+                                Milestone milestone1  = projectManager.createMilestone(project.getProjectId(), "Milestone1 ", "21/12/2017");
+                                Milestone milestone2  = projectManager.createMilestone(project.getProjectId(), "Milestone2 ", "01/12/2017");
 
                                 //create Tasks
                                 Task task = projectManager.createTask(project.getProjectId(), "Task 1");

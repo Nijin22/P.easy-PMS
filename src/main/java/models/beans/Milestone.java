@@ -21,7 +21,7 @@ public class Milestone {
 	Long mileStoneId;
 	@NotNull
 	private String name;
-	private Date deadline;
+	private String deadline;
 	private float progress;
 	@ManyToOne
 	private Project project;
@@ -37,10 +37,10 @@ public class Milestone {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Date getDeadline() {
+	public String getDeadline() {
 		return deadline;
 	}
-	public void setDeadline(Date deadline) {
+	public void setDeadline(String deadline) {
 		this.deadline = deadline;
 	}
 	public float getProgress() {

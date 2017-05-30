@@ -238,7 +238,7 @@ public class ProjectManager {
     * @throws NoSuchElementException
     */
    @Transactional
-   public Milestone createMilestone(long projectId, String name, Date deadline) throws NoSuchElementException {
+   public Milestone createMilestone(long projectId, String name, String deadline) throws NoSuchElementException {
        //description can be null, so no exception handling is requiered
 
        EntityManager entityManager = entitiyManagerProvider.get();
@@ -289,7 +289,7 @@ public class ProjectManager {
 * @throws NoSuchElementException
 */
 @Transactional
-public Milestone updateMilestone(long milestoneId, String name, Date deadline) throws NoSuchElementException {
+public Milestone updateMilestone(long milestoneId, String name, String deadline) throws NoSuchElementException {
 
   EntityManager entityManager = entitiyManagerProvider.get();
   Milestone milestone = entityManager.find(Milestone.class, milestoneId);
