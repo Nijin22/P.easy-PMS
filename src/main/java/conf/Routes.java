@@ -90,6 +90,10 @@ public class Routes implements ApplicationRoutes {
         //Get beacause <a> link can't do a delete call
         router.GET().route("/delete/{type}/{fileId}/{idOfOwner}").with(FileController::deleteFinish);
         
+        //create Master Project -- Get beacause <a> link can't do a delete ca
+        router.GET().route("/createProject/{email}").with(ProjectController::createProject);
+
+        
         //AJAX Calls - Project
         router.POST().route("/changeProjectname/{projectId}/newName/{newName}").with(ProjectController::changeProjectname);
         router.POST().route("/changeProjectDescription/{projectId}/newDescription/{description}").with(ProjectController::changeProjectDescription);

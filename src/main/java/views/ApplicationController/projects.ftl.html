@@ -16,22 +16,22 @@
 	<table id="myTable">
 		<tr class="header">
 			<th style="width: 18%;">${i18n("projects.projectname")}</th>
-			<th style="width: 18%;">${i18n("projects.status")}</th>
+			<th style="width: 10%;">${i18n("projects.status")}</th>
 			<th style="width: 18%;">${i18n("projects.timeleft")}</th>
 			<th style="width: 18%;">${i18n("projects.budget")}</th>
-		    <th style="width: 10%;">${i18n("projects.start")}</th>
+		    <th style="width: 18%;">${i18n("projects.ProjectManager")}</th>
 			<th style="width: 18%;">${i18n("projects.deadline")}</th>
 		</tr>
 		
                      <tbody>
                      <#list projects as project>
                         <tr>
-                           <td>Projekt 1</td>
-                           <td style="color:#00cd66">In Time</td>
+                           <td><a href="/projects/${project.projectId}">${project.name}</a></td>
                            <td>Abgeschlossen</td>
-                           <td>22 Stunden</td>
-                           <td>22000€</td>
-                           <td>21.12.2017</td>
+                           <td style="color:#00cd66">In Time</td>
+                           <td>${project.budget}€</td>
+                           <td>${project.projectManager.emailAddress}</td>
+                           <td>${project.deadline}</td>
                         </tr>
                       </#list>
                      </tbody>

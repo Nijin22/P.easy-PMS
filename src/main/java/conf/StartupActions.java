@@ -104,7 +104,7 @@ public class StartupActions {
                                 
                                 Task task4 = projectManager.createTask(project.getProjectId(), "Task 4");
                                 projectManager.updateTask(task4.getTaskId(), "Task 4", "Description Task 1 ", 0, milestone2.getMileStoneId());
-                                
+                                projectManager.assignUserToTask(task.getTaskId(), member1.getEmailAddress());
                                 //Upload 2 Files
                                 File file1 = new File("src/test/resources/StartupFile1.pdf");
                                 File file2 = new File("src/test/resources/StartupFile2.pdf");

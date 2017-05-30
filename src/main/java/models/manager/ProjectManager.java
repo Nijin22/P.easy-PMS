@@ -10,6 +10,8 @@ import com.google.inject.persist.Transactional;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -33,6 +35,60 @@ public class ProjectManager {
     Provider<EntityManager> entitiyManagerProvider;
 
     // Begin Project specific Methods
+    
+    /**
+    *
+    * @param email
+    * @param name
+    * @return created Master Project
+    * @throws IllegalArgumentException
+    */
+   @Transactional
+   public Project createMasterProject(String email) throws IllegalArgumentException {
+
+       if (email == null) {
+           throw new IllegalArgumentException("Projectmanager can't be null");
+       }
+       
+       DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+       LocalDate localDate = LocalDate.now();
+
+       // Get Manager to persist the project object
+       EntityManager entityManager = entitiyManagerProvider.get();
+       PeasyUser projectManager = entityManager.find(PeasyUser.class, email);
+
+       // Create project bean
+       Project project = new Project();
+       project.setProjectManager(projectManager);
+       project.setName("Initial Project");
+       project.setDescription("Initial Description");
+       project.setBudget("0");
+       project.setStart(dtf.format(localDate));
+       project.setDeadline(dtf.format(localDate));
+       project.setStatus(ProjectStatus.CREATED);
+       
+       //create the Task bean
+       Task task = new Task();
+       task.setName("Initial Task");
+       task.setDescription("Initial Description");
+       task.setStart(dtf.format(localDate));
+       task.setEffort("1");
+       task.setProgress(0);
+       task.setProject(project);
+       task.setLevel(0);
+       
+       project.getTasks().add(task);
+       
+       // Persist the project
+       entityManager.persist(project);
+       
+       // Persist the task
+       entityManager.persist(task);
+
+
+       return project;
+   }
+    
     /**
      *
      * @param projectManager

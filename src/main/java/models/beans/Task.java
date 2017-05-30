@@ -21,9 +21,19 @@ public class Task implements Serializable {
     private String description;
     private String effort;
     private String start;
+    
+    private int level;
 
     private float progress;
-    @ManyToOne
+    public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	@ManyToOne
     private Project project;
     
     @ManyToMany
@@ -33,6 +43,8 @@ public class Task implements Serializable {
     private static final long serialVersionUID = 1L;
     @OneToMany(mappedBy = "task")
     private Set<TaskFile> taskFiles= new HashSet<>();
+    
+    
     @ManyToOne
     Milestone milestone;
 

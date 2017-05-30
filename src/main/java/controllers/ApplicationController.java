@@ -160,6 +160,7 @@ public class ApplicationController {
     		}
     		
             result.render("users",peasyUserswithoutCurrentProject);
+              
            
             return result;
 
@@ -181,7 +182,9 @@ public class ApplicationController {
          //Files
          result.render("files", task.getTaskFiles());
          
-        
+         //Taskmebers
+         result.render("members", task.getUsers());
+         
          return result;
 	}
 

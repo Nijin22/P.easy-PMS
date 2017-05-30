@@ -21,6 +21,13 @@ public class ProjectController {
 	@Inject
 	private UserManager userManager;
 	
+	public Result createProject(@PathParam("email") String email){
+		Project project = projectManager.createMasterProject(email);
+		
+			return Results.redirect("/projects/"+project.getProjectId());
+		
+	}
+	
 	public Result addBlogEntry(@PathParam("projectId") String projectId,@PathParam("email") String email,@PathParam("title") String title,@PathParam("text") String text){
 		projectManager.createBlogEntry( Long.parseLong(projectId), email, title, text);
 		return Results.redirect("/projects/" + projectId);
