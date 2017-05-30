@@ -89,8 +89,8 @@ public class StartupActions {
 //                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 //                                Date d1 = sdf.parse("21/12/2017");
 //                                Date d2 = sdf.parse("01/12/2017");
-                                Milestone milestone1  = projectManager.createMilestone(project.getProjectId(), "Milestone1 ", "21/12/2017");
-                                Milestone milestone2  = projectManager.createMilestone(project.getProjectId(), "Milestone2 ", "01/12/2017");
+                                Milestone milestone1  = projectManager.createMilestone(project.getProjectId(), "Milestone1 ", "2017-08-19");
+                                Milestone milestone2  = projectManager.createMilestone(project.getProjectId(), "Milestone2 ", "2017-08-19");
 
                                 //create Tasks
                                 Task task = projectManager.createTask(project.getProjectId(), "Task 1");

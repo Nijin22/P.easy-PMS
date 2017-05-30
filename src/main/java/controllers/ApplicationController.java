@@ -95,6 +95,8 @@ public class ApplicationController {
         Milestone milestone = projectManager.getMilestone(Long.parseLong(milestoneId));
         
         result.render("project",milestone.getProject());
+        result.render("milestone",milestone);
+        result.render("tasks",milestone.getTasks());
         
   
         return result;
