@@ -41,7 +41,7 @@
 									<tbody>
 									<#list milestones as milestone>
 										<tr>
-											<td>${milestone.name}</td>
+											<td><a href="/projects/${project.projectId}/milestones/${milestone.mileStoneId}">${milestone.name}</a></td>
 											<td style="color: #00cd66" >${milestone.progress}%</td>
 											<td>${milestone.deadline}</td>
 											<td>	

@@ -124,7 +124,7 @@
 			<tbody>
 			<#list tasks as task>
 				<tr>
-					<td>${task.name}</td>
+					<td><a href="/projects/${project.projectId}/tasks/${task.taskId}">${task.name}</a></td>
 					<td>${task.progress}</td>
 					<td>${task.milestone.name}</td>
 					<td>${task.progress}</td>
