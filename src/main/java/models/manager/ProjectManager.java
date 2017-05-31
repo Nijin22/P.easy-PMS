@@ -735,6 +735,64 @@ public Milestone updateMilestone(long milestoneId, String name, String deadline)
        return project;
 
    }
+   
+   
+   
+   /**
+   *
+   * @param milestoneId
+   * @param taskId
+   * @return updated Milestone
+   * @throws NoSuchElementException
+   */
+  @Transactional
+  public Milestone addTasktoMilestone(long milestoneId, long taskId) throws NoSuchElementException {
+     
+      EntityManager entityManager = entitiyManagerProvider.get();
+      Milestone milestone = entityManager.find(Milestone.class, milestoneId);
+      Task task = entityManager.find(Task.class, taskId);  
+      
+      if (milestone == null) {
+          throw new NoSuchElementException("Milestone with milestoneId: " + milestoneId + "doesn't exist in the database");
+      }
+      if (task == null) {
+          throw new NoSuchElementException("Task with taskId: " + taskId + "doesn't exist in the database");
+      }
+
+      milestone.getTasks().add(task);
+      task.setMilestone(milestone);
+
+      return milestone;
+
+  }
+  
+  /**
+  *
+  * @param milestoneId
+  * @param taskId
+  * @return updated Milestone
+  * @throws NoSuchElementException
+  */
+ @Transactional
+ public Milestone deleteTaskfromMilestone(long milestoneId, long taskId) throws NoSuchElementException {
+    
+     EntityManager entityManager = entitiyManagerProvider.get();
+     Milestone milestone = entityManager.find(Milestone.class, milestoneId);
+     Task task = entityManager.find(Task.class, taskId);  
+     
+     if (milestone == null) {
+         throw new NoSuchElementException("Milestone with milestoneId: " + milestoneId + "doesn't exist in the database");
+     }
+     if (task == null) {
+         throw new NoSuchElementException("Task with taskId: " + taskId + "doesn't exist in the database");
+     }
+
+     milestone.getTasks().remove(task);
+     task.setMilestone(null);
+
+     return milestone;
+
+ }
 
    /**
    *

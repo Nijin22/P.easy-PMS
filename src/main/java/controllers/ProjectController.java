@@ -172,6 +172,33 @@ public class ProjectController {
 		
 	}
 	
+	public Result addTasktoMilestone(@PathParam("milestoneId") String milestoneId,@PathParam("taskId") String taskId){
+		Milestone milestone = projectManager.addTasktoMilestone(Long.parseLong(milestoneId),Long.parseLong(taskId));
+		Task task = projectManager.getTask(Long.parseLong(taskId));
+		
+		if(milestone.getTasks().contains(task)){
+			return Results.ok();
+		}else{
+			return Results.badRequest();
+		}
+		
+	}
+	
+	
+	public Result deleteTaskfromMilestone(@PathParam("milestoneId") String milestoneId,@PathParam("taskId") String taskId){
+		System.out.println("Ready to delete " +milestoneId+ " " +taskId);
+		Milestone milestone = projectManager.deleteTaskfromMilestone(Long.parseLong(milestoneId),Long.parseLong(taskId));
+		Task task = projectManager.getTask(Long.parseLong(taskId));
+		
+		if(!milestone.getTasks().contains(task)){
+			return Results.ok();
+		}else{
+			return Results.badRequest();
+		}
+		
+	}
+	
+	
 	public Result addUsertoTask(@PathParam("taskId") String taskId,@PathParam("email") String email){
 		Task task = projectManager.assignUserToTask(Long.parseLong(taskId), email);
 		PeasyUser peasyUser = userManager.getUser(email);

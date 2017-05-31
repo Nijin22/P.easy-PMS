@@ -97,8 +97,28 @@ public class ApplicationController {
         result.render("project",milestone.getProject());
         result.render("milestone",milestone);
         result.render("tasks",milestone.getTasks());
+        		
+		Set<Task> taskswithoutCurrentMilestone = new HashSet<>();
+		
+		for(Task task : milestone.getProject().getTasks()){
+			int a = 0;
+			System.out.println("Milestone " + milestone.getTasks().toString());
+			System.out.println("Task " + task.toString());
+
+			if(task.getMilestone() == null){
+				taskswithoutCurrentMilestone.add(task);
+			}else{
+			if(task.getMilestone().getMileStoneId().equals(Long.parseLong(milestoneId))){
+			 a = 1;
+			}
+			if(a==0){
+				taskswithoutCurrentMilestone.add(task);
+			} 
+		  }
+		}
         
-  
+        result.render("potentialTasks",taskswithoutCurrentMilestone);
+
         return result;
 	}
 
