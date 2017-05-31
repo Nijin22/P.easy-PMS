@@ -192,6 +192,26 @@ public class ApplicationController {
          //Taskmebers
          result.render("members", task.getUsers());
          
+         
+         
+     	Set<PeasyUser> peasyUsers = task.getProject().getProjectMembers();
+		
+		Set<PeasyUser> peasyUserswithoutCurrentTask = new HashSet<>();
+		
+		for(PeasyUser peasyUser : peasyUsers){
+			int a = 0;
+			for(Task assignedtask : peasyUser.getTasks()){
+				if(assignedtask.getTaskId()==Long.parseLong(taskId)){
+					 a = 1;
+				}	
+			}
+			if(a==0){
+				peasyUserswithoutCurrentTask.add(peasyUser);
+			}    			
+		}
+        result.render("potentialMembers",peasyUserswithoutCurrentTask);
+         
+         
          return result;
 	}
 

@@ -148,11 +148,35 @@ public class ProjectController {
 		
 	}
 	
+	public Result deleteUserFromTask(@PathParam("taskId") String taskId,@PathParam("email") String email){
+		Task task = projectManager.unassignUserFromTask(Long.parseLong(taskId), email);
+		PeasyUser peasyUser = userManager.getUser(email);
+		
+		if(!task.getUsers().contains(peasyUser)){
+			return Results.ok();
+		}else{
+			return Results.badRequest();
+		}
+		
+	}
+	
 	public Result addUsertoProject(@PathParam("projectId") String projectId,@PathParam("email") String email){
 		Project project = projectManager.assignUserToProject(Long.parseLong(projectId), email);
 		PeasyUser peasyUser = userManager.getUser(email);
 		
 		if(project.getProjectMembers().contains(peasyUser)){
+			return Results.ok();
+		}else{
+			return Results.badRequest();
+		}
+		
+	}
+	
+	public Result addUsertoTask(@PathParam("taskId") String taskId,@PathParam("email") String email){
+		Task task = projectManager.assignUserToTask(Long.parseLong(taskId), email);
+		PeasyUser peasyUser = userManager.getUser(email);
+		
+		if(task.getUsers().contains(peasyUser)){
 			return Results.ok();
 		}else{
 			return Results.badRequest();

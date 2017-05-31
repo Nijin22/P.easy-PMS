@@ -172,39 +172,6 @@
 								<!-- /.modal-dialog -->
 							</div>
 				<!--End Modal for Add Dependency to Task -->
-				<!--Start Modal for Delete Dependency from Task -->
-				<div class="modal fade" id="deleteDep" tabindex="-1" role="dialog"
-								aria-labelledby="edit" aria-hidden="true">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal"
-												aria-hidden="true">
-												<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-											</button>
-											<h4 class="modal-title custom_align" id="Heading">"${i18n('members.deleteThisEntry')}"</h4>
-										</div>
-										<div class="modal-body">
-											<div class="alert alert-danger">
-												<span class="glyphicon glyphicon-warning-sign"></span>
-												"${i18n('members.sureToDelete')}"
-											</div>
-										</div>
-										<div class="modal-footer ">
-											<button type="button" class="btn btn-success">
-												<span class="glyphicon glyphicon-ok-sign"></span>"${i18n('members.yesDelete')}"
-											</button>
-											<button type="button" class="btn btn-default"
-												data-dismiss="modal">
-												<span class="glyphicon glyphicon-remove"></span>
-												"${i18n('members.noDelete')}"
-											</button>
-										</div>
-									</div>
-									<!-- /.modal-content -->
-								</div>
-								<!-- /.modal-dialog -->
-							</div>
 				<!--End Modal for Delete Dependency from Task -->
 							
 				<hr>
@@ -219,12 +186,12 @@
                      <tbody>
                      <#list members as member>
                         <tr>
-                           <td>John</td>
-                           <td>Doe</td>
-                           <td>john.doe@example.com</td>
+                           <td>${member.firstName}</td>
+                           <td>${member.lastName}</td>
+                           <td>${member.emailAddress}</td>
 
                            <td>
-                              <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target=#deleteMember ><span class="glyphicon glyphicon-trash"></span></button></p>
+                              <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" onclick="unassignUser( '${member.emailAddress}')" ><span class="glyphicon glyphicon-trash"></span></button></p>
                            </td>
                         </tr>
                         </#list>
@@ -237,37 +204,34 @@
 														value="Add Member"> <span></span>
 						</div>
 				</div>
-				<!-- Modal for add Dependency to Task -->
+							<!-- Modal for add User to Task -->
 							<div class="modal fade" id="addMember" tabindex="-1" role="dialog"
 								aria-labelledby="edit" aria-hidden="true">
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
 											<button type="button" class="close" data-dismiss="modal"
-												aria-hidden="true">
+												aria-hidden="true" >
 												<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 											</button>
-											<h4 class="modal-title custom_align" id="Heading">Add Member</h4>
+											<h4 class="modal-title custom_align" id="Heading">${i18n('members.addMemberToTask')}</h4>
 										</div>
 										<div class="modal-body">
-											<div class="form-group">
-												<input class="form-control " type="text" placeholder="Max">
-											</div>
-											<div class="form-group">
-												<input class="form-control " type="text"
-													placeholder="Mustermann">
-											</div>
-											<div class="form-group">
-												<input class="form-control " type="text"
-													placeholder="Mustermann@gmail.com">
-											</div>
-										</div>
-										<div class="modal-footer ">
-											<button type="button" class="btn btn-warning btn-lg"
-												style="width: 100%;">
-												<span class="glyphicon glyphicon-ok-sign"></span>
-												Add
-											</button>
+										<table>
+										<#list potentialMembers as user>
+										<tr><td>
+										${user.firstName}
+										</td>
+										<td>
+										,
+										</td>
+										<td>
+									     ${user.lastName}
+										</td>
+										<td><button type="button" class="btn" onclick="addUserToTask('${user.emailAddress}')"><span class="glyphicon glyphicon-ok-sign"></span></button></td>
+										</tr>
+										</#list>
+										</table>
 										</div>
 									</div>
 									<!-- /.modal-content -->
@@ -275,40 +239,6 @@
 								<!-- /.modal-dialog -->
 							</div>
 				<!--End Modal for Add Dependency to Task -->
-				<!--Start Modal for Delete Dependency from Task -->
-				<div class="modal fade" id="deleteMember" tabindex="-1" role="dialog"
-								aria-labelledby="edit" aria-hidden="true">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal"
-												aria-hidden="true">
-												<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-											</button>
-											<h4 class="modal-title custom_align" id="Heading">"${i18n('members.deleteThisEntry')}"</h4>
-										</div>
-										<div class="modal-body">
-											<div class="alert alert-danger">
-												<span class="glyphicon glyphicon-warning-sign"></span>
-												"${i18n('members.sureToDelete')}"
-											</div>
-										</div>
-										<div class="modal-footer ">
-											<button type="button" class="btn btn-success">
-												<span class="glyphicon glyphicon-ok-sign"></span>"${i18n('members.yesDelete')}"
-											</button>
-											<button type="button" class="btn btn-default"
-												data-dismiss="modal">
-												<span class="glyphicon glyphicon-remove"></span>
-												"${i18n('members.noDelete')}"
-											</button>
-										</div>
-									</div>
-									<!-- /.modal-content -->
-								</div>
-								<!-- /.modal-dialog -->
-							</div>
-				<!--End Modal for Delete Dependency from Task -->
 
 							
 							<!--End Input Parameters of Project -->
@@ -447,8 +377,44 @@
 			    }
 			}
 			});
+			
+	}	
+		function unassignUser(email){
 
-	}
+			$.ajax({
+				type : "POST",
+				url : "/changeTask/"+${task.taskId}+"/deleteMemberFromTask/"+email,
+				success: function (response) {  
+					window.location.reload(true);													
+				},
+				statusCode: {
+				    500: function() {
+				       // Only if your server returns a 403 status code can it come in this block. :-)
+				        //alert("Error to update DeadLine");
+						window.location.reload(true);													
+				    }
+				}
+			});
+		}	
+
+		function addUserToTask(email){
+			$.ajax({
+				type : "POST",
+				url : "/changeTask/"+${task.taskId}+"/addMemberToTask/"+email,
+				success: function (response) {  
+					window.location.reload(true);
+				
+				},
+				statusCode: {
+				    500: function() {
+				    	window.location.reload(true);
+				    	// Only if your server returns a 403 status code can it come in this block. :-)
+				       // alert("Error to update Project Start");
+				    	}
+					}
+					});
+					
+		}
 
 </script>
 
