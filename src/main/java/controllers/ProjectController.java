@@ -36,7 +36,7 @@ public class ProjectController {
 	
 	public Result createMilestone(@PathParam("projectId") String projectId){
 	   
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	    LocalDate localDate = LocalDate.now();
 		
 	    Milestone milestone = projectManager.createMilestone(Long.parseLong(projectId), "initial Milestone", dtf.format(localDate));

@@ -127,10 +127,11 @@
 					<td><a href="/projects/${project.projectId}/tasks/${task.taskId}">${task.name}</a></td>
 					<td>${task.progress}</td>
 					<td>
-					<#if userName??>
+					<#if task.milestone??>
 	  							${task.milestone.name}
 	  							<#else>
-	  							Value not Set!
+	  							Set a Milestone
+	  							
 					</#if>
 					</td>
 					<td>${task.progress}</td>
