@@ -27,7 +27,7 @@
                      <#list projects as project>
                         <tr>
                            <td><a href="/projects/${project.projectId}">${project.name}</a></td>
-                           <td>Abgeschlossen</td>
+                           <td>${project.status}</td>
                            <td style="color:#00cd66">In Time</td>
                            <td>${project.budget}€</td>
                            <td>${project.projectManager.emailAddress}</td>

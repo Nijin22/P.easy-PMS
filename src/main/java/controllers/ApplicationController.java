@@ -102,8 +102,6 @@ public class ApplicationController {
 		
 		for(Task task : milestone.getProject().getTasks()){
 			int a = 0;
-			System.out.println("Milestone " + milestone.getTasks().toString());
-			System.out.println("Task " + task.toString());
 
 			if(task.getMilestone() == null){
 				taskswithoutCurrentMilestone.add(task);
