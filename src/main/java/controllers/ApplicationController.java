@@ -138,13 +138,10 @@ public class ApplicationController {
     		List<PeasyUser> peasyUsers = projectManager.getAllPeasyusers();
     		
     		Set<PeasyUser> peasyUserswithoutCurrentProject = new HashSet<>();
-    		
-    		
     		for(PeasyUser peasyUser : peasyUsers){
     			int a = 0;
     			for(Project assignedProject : peasyUser.getProjects()){
     				if(assignedProject.getProjectId().equals(Long.parseLong(projectId))){
-    					System.out.println("ass " + peasyUser.toString());
     					 a = 1;
     				}	
     			}
@@ -152,16 +149,26 @@ public class ApplicationController {
     				peasyUserswithoutCurrentProject.add(peasyUser);
     			}    			
     		}
-    	
+            result.render("users",peasyUserswithoutCurrentProject);
+            
+    		Set<PeasyUser> peasyUserswithoutCurrentManager = new HashSet<>();
+
     		for(PeasyUser peasyUser : peasyUsers){
-    			
-    			System.out.println("ALL " + peasyUser.toString());
+    			int a = 0;
+    			for(Project projectmanager : peasyUser.getProjectsWhereUserIsManager()){
+    				if(projectmanager.getProjectId().equals(Long.parseLong(projectId))){
+    					 a = 1;
+    				}	
+    			}
+    			if(a==0){
+    				peasyUserswithoutCurrentManager.add(peasyUser);
+    				System.out.println("manager: " + peasyUser.toString());
+    			}	
     			
     		}
-    		
-            result.render("users",peasyUserswithoutCurrentProject);
               
-           
+            result.render("userManagers",peasyUserswithoutCurrentManager);
+
             return result;
 
 	}

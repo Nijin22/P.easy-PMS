@@ -119,25 +119,47 @@ public class ProjectManager {
 
     /**
      *
-     * @param projectId
+     * @param taskId
      * @param newname
-     * @return Project
+     * @return task
      * @throws NoSuchElementException
      */
     @Transactional
-    public Project changeProjectname(long projectId,String newname) throws NoSuchElementException {
+    public Task changeTaskname(long taskId,String newname) throws NoSuchElementException {
         EntityManager entityManager = entitiyManagerProvider.get();
-        Project project = entityManager.find(Project.class, projectId);
+        Task task = entityManager.find(Task.class, taskId);
 
         
-        if (project == null) {
-            throw new NoSuchElementException("Project with projectId " + projectId + "is not in the database");
+        if (task == null) {
+            throw new NoSuchElementException("Task with taskId " + taskId + "is not in the database");
         } else {
-        	project.setName(newname);
-            return project;
+        	task.setName(newname);
+            return task;
         }
 
     }
+    
+    /**
+    *
+    * @param projectId
+    * @param newname
+    * @return Project
+    * @throws NoSuchElementException
+    */
+   @Transactional
+   public Project changeProjectname(long projectId,String newname) throws NoSuchElementException {
+       EntityManager entityManager = entitiyManagerProvider.get();
+       Project project = entityManager.find(Project.class, projectId);
+
+       
+       if (project == null) {
+           throw new NoSuchElementException("Project with projectId " + projectId + "is not in the database");
+       } else {
+       	project.setName(newname);
+           return project;
+       }
+
+   }
     
     /**
     *
@@ -243,6 +265,27 @@ public class ProjectManager {
 
   }
     
+  /**
+  *
+  * @param taskId
+  * @param description
+  * @return Task
+  * @throws NoSuchElementException
+  */
+ @Transactional
+ public Task changeTaskDescription(long taskId,String description) throws NoSuchElementException {
+     EntityManager entityManager = entitiyManagerProvider.get();
+     Task task = entityManager.find(Task.class, taskId);
+
+     
+     if (task == null) {
+         throw new NoSuchElementException("Task with taskId " + taskId + "is not in the database");
+     } else {
+     	task.setDescription(description);
+        return task;
+     }
+
+ }
     /**
     *
     * @param projectId
@@ -693,6 +736,35 @@ public Milestone updateMilestone(long milestoneId, String name, String deadline)
 
    }
 
+   /**
+   *
+   * @param projectId
+   * @param email
+   * @return updated Project
+   * @throws NoSuchElementException
+   */
+  @Transactional
+  public Project changeProjectmanager(long projectId, String email) throws NoSuchElementException {
+     
+      EntityManager entityManager = entitiyManagerProvider.get();
+      Project project = entityManager.find(Project.class, projectId);
+      PeasyUser user = entityManager.find(PeasyUser.class, email);  
+      
+      if (project == null) {
+          throw new NoSuchElementException("Project with projectId: " + projectId + "doesn't exist in the database");
+      }
+      if (user == null) {
+          throw new NoSuchElementException("User with email: " + email + "doesn't exist in the database");
+      }
+
+      project.setProjectManager(user);
+      user.getProjectsWhereUserIsManager().add(project);
+
+      return project;
+
+  }
+   
+   
    /**
     *
     * @param projectId

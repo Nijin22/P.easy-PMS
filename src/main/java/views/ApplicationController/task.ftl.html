@@ -3,7 +3,24 @@
 
 <div id="project">
 	<div class="page-header">
-		<h1>${task.project.name}-${task.name}</h1>
+		<h1 id="projectName">${task.name}</h1>
+		<button  class="btn btn-primary btn-xs" data-title="editName"
+				onclick="editNameButton()" id='editNameButton'>
+				<span class="glyphicon glyphicon-pencil"></span>
+			</button>
+
+		</div>
+	 <div id=newNameForm style="display: none;">
+			<div class="form-group">
+				<label for="newName1">Select a Task name</label> <input 
+					type="text" class="form-control" id="newNameText">
+			</div>
+
+			<input type='button' onclick="saveNameButton()" id='saveNameButton'
+				class="btn btn-success pull-right" value='Save'> <br>
+
+
+		</div>
 	</div>
 	<div class="container">
 		<div class="row">
@@ -26,11 +43,29 @@
 					<div class="tab-content">
 						<div role="tabpanel" class="tab-pane active" id="tab1">
 							<p>
-								<!--Button Project Description Start -->
-								<button class="btn btn-primary" data-toggle="collapse"
-									data-target="#details1">${i18n('task.taskDescription')}</button>
-							<div id="details1" class="collapse">
-								${task.description}</div>
+							
+						    <!--Button Project Description Start -->
+							<button class="btn btn-primary" data-toggle="collapse"
+									data-target="#descriptionText">${i18n('task.taskDescription')}</button>
+							<div id="descriptionText" class="collapse">
+								<div class="textDescription" id="textDescritpion">${task.description}</div>
+
+								<br> <input type='button' onclick="editButton()"
+									id='editButton' class="btn btn-primary pull-right" value='Edit'>
+								<br>
+								<div id="editDescription" style="display: none;">
+									<div class="form-group">
+										<label for=" Email1msg">Edit Description</label>
+										<textarea class="form-control" id="textareaDescription"
+											rows="5"></textarea>
+									</div>
+									<input type='button' onclick="saveButton()" id='saveButton'
+										class="btn btn-success pull-right" value='Save'> <br>
+
+
+
+								</div>
+							</div>
 							<br>
 							<!-- Buttom Project Description End -->
 							<!-- Start Progess Bar -->
@@ -348,6 +383,73 @@
 			}
 		}
 	}
+	
+	function editNameButton() {
+		$('#newNameForm').toggle('show');
+		$('h1').toggle('hide');
+		$('editNameButton').toggle('hide');
+		//if ($("h1").text() == $("#newNameText").text()) {
+		//$("h1").clone().appendTo("#newNameText");
+		$('#newNameText').val($('#projectName').html());
+
+	}
+
+	function saveNameButton() {
+		$('#newNameForm').toggle('hide');
+		$('h1').toggle('show');
+			
+		
+		if($('#newNameText').val()==null||$('#newNameText').val()==""){
+			alert("Projektname muss gefuellt sein");
+		}else{
+
+		$('#projectName').text($('#newNameText').val());
+		$.ajax({
+			type : "POST",
+			url : "/changeTaskname/"+${project.projectId}+"/newName/"+$('#newNameText').val(),
+			success: function (response) {  
+			},
+			statusCode: {
+			    500: function() {
+			       // Only if your server returns a 403 status code can it come in this block. :-)
+			       // alert("Error to update Projectname");
+			    }
+			}
+			});
+		}
+	}
+	
+	function editButton() {
+		$('#editDescription').toggle('show');
+		$('#textDescritpion').toggle('hide');
+		$('#editButton').toggle('hide');
+		$('#textareaDescription').val($('#textDescritpion').html());
+		
+	}
+
+	function saveButton() {
+		$('#textDescritpion').text($('#textareaDescription').val());
+		$('#editDescription').toggle('hide');
+		$('#textDescritpion').toggle('show');
+		$('#editButton').toggle('show');
+	
+		
+		
+		$.ajax({
+			type : "POST",
+			url : "/changeTaskDescription/"+${task.taskId}+"/newDescription/"+$('#textareaDescription').val(),
+			success: function (response) {  
+			},
+			statusCode: {
+			    500: function() {
+			       // Only if your server returns a 403 status code can it come in this block. :-)
+			        //alert("Error to update Description");
+			    }
+			}
+			});
+
+	}
+
 </script>
 
 <style>

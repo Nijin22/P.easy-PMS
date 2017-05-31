@@ -22,6 +22,7 @@ import models.beans.Organisation;
 
 import models.beans.PeasyUser;
 import models.beans.Project;
+import models.beans.ProjectStatus;
 import models.beans.Task;
 import models.manager.FileManager;
 import models.manager.OrganisationManager;
@@ -68,7 +69,9 @@ public class StartupActions {
                                 projectManager.updateProject(project2.getProjectId(), "Project Description");
                                 projectManager.updateProjectParameters(project.getProjectId(),"2017-08-19","2018-08-19","100000");
                                 projectManager.updateProjectParameters(project2.getProjectId(),"2017-08-19","2018-08-19","100000");
-                               
+                                projectManager.changeProjectState(project.getProjectId(), ProjectStatus.IMPLEMENTATION);
+                                projectManager.changeProjectState(project2.getProjectId(), ProjectStatus.PREPARATION);
+
                                 projectManager.assignUserToProject(project.getProjectId(), user.getEmailAddress());
                                 projectManager.assignUserToProject(project2.getProjectId(), manager.getEmailAddress());
 

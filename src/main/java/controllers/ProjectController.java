@@ -1,12 +1,17 @@
 package controllers;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import models.beans.Milestone;
 import models.beans.PeasyUser;
 import models.beans.Project;
+import models.beans.ProjectStatus;
+import models.beans.Task;
 import models.manager.ProjectManager;
 import models.manager.UserManager;
 import ninja.Result;
@@ -22,11 +27,24 @@ public class ProjectController {
 	private UserManager userManager;
 	
 	public Result createProject(@PathParam("email") String email){
+		
 		Project project = projectManager.createMasterProject(email);
 		
-			return Results.redirect("/projects/"+project.getProjectId());
-		
+	    return Results.redirect("/projects/"+project.getProjectId());
 	}
+	
+	
+	public Result createMilestone(@PathParam("projectId") String projectId){
+	   
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+	    LocalDate localDate = LocalDate.now();
+		
+	    Milestone milestone = projectManager.createMilestone(Long.parseLong(projectId), "initial Milestone", dtf.format(localDate));
+		
+		return Results.redirect("/projects/"+projectId+"/milestones/"+milestone.getMileStoneId());
+	}
+	
+	
 	
 	public Result addBlogEntry(@PathParam("projectId") String projectId,@PathParam("email") String email,@PathParam("title") String title,@PathParam("text") String text){
 		projectManager.createBlogEntry( Long.parseLong(projectId), email, title, text);
@@ -48,11 +66,35 @@ public class ProjectController {
 		}
 		
 	}
+
+	public Result changeTaskName(@PathParam("taskId") String taskId,@PathParam("newName") String newName){
+		System.out.println("Bin hier");
+		Task task = projectManager.changeTaskname(Long.parseLong(taskId), newName);
+		System.out.println("Bin hier" +  task.getName() +newName );
+		if(task.getName().equals(newName)){
+			return Results.ok();
+		}else{
+			return Results.badRequest();
+		}
+		
+	}
 	
 	public Result changeProjectDescription(@PathParam("projectId") String projectId,@PathParam("description") String description){
 		Project project = projectManager.changeProjectDescription(Long.parseLong(projectId), description);
 		
 		if(project.getDescription().equals(description)){
+			return Results.ok();
+		}else{
+			return Results.badRequest();
+		}
+		
+	}
+	
+	
+	public Result changeTaskDescription(@PathParam("taskId") String taskId,@PathParam("description") String description){
+		Task task = projectManager.changeTaskDescription(Long.parseLong(taskId), description);
+		
+		if(task.getDescription().equals(description)){
 			return Results.ok();
 		}else{
 			return Results.badRequest();
@@ -118,5 +160,22 @@ public class ProjectController {
 		
 	}
 	
+	public Result changeManager(@PathParam("projectId") String projectId,@PathParam("email") String email){
+		Project project = projectManager.changeProjectmanager(Long.parseLong(projectId), email);
+		
+	    return Results.ok();
+	
+	}
+	
+	public Result changeStatus(@PathParam("projectId") String projectId,@PathParam("status") String status){
+		ProjectStatus enumStatus = ProjectStatus.valueOf(status);
+		Project project = projectManager.changeProjectState(Long.parseLong(projectId), enumStatus);
+		
+		if(project.getStatus().name().contains(status)){
+			return Results.ok();
+		}else{
+			return Results.badRequest();
+		}	
+	}
 	
 }

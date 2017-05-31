@@ -172,8 +172,51 @@
 									<TD><input class="form-control" type="number" value='${project.budget}'
 										id="projectBudget" onblur="changeProjectBudget()"></TD>
 								</TR>
+								<TR class="spaceUnder">
+									<TD><strong>${i18n("project.projectmanager")}</strong></TD>
+									<TD>
+									<input class="form-control" type="text" value='${project.projectManager.firstName} ${project.projectManager.lastName}'
+										id="projectBudget" disabled></TD>
+									
+									<TD>
+									<input type="button" class="btn btn-primary"
+									data-title="Add Manager" data-toggle="modal" data-target="#addManager"
+									value="${i18n('members.projectMember')}">
+									</TD>
+								</TR>
+								<TR class="spaceUnder">
+									<TD><strong></strong>${i18n("project.status")}</TD>
+									<TD>
+									<select id="select" name="status" onchange="changeStatus()">
+									      <option value="CREATED">CREATED</option>
+										  <option value="PREPARATION">PREPARATION</option>
+										  <option value="IMPLEMENTATION">IMPLEMENTATION</option>
+										  <option value="CANCELED">CANCELED</option>
+										  <option value="FINISHED" >FINISHED</option>
+									</select>	
+									</TD>
+								</TR>
 							</TABLE>
 							<script>
+							function changeStatus(){
+								
+								$.ajax({
+									type : "POST",
+									url : "/changeProject/"+${project.projectId}+"/projectStatus/"+	$('select[name=status]').val(),
+									success: function (response) {  
+									},
+									statusCode: {
+									    500: function() {
+									       // Only if your server returns a 403 status code can it come in this block. :-)
+									       // alert("Error to update Project Start");
+									    	}
+										}
+										});
+								}
+								
+							window.onload = function() {
+								$('#select').val('${project.status}');
+								};
 							function changeProjectStart(){
 								
 								
@@ -373,6 +416,61 @@
 							}
 							</script>
 
+
+							<!-- 							Modal for change ProjectManager -->
+							<div class="modal fade" id="addManager" tabindex="-1" role="dialog"
+								aria-labelledby="edit" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal"
+												aria-hidden="true" >
+												<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+											</button>
+											<h4 class="modal-title custom_align" id="Heading">${i18n('members.addManager')}</h4>
+										</div>
+										<div class="modal-body">
+										<table>
+										<#list userManagers as userManager>
+										<tr><td>
+										${userManager.firstName}
+										</td>
+										<td>
+										,
+										</td>
+										<td>
+									     ${userManager.lastName}
+										</td>
+										<td><button type="button" class="btn" onclick="changeManager('${userManager.emailAddress}')"><span class="glyphicon glyphicon-ok-sign"></span></button></td>
+										</tr>
+										</#list>
+										</table>
+										</div>
+									</div>
+									<!-- /.modal-content -->
+								</div>
+								<!-- /.modal-dialog -->
+							</div>
+							<script>
+							function changeManager(email){
+								$.ajax({
+									type : "POST",
+									url : "/changeProject/"+${project.projectId}+"/changeManager/"+email,
+									success: function (response) {  
+										window.location.reload(true);
+									
+									},
+									statusCode: {
+									    500: function() {
+									    	window.location.reload(true);
+									    	// Only if your server returns a 403 status code can it come in this block. :-)
+									       // alert("Error to update Project Start");
+									    	}
+										}
+										});
+										
+							}
+							</script>
 							<hr>
 
 							<!--Start Block -->

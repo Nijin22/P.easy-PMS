@@ -92,6 +92,7 @@ public class Routes implements ApplicationRoutes {
         
         //create Master Project -- Get beacause <a> link can't do a delete ca
         router.GET().route("/createProject/{email}").with(ProjectController::createProject);
+        router.GET().route("/createMilestone/{projectId}").with(ProjectController::createMilestone);
 
         
         //AJAX Calls - Project
@@ -105,6 +106,16 @@ public class Routes implements ApplicationRoutes {
         router.POST().route("/changeProject/{projectId}/deleteMember/{email}").with(ProjectController::deleteUserFromProject);
         router.POST().route("/changeProject/{projectId}/addMember/{email}").with(ProjectController::addUsertoProject);
 
+        router.POST().route("/changeProject/{projectId}/changeManager/{email}").with(ProjectController::changeManager);
+      
+        router.POST().route("/changeProject/{projectId}/projectStatus/{status}").with(ProjectController::changeStatus);
+        
+        
+
+        
+        //AJAX Calls -Task
+        router.POST().route("/changeTaskname/{taskId}/newName/{newName}").with(ProjectController::changeTaskName);
+        router.POST().route("/changeTaskDescription/{taskId}/newDescription/{description}").with(ProjectController::changeTaskDescription);
 
         
         ///////////////////////////////////////////////////////////////////////
