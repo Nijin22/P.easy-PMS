@@ -21,17 +21,16 @@ public class Task implements Serializable {
     private String description;
     private String effort;
     private String start;
-    
     private int level;
+    private boolean initialTask;
 
     private float progress;
-    public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
-	}
+    
+    @ManyToMany(mappedBy = "belowTasks")
+    private Set<Task> upTasks = new HashSet<>();
+ 
+    @ManyToMany
+    private Set<Task> belowTasks = new HashSet<>();
 
 	@ManyToOne
     private Project project;
@@ -75,8 +74,16 @@ public class Task implements Serializable {
     public void setUsers(Set<PeasyUser> users) {
         this.users = users;
     }
+    
+    public boolean isInitialTask() {
+		return initialTask;
+	}
 
-    public String getDescription() {
+	public void setInitialTask(boolean initialTask) {
+		this.initialTask = initialTask;
+	}
+
+	public String getDescription() {
         return this.description;
     }
 
@@ -124,6 +131,22 @@ public class Task implements Serializable {
 		this.milestone = milestone;
 	}
 
+	public Set<Task> getUpTasks() {
+		return upTasks;
+	}
+
+	public void setUpTasks(Set<Task> upTasks) {
+		this.upTasks = upTasks;
+	}
+
+	public Set<Task> getBelowTasks() {
+		return belowTasks;
+	}
+
+	public void setBelowTasks(Set<Task> belowTasks) {
+		this.belowTasks = belowTasks;
+	}
+
 	public String getEffort() {
 		return effort;
 	}
@@ -138,6 +161,14 @@ public class Task implements Serializable {
 
 	public void setStart(String start) {
 		this.start = start;
+	}
+	
+    public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 
 	@Override

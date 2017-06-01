@@ -46,16 +46,6 @@ public class ProjectController {
 	
 	
 	
-	public Result addBlogEntry(@PathParam("projectId") String projectId,@PathParam("email") String email,@PathParam("title") String title,@PathParam("text") String text){
-		projectManager.createBlogEntry( Long.parseLong(projectId), email, title, text);
-		return Results.redirect("/projects/" + projectId);
-	}
-	
-	public Result addBlogEntry(@PathParam("projectId") String projectId,@PathParam("blogEntryId") String blogEntryId){
-		projectManager.deleteBlogEntry(Integer.parseInt(blogEntryId));
-		return Results.redirect("/projects/" + projectId);
-	}
-	
 	public Result changeProjectname(@PathParam("projectId") String projectId,@PathParam("newName") String newName){
 		Project project = projectManager.changeProjectname(Long.parseLong(projectId), newName);
 		
@@ -67,6 +57,17 @@ public class ProjectController {
 		
 	}
 
+	public Result addBlogEntry(@PathParam("projectId") String projectId,@PathParam("email") String email,@PathParam("title") String title,@PathParam("text") String text){
+		System.out.println(projectId + " " + email + " " + title + " " + text + " ");
+		projectManager.createBlogEntry( Long.parseLong(projectId), email, title, text);
+		return Results.ok();
+		}
+	
+	public Result deleteBlogEntry(@PathParam("projectId") String projectId,@PathParam("blogEntryId") String blogEntryId){
+		projectManager.deleteBlogEntry(Integer.parseInt(blogEntryId));
+		return Results.ok();
+		}
+	
 	public Result changeTaskName(@PathParam("taskId") String taskId,@PathParam("newName") String newName){
 		System.out.println("Bin hier");
 		Task task = projectManager.changeTaskname(Long.parseLong(taskId), newName);

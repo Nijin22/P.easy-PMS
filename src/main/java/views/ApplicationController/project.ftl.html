@@ -484,7 +484,7 @@
 									<ul class="chat">
 										<#list blogEntries as blogentry>
 										<li class="left clearfix"><span
-											class="chat-img pull-left"> <a href=""><span
+											class="chat-img pull-left"> <a onclick="deleteBlogEntry('${blogentry.blogEntryId}')"><span
 													class="glyphicon glyphicon-trash"></span></a>
 										</span>
 											<div class="chat-body clearfix">
@@ -503,19 +503,16 @@
 									</ul>
 								</div>
 								<div class="panel-footer clearfix">
-									<form method="post" action=''>
-										<textarea name="title" class="form-control" rows="1"
+										<textarea id="blogTitle" name="title" class="form-control" rows="1"
 											placeholder="${i18n("project.typeYourTitle")}"></textarea>
 										<br>
-										<textarea name="text" class="form-control" rows="2"
+										<textarea id="blogText" name="text" class="form-control" rows="2"
 											placeholder="${i18n("project.typeYourMessage")}"></textarea>
 										<span
 											class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-xs-12"
 											style="margin-top: 10px">
-											<button onclick="www.google.de"
-												class="btn btn-warning btn-lg btn-block" id="btn-chat">${i18n("project.addblog")}</button>
+											<button onclick="addBlogEntry()" class="btn btn-warning btn-lg btn-block" id="btn-chat">${i18n("project.addblog")}</button>
 										</span>
-									</form>
 								</div>
 							</div>
 
@@ -599,4 +596,45 @@
 			}
 		}
 	}
+	
+	function addBlogEntry(){
+		if($('#blogTitle').val()==null||$('#blogTitle').val()=="" || $('#blogText').val()==null||$('#blogText').val()=="" ){
+			
+			alert("Text und Titel muessen gefuellt sein");
+		}else{
+		$.ajax({
+			type : "POST",
+			url : "/addBlog/"+${project.projectId}+"/user/${session.email}/title/" + $('#blogTitle').val() + "/text/" + $('#blogText').val(),
+			success: function (response) {  
+				window.location.reload(true);
+			
+			},
+			statusCode: {
+			    500: function() {
+			    	window.location.reload(true);
+			    	// Only if your server returns a 403 status code can it come in this block. :-)
+			    	}
+				}
+				});
+		}	
+	}
+	
+		function deleteBlogEntry(blogId){
+
+			$.ajax({
+				type : "POST",
+				url : "/deleteBlog/"+${project.projectId}+"/blog/" + blogId,
+				success: function (response) {  
+					window.location.reload(true);
+				
+				},
+				statusCode: {
+				    500: function() {
+				    	window.location.reload(true);
+				    	// Only if your server returns a 403 status code can it come in this block. :-)
+				    	}
+					}
+					});
+					
+		}
 </script> </@layout.peasyLayout> 

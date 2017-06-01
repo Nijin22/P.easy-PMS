@@ -9,9 +9,11 @@ import com.google.inject.Provider;
 import com.google.inject.persist.Transactional;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -76,6 +78,8 @@ public class ProjectManager {
        task.setProgress(0);
        task.setProject(project);
        task.setLevel(0);
+       task.setInitialTask(true);
+       task.setLevel(1);
        
        project.getTasks().add(task);
        
@@ -117,6 +121,54 @@ public class ProjectManager {
         return project;
     }
 
+    
+    /**
+    *
+    * @param taskIdUp
+    * @param taskIdDown
+    * @return created Project
+    * @throws IllegalArgumentException
+    */
+   @Transactional
+   public void addTaskDependecy(String taskIdUp, String taskIdDown) throws IllegalArgumentException {
+       if (taskIdUp.isEmpty()) {
+           throw new IllegalArgumentException("taskIdUp can't be empty or null");
+       }
+       if (taskIdDown == null) {
+           throw new IllegalArgumentException("taskIdDown can't be null");
+       }
+
+       // Get Manager to persist the project object
+       EntityManager entityManager = entitiyManagerProvider.get();
+       
+       Task taskUp = entityManager.find(Task.class, taskIdUp);
+       Task taskDown = entityManager.find(Task.class, taskIdDown);
+
+       if(taskDown.getLevel()==null || taskDown.getLevel().intValue() < taskUp.getLevel().intValue()){
+    	   taskDown.setLevel(taskUp.getLevel().intValue()+1);
+    	   taskUp.getBelowTasks().add(taskDown);
+    	   taskDown.getUpTasks().add(taskUp);
+    	   for(Task task : taskDown.getUpTasks()){
+    		   //find latest date of uptask
+    	   }
+   		try {    	   
+    	   SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+    	   Date date = format.parse(taskUp.getStart());
+
+    	   
+    	   Calendar c = Calendar.getInstance();
+    	   c.setTime(date); 
+    	   c.add(Calendar.DATE, Integer.parseInt(taskUp.getEffort())); 
+    	   String startDownTask = format.format(c.getTime());
+    	   
+    	   taskUp.setStart(startDownTask);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       }
+   }
+    
     /**
      *
      * @param taskId
@@ -923,6 +975,7 @@ public Milestone updateMilestone(long milestoneId, String name, String deadline)
      */
     @Transactional
     public void deleteBlogEntry(int blogEntryId) throws NoSuchElementException {
+    	
         EntityManager entityManager = entitiyManagerProvider.get();
         ProjectBlogEntry blogEntry = entityManager.find(ProjectBlogEntry.class, blogEntryId);
         if (blogEntry == null) {

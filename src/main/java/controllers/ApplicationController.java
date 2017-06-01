@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import models.beans.BlogEntry;
 import models.beans.Milestone;
 import models.beans.Organisation;
 import models.beans.PeasyUser;
@@ -146,8 +147,10 @@ public class ApplicationController {
             //Project Parameters
             result.render("project", project);
             System.out.println("Size of project-Blogentries: " + project.getBlogEntries().size());
+        
             //Blog entries
-            result.render("blogEntries",project.getBlogEntries());
+            result.render("blogEntries", project.getBlogEntries());
+            System.out.println(project.getBlogEntries().toString());
             //Files
             System.out.println("Size of project-Files: " + project.getProjectFiles().size());
             result.render("files", project.getProjectFiles());

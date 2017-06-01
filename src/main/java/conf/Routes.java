@@ -110,7 +110,9 @@ public class Routes implements ApplicationRoutes {
       
         router.POST().route("/changeProject/{projectId}/projectStatus/{status}").with(ProjectController::changeStatus);
         
-        
+        router.POST().route("/addBlog/{projectId}/user/{email}/title/{title}/text/{text}").with(ProjectController::addBlogEntry);
+        router.POST().route("/deleteBlog/{projectId}/blog/{blogEntryId}").with(ProjectController::deleteBlogEntry);
+
 
         
         //AJAX Calls -Task
