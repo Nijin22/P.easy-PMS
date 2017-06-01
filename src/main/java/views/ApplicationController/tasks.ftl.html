@@ -110,7 +110,9 @@
 				</div>
 			</div>
 		</div>
-
+			<div class="btn-toolbar">
+					<a href="/createTask/${project.projectId}"><button class="btn btn-primary">New Task</button></a>
+			</div>
 		<table class="table">
 			<thead>
 				<tr>
@@ -125,22 +127,22 @@
 			<#list tasks as task>
 				<tr>
 					<td><a href="/projects/${project.projectId}/tasks/${task.taskId}">${task.name}</a></td>
-					<td>${task.progress}</td>
+					<td>${task.progress}%</td>
 					<td>
 					<#if task.milestone??>
-	  							${task.milestone.name}
+	  							<a href="/projects/${project.projectId}/milestones/${task.milestone.mileStoneId}">${task.milestone.name}</a>
 	  							<#else>
 	  							Set a Milestone
-	  							
 					</#if>
 					</td>
-					<td>${task.progress}</td>
+					<td>${task.start}</td>
 					<td>${task.progress}</td>
 					
 				</tr>
 			</#list>
 			</tbody>
 		</table>
+
 	</div>
 							
 

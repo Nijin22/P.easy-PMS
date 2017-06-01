@@ -79,28 +79,29 @@
 							<TABLE>
 								<TR class="spaceUnder">
 									<TD><strong>${i18n('task.taskProgress')}</strong></TD>
-									<TD><input class="form-control" type="text" value="${task.progress}%"
+									<TD><input class="form-control" type="text" value="${task.progress}"
 										id="example-date-input"></TD>
 									<TD></TD>
 									<TD><strong>${i18n('task.taskEffort')}</strong></TD>
-									<TD><input class="form-control" type="number" value="42"
+									<TD><input class="form-control" type="number" value="${task.effort}"
 										id="example-number-input"></TD>
 								</TR>
 								<TR class="spaceUnder">
 									<TD><strong>${i18n('task.taskStart')}</strong></TD>
 									<TD><input class="form-control" type="date"
-										value="2011-08-19" id="example-date-input"></TD>
+										value="${task.start}" id="example-date-input"></TD>
 								</TR>
 								<TR class="spaceUnder">
 									<TD><strong>${i18n('task.taskMilestone')}</strong></TD>
-									<#if userName??>
+									
+									<#if task.milestone??>
 									<TD><input class="form-control" type="text" 
 									value="${task.milestone.name}"
-										id="example-number-input"></TD>
+										id="example-number-input" disabled></TD>
 									<#else>
 	  									<TD><input class="form-control" type="text" 
 									value=""
-										id="example-number-input"></TD>
+										id="example-number-input" disabled></TD>
 									</#if>
 									
 								</TR>

@@ -45,6 +45,14 @@ public class ProjectController {
 	}
 	
 	
+	public Result createTask(@PathParam("projectId") String projectId){
+		
+	    Task task = projectManager.createTask(Long.parseLong(projectId), "initial Task");
+		
+		return Results.redirect("/projects/"+projectId+"/tasks/"+task.getTaskId());
+	}
+	
+	
 	
 	public Result changeProjectname(@PathParam("projectId") String projectId,@PathParam("newName") String newName){
 		Project project = projectManager.changeProjectname(Long.parseLong(projectId), newName);

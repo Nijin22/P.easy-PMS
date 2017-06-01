@@ -97,17 +97,20 @@ public class StartupActions {
 
                                 //create Tasks
                                 Task task = projectManager.createTask(project.getProjectId(), "Task 1");
-                                projectManager.updateTask(task.getTaskId(), "Task 1", "Description Task 1 ", 80, milestone1.getMileStoneId());
+                                projectManager.updateTask(task.getTaskId(), "Task 1", "Description Task 1 ", 80, milestone1.getMileStoneId(),"1");
                                 
                                 Task task2 = projectManager.createTask(project.getProjectId(), "Task 2");
-                                projectManager.updateTask(task2.getTaskId(), "Task 2", "Description Task 1 ", 20, milestone1.getMileStoneId());
+                                projectManager.updateTask(task2.getTaskId(), "Task 2", "Description Task 1 ", 20, milestone1.getMileStoneId(),"1");
                                 
                                 Task task3 = projectManager.createTask(project.getProjectId(), "Task 3");
-                                projectManager.updateTask(task3.getTaskId(), "Task 3", "Description Task 1 ", 10, milestone2.getMileStoneId());
+                                projectManager.updateTask(task3.getTaskId(), "Task 3", "Description Task 1 ", 10, milestone2.getMileStoneId(),"1");
+                                task3.setEffort("1");
                                 
                                 Task task4 = projectManager.createTask(project.getProjectId(), "Task 4");
-                                projectManager.updateTask(task4.getTaskId(), "Task 4", "Description Task 1 ", 0, milestone2.getMileStoneId());
+                                projectManager.updateTask(task4.getTaskId(), "Task 4", "Description Task 1 ", 0, milestone2.getMileStoneId(),"1");
                                 projectManager.assignUserToTask(task.getTaskId(), member1.getEmailAddress());
+                                task4.setEffort("1");
+                                
                                 //Upload 2 Files
                                 File file1 = new File("src/test/resources/StartupFile1.pdf");
                                 File file2 = new File("src/test/resources/StartupFile2.pdf");

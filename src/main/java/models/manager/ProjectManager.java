@@ -52,7 +52,7 @@ public class ProjectManager {
            throw new IllegalArgumentException("Projectmanager can't be null");
        }
        
-       DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+       DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
        LocalDate localDate = LocalDate.now();
 
        // Get Manager to persist the project object
@@ -80,6 +80,9 @@ public class ProjectManager {
        task.setLevel(0);
        task.setInitialTask(true);
        task.setLevel(1);
+       
+       //initial Task can't be deleted
+       task.setInitialTask(true);
        
        project.getTasks().add(task);
        
@@ -628,15 +631,27 @@ public Milestone updateMilestone(long milestoneId, String name, String deadline)
         } else {
         Task task = new Task();
         task.setProject(project);
-        task.setName(name);
-        project.getTasks().add(task);
+        task.setName("Initial Task");
+        task.setProgress(1);
+        task.setEffort("1");
+        task.setDescription("Initial Description");
+       
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    LocalDate localDate = LocalDate.now();
+	    task.setStart( dtf.format(localDate));
+       
+	    project.getTasks().add(task);
+
         entityManager.persist(task);
 
         return task; 
           }
 
     }
-
+    
+    
+    
+    
     /**
      *
      * @param taskId
@@ -666,7 +681,7 @@ public Milestone updateMilestone(long milestoneId, String name, String deadline)
      * @throws NoSuchElementException
      */
     @Transactional
-    public Task updateTask(long taskId, String name, String description, int progress, long milestoneId) throws NoSuchElementException {
+    public Task updateTask(long taskId, String name, String description, int progress, long milestoneId, String effort) throws NoSuchElementException {
         //only name can't be null, description and progress can be null
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Name can't be empty");
@@ -684,6 +699,7 @@ public Milestone updateMilestone(long milestoneId, String name, String deadline)
             task.setDescription(description);
             task.setProgress(progress);
             task.setMilestone(milestone);
+            task.setEffort(effort);
             milestone.getTasks().add(task);
             return task;
         }

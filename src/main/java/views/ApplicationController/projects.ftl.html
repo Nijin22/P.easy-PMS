@@ -39,7 +39,7 @@
                   <div class="form-group">
                      <label class="col-md-0 control-label"></label>
                      <div class="col-md-0">
-                        <input type="button" class="btn btn-primary" value="${i18n('projects.addUser')}">            
+                        <a href="/createProject/${session.email}"><input type="button" class="btn btn-primary" value="${i18n('projects.addUser')}"></a>    
                      </div>
                   </div>
                </div>
@@ -69,5 +69,6 @@
 			}
 		}
 	}
+	
 </script>
 </@layout.peasyLayout>
