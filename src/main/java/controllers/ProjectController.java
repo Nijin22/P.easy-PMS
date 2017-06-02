@@ -79,7 +79,7 @@ public class ProjectController {
 	public Result changeTaskName(@PathParam("taskId") String taskId,@PathParam("newName") String newName){
 		System.out.println("Bin hier");
 		Task task = projectManager.changeTaskname(Long.parseLong(taskId), newName);
-		System.out.println("Bin hier" +  task.getName() +newName );
+		System.out.println("Bin hier" +  task.getName() + newName );
 		if(task.getName().equals(newName)){
 			return Results.ok();
 		}else{
@@ -111,10 +111,32 @@ public class ProjectController {
 		
 	}
 	
+	
+	public Result changeTaskEffort(@PathParam("taskId") String taskId,@PathParam("effort") String effort){
+		Task task = projectManager.changeTaskEffort(Long.parseLong(taskId), effort);
+		
+		if(task.getEffort().equals(effort)){
+			return Results.ok();
+		}else{
+			return Results.badRequest();
+		}
+		
+	}
+	
+	public Result changeTaskProgress(@PathParam("taskId") String taskId,@PathParam("progress") String progress){
+		Task task = projectManager.changeTaskProgress(Long.parseLong(taskId), progress);
+		
+		if(String.valueOf(task.getProgress()).equals(progress)){
+			return Results.ok();
+		}else{
+			return Results.badRequest();
+		}
+		
+	}
 	public Result changeProjectStart(@PathParam("projectId") String projectId,@PathParam("projectStart") String projectStart){
 		Project project = projectManager.changeProjectStart(Long.parseLong(projectId), projectStart);
 		
-		if(project.getDescription().equals(projectStart)){
+		if(project.getStart().equals(projectStart)){
 			return Results.ok();
 		}else{
 			return Results.badRequest();
@@ -125,7 +147,29 @@ public class ProjectController {
 	public Result changeProjectEnd(@PathParam("projectId") String projectId,@PathParam("projectDeadline") String projectDeadline){
 		Project project = projectManager.changeProjectEnd(Long.parseLong(projectId), projectDeadline);
 		
-		if(project.getDescription().equals(projectDeadline)){
+		if(project.getDeadline().equals(projectDeadline)){
+			return Results.ok();
+		}else{
+			return Results.badRequest();
+		}
+		
+	}
+	
+	public Result changeMilestoneEnd(@PathParam("mileStoneId") String milestoneId,@PathParam("milestoneDeadline") String milestoneDeadline){
+		Milestone milestone = projectManager.changeMilestoneEnd(Long.parseLong(milestoneId), milestoneDeadline);
+		
+		if(milestone.getDeadline().equals(milestoneDeadline)){
+			return Results.ok();
+		}else{
+			return Results.badRequest();
+		}
+		
+	}
+	
+	public Result changeMilestoneName(@PathParam("mileStoneId") String milestoneId,@PathParam("milestoneName") String milestoneName){
+		Milestone milestone = projectManager.changeMilestoneName(Long.parseLong(milestoneId), milestoneName);
+		
+		if(milestone.getName().equals(milestoneName)){
 			return Results.ok();
 		}else{
 			return Results.badRequest();

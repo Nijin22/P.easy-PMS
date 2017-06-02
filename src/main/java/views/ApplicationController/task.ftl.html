@@ -80,16 +80,16 @@
 								<TR class="spaceUnder">
 									<TD><strong>${i18n('task.taskProgress')}</strong></TD>
 									<TD><input class="form-control" type="text" value="${task.progress}"
-										id="example-date-input"></TD>
+										id="progressId" onblur="changeProgress()"></TD>
 									<TD></TD>
 									<TD><strong>${i18n('task.taskEffort')}</strong></TD>
 									<TD><input class="form-control" type="number" value="${task.effort}"
-										id="example-number-input"></TD>
+										id="effortId" onblur="changeEffort()"></TD>
 								</TR>
 								<TR class="spaceUnder">
 									<TD><strong>${i18n('task.taskStart')}</strong></TD>
 									<TD><input class="form-control" type="date"
-										value="${task.start}" id="example-date-input"></TD>
+										value="${task.start}" id="example-date-input" disabled></TD>
 								</TR>
 								<TR class="spaceUnder">
 									<TD><strong>${i18n('task.taskMilestone')}</strong></TD>
@@ -337,7 +337,7 @@
 		$('#projectName').text($('#newNameText').val());
 		$.ajax({
 			type : "POST",
-			url : "/changeTaskname/"+${project.projectId}+"/newName/"+$('#newNameText').val(),
+			url : "/changeTaskname/"+${task.taskId}+"/newName/"+$('#newNameText').val(),
 			success: function (response) {  
 			},
 			statusCode: {
@@ -416,7 +416,60 @@
 					});
 					
 		}
-
+		
+		function changeProgress(){
+			if($('#progressId').val()==null||$('#progressId').val()==""){
+				
+				alert("ProgressId muss gefuellt sein");
+				window.location.reload(true);
+			}
+			else if ($('#progressId').val() > 100){
+				alert("Progress muss kleiner gleich 100 sein");
+				window.location.reload(true);
+			}
+			else{
+			$.ajax({
+				type : "POST",
+				url : "/changeTask/"+${task.taskId}+"/changeProgress/"+ $('#progressId').val(),
+				success: function (response) {  
+					window.location.reload(true);
+				
+				},
+				statusCode: {
+				    500: function() {
+				    	window.location.reload(true);
+				    	// Only if your server returns a 403 status code can it come in this block. :-)
+				       // alert("Error to update Project Start");
+				    	}
+					}
+					});
+			}		
+		}
+		
+		function changeEffort(){
+			if($('#effortId').val()==null||$('#effortId').val()==""){
+				
+				alert("Effort muss gefuellt sein");
+				window.location.reload(true);
+			}else{
+			$.ajax({
+				type : "POST",
+				url : "/changeTask/"+${task.taskId}+"/changeEffort/"+ $('#effortId').val(),
+				success: function (response) {  
+					window.location.reload(true);
+				
+				},
+				statusCode: {
+				    500: function() {
+				    	window.location.reload(true);
+				    	// Only if your server returns a 403 status code can it come in this block. :-)
+				       // alert("Error to update Project Start");
+				    	}
+					}
+					});
+					
+		}
+		}
 </script>
 
 <style>

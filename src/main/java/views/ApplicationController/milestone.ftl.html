@@ -1,9 +1,5 @@
 <#import "../layout/peasyLayout.ftl.html" as layout>
-<@layout.peasyLayout "Milestones"> <script>
-	$('#sandbox-container .input-group.date').datepicker({
-		calendarWeeks : true
-	});
-</script>
+<@layout.peasyLayout "Milestones"> 
 
 
 <body>
@@ -34,8 +30,8 @@
 									<!-- Username -->
 									<label class="control-label" for="first_name">${i18n('milestone.name')}</label>
 									<div class="controls">
-										<input type="text" id="first_name" name="name" value="${milestone.name}"
-											class="form-control">
+										<input type="text" id="projectName" name="name" value="${milestone.name}"
+											class="form-control"  onblur="changeName()">
 									</div>
 								</div>
 
@@ -43,15 +39,15 @@
 									<label class="control-label" for="title">${i18n('milestone.progress')}</label>
 									<div class="controls">
 										<input type="number" id="first_name" name="name" value="${milestone.progress}"
-											class="form-control">
+											class="form-control" disabled>
 									</div>
 								</div>
 								
 								<div class="control-group">
 									<label class="control-label" for="Deadline">${i18n('milestone.deadline')}</label>
 									<div class="controls">
-										<input class="form-control" type="date"
-										value="${milestone.deadline}" id="example-date-input">
+										<input class="form-control" type="date" id="projectEnd"
+										value="${milestone.deadline}" id="example-date-input" onblur="changeDeadline()">
 									</div>
 								</div>
 								<hr>
@@ -163,6 +159,77 @@
 									}
 								});
 							}	
+							
+							function changeName(){
+
+								$.ajax({
+									type : "POST",
+									url : "/deleteBlog/"+${project.projectId}+"/blog/" + blogId,
+									success: function (response) {  
+										window.location.reload(true);
+									
+									},
+									statusCode: {
+									    500: function() {
+									    	window.location.reload(true);
+									    	// Only if your server returns a 403 status code can it come in this block. :-)
+									    	}
+										}
+										});
+										
+							}
+							
+							function changeDeadline(){
+								if($('#projectEnd').val()==null||$('#projectEnd').val()==""){
+									
+									alert("Deadline muss gefuellt sein");
+									window.location.reload(true);
+								}else{
+	
+
+								$.ajax({
+									type : "POST",
+									url : "/changeMilestone/"+${milestone.mileStoneId}+"/milestoneDeadline/"+$('#projectEnd').val(),
+									success: function (response) {  
+									},
+									statusCode: {
+									    500: function() {
+									       // Only if your server returns a 403 status code can it come in this block. :-)
+									        //alert("Error to update DeadLine");
+									    }
+									}
+									});
+									
+								}	
+							}
+							
+							function changeName(){
+								if($('#projectName').val()==null||$('#projectName').val()==""){
+									
+									alert("Name muss gefuellt sein");
+									window.location.reload(true);
+								}else{
+	
+
+								$.ajax({
+									type : "POST",
+									url : "/changeMilestone/"+${milestone.mileStoneId}+"/milestoneName/"+$('#projectName').val(),
+									success: function (response) {  
+										window.location.reload(true);	
+									},
+									statusCode: {
+									    500: function() {
+									    	window.location.reload(true);	
+									       // Only if your server returns a 403 status code can it come in this block. :-)
+									        //alert("Error to update DeadLine");
+									    }
+									}
+									});
+									
+								}	
+							}
+
+
 							</script>
 </body>
 </@layout.peasyLayout> 

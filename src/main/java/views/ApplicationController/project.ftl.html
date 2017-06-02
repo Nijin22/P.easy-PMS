@@ -223,6 +223,7 @@
 
 								if($('#projectStart').val()==null||$('#projectStart').val()==""){
 									alert("Startdatum muss gefuellt sein");
+									window.location.reload(true);
 								}else{
 						
 								if(Date.parse($('#projectStart').val()) > Date.parse($('#projectEnd').val())){
@@ -248,6 +249,7 @@
 								if($('#projectEnd').val()==null||$('#projectEnd').val()==""){
 									
 									alert("Deadline muss gefuellt sein");
+									window.location.reload(true);
 								}else{
 									if(Date.parse($('#projectStart').val()) > Date.parse($('#projectEnd').val())){
 										alert("Enddatum muss vor Startdatum liegen");

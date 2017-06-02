@@ -260,7 +260,50 @@ public class ProjectManager {
 
   }
   
-  
+  /**
+  *
+  * @param projectId
+  * @param end
+  * @return Project
+  * @throws NoSuchElementException
+  */
+ @Transactional
+ public Milestone changeMilestoneEnd(long milestoneID,String end) throws NoSuchElementException {
+     EntityManager entityManager = entitiyManagerProvider.get();
+     Milestone milestone = entityManager.find(Milestone.class, milestoneID);
+
+     
+     if ( milestone == null) {
+         throw new NoSuchElementException("Milestone with milestoneID " + milestoneID + "is not in the database");
+     } else {
+     	milestone.setDeadline(end);
+        return milestone;
+     }
+
+ }
+ 
+ /**
+ *
+ * @param projectId
+ * @param end
+ * @return Project
+ * @throws NoSuchElementException
+ */
+@Transactional
+public Milestone changeMilestoneName(long milestoneID,String name) throws NoSuchElementException {
+    EntityManager entityManager = entitiyManagerProvider.get();
+    Milestone milestone = entityManager.find(Milestone.class, milestoneID);
+
+    
+    if ( milestone == null) {
+        throw new NoSuchElementException("Milestone with milestoneID " + milestoneID + "is not in the database");
+    } else {
+    	milestone.setName(name);
+       return milestone;
+    }
+
+} 
+ 
   /**
   *
   * @return List<PeasyUser>
@@ -341,6 +384,50 @@ public class ProjectManager {
      }
 
  }
+ 
+ /**
+ *
+ * @param taskId
+ * @param description
+ * @return Task
+ * @throws NoSuchElementException
+ */
+@Transactional
+public Task changeTaskProgress(long taskId,String progress) throws NoSuchElementException {
+    EntityManager entityManager = entitiyManagerProvider.get();
+    Task task = entityManager.find(Task.class, taskId);
+
+    
+    if (task == null) {
+        throw new NoSuchElementException("Task with taskId " + taskId + "is not in the database");
+    } else {
+    	task.setProgress(Integer.parseInt(progress));;
+       return task;
+    }
+
+}
+
+/**
+*
+* @param taskId
+* @param description
+* @return Task
+* @throws NoSuchElementException
+*/
+@Transactional
+public Task changeTaskEffort(long taskId,String effort) throws NoSuchElementException {
+   EntityManager entityManager = entitiyManagerProvider.get();
+   Task task = entityManager.find(Task.class, taskId);
+
+   
+   if (task == null) {
+       throw new NoSuchElementException("Task with taskId " + taskId + "is not in the database");
+   } else {
+   	task.setEffort(effort);
+      return task;
+   }
+
+}
     /**
     *
     * @param projectId

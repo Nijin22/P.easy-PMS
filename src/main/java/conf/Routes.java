@@ -120,12 +120,16 @@ public class Routes implements ApplicationRoutes {
         router.POST().route("/changeTaskDescription/{taskId}/newDescription/{description}").with(ProjectController::changeTaskDescription);
         router.POST().route("/changeTask/{taskId}/deleteMemberFromTask/{email}").with(ProjectController::deleteUserFromTask);
         router.POST().route("/changeTask/{taskId}/addMemberToTask/{email}").with(ProjectController::addUsertoTask);
+        router.POST().route("/changeTask/{taskId}/changeEffort/{effort}").with(ProjectController::changeTaskEffort);
+        router.POST().route("/changeTask/{taskId}/changeProgress/{progress}").with(ProjectController::changeTaskProgress);
 
         router.GET().route("/createTask/{projectId}").with(ProjectController::createTask);
        
-        //AJAX Calls -Milestone
+        //AJAX Calls -Milestone 
         router.POST().route("/changeMilestone/{milestoneId}/addTask/{taskId}").with(ProjectController::addTasktoMilestone);
         router.POST().route("/changeMilestone/{milestoneId}/deleteTask/{taskId}").with(ProjectController::deleteTaskfromMilestone);
+        router.POST().route("/changeMilestone/{mileStoneId}/milestoneDeadline/{milestoneDeadline}").with(ProjectController::changeMilestoneEnd);
+        router.POST().route("/changeMilestone/{mileStoneId}/milestoneName/{milestoneName}").with(ProjectController::changeMilestoneName);
 
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)

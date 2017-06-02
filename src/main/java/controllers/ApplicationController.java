@@ -2,9 +2,17 @@ package controllers;
 
 import com.google.inject.Inject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.lang.time.DateUtils;
 
 import models.beans.BlogEntry;
 import models.beans.Milestone;
@@ -249,6 +257,7 @@ public class ApplicationController {
         //Project 
         result.render("projects", distinct);      
         
+        
         return result;
 	}
 
@@ -259,7 +268,109 @@ public class ApplicationController {
         
         //Project Parameters
         result.render("project", project);
+        
+        //calculate report values
+        Set<Task> tasks = project.getTasks();
+        
+        double taskValue = 0;
+        double counter =0;
+        
+        for(Task task : tasks){
+        	double gewichtung;
+        	if(!task.getUsers().isEmpty()){
+            	 gewichtung = Integer.parseInt(task.getEffort())/task.getUsers().size();
+
+        	}else{
+        		gewichtung =  Integer.parseInt(task.getEffort());
+        	}
+        	
+        	counter += gewichtung;
+        	
+        	taskValue += gewichtung * task.getProgress(); 
+        }
+        
+        Double tasksFinished = taskValue/counter;
+        Double tasksOpen = 100 - tasksFinished;
+        
+        result.render("finished", tasksFinished.intValue());
+        result.render("open", tasksOpen.intValue());
+
+        String start =  project.getStart();
+        String end = project.getDeadline();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+        Date dateStart = null;
        
+        try {
+        	dateStart = format.parse(start);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = null;
+        Date endDate = null;
+        Date aktuelDate = null;
+        long diffStart = 0;
+        long diffEnd = 0;
+
+		try {
+			startDate = parser.parse(start);
+			endDate = parser.parse(end);
+			aktuelDate =  parser.parse(parser.format(new Date()));
+	        diffStart = startDate.getTime() - aktuelDate.getTime();   
+	        diffEnd = aktuelDate.getTime() - endDate.getTime();   
+
+	        System.out.println("start" + diffStart);
+	        System.out.println("end" + diffEnd);
+
+	        
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+		
+		
+		if(diffStart != 0 && aktuelDate.before(startDate)){
+			result.render("projectstart","Project starts in");
+			result.render("projectend","");
+			result.render("start",TimeUnit.DAYS.convert(diffStart, TimeUnit.MILLISECONDS));
+			result.render("end",0);	
+			result.render("startrel",100);
+			result.render("endrel",0);
+		} 
+		else if(diffEnd!=0 && aktuelDate.after(endDate)){
+			result.render("projectstart","");
+			result.render("projectend","Project has end since");
+			result.render("start",0);
+			result.render("end",TimeUnit.DAYS.convert(diffEnd, TimeUnit.MILLISECONDS));		
+			result.render("startrel",0);
+			result.render("endrel",100);
+		}
+		
+		else{
+			result.render("projectstart","Project has started since");
+			result.render("start",TimeUnit.DAYS.convert(diffStart, TimeUnit.MILLISECONDS)*-1);
+			result.render("projectend","Project ends in ");
+			result.render("end",TimeUnit.DAYS.convert(diffEnd, TimeUnit.MILLISECONDS)*-1);	
+			
+			if(diffStart == 0 & diffEnd ==0){
+				result.render("startrel",50);
+				result.render("endrel",50);
+			}else{
+			
+			Double teiler = (double) (Math.abs(TimeUnit.DAYS.convert(diffStart, TimeUnit.MILLISECONDS))+Math.abs(TimeUnit.DAYS.convert(diffEnd, TimeUnit.MILLISECONDS)));
+			Double startrel = Math.abs(TimeUnit.DAYS.convert(diffStart, TimeUnit.MILLISECONDS))/teiler;
+			Double endrel = 1 - startrel;
+			
+			
+			Double startFinish = startrel *100;
+			Double endFinish = endrel *100;
+
+			result.render("startrel",startFinish.intValue());
+			result.render("endrel",endFinish.intValue());
+			}
+		}
+
         return result;
 	}
 
