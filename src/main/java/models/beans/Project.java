@@ -1,7 +1,11 @@
 package models.beans;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +14,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+
+import org.apache.regexp.recompile;
+
 import models.beans.PeasyUser;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -155,6 +162,29 @@ public class Project {
 
 	public void setTasks(Set<Task> tasks) {
 		this.tasks = tasks;
+	}
+	
+	public long getTimeLeft() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date endDate = null;
+        Date aktuelDate = null;
+		try {
+			endDate = format.parse(deadline);
+			aktuelDate =  format.parse(format.format(new Date()));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+        long diffEnd = aktuelDate.getTime() - endDate.getTime();   
+
+        long timeLeft = TimeUnit.DAYS.convert(diffEnd, TimeUnit.MILLISECONDS)*-1;
+        System.out.println("Deadline: " +deadline);
+        System.out.println("actual: " + aktuelDate.toString());
+        System.out.println("end: " + endDate.toString());
+        System.out.println("diff" + TimeUnit.DAYS.convert(diffEnd, TimeUnit.MILLISECONDS));
+
+		return timeLeft;
 	}
 
 	@Override

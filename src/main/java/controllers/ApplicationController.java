@@ -297,7 +297,7 @@ public class ApplicationController {
 
         String start =  project.getStart();
         String end = project.getDeadline();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date dateStart = null;
        
         try {
@@ -319,10 +319,6 @@ public class ApplicationController {
 	        diffStart = startDate.getTime() - aktuelDate.getTime();   
 	        diffEnd = aktuelDate.getTime() - endDate.getTime();   
 
-	        System.out.println("start" + diffStart);
-	        System.out.println("end" + diffEnd);
-
-	        
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
