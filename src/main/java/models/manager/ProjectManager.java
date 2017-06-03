@@ -500,6 +500,28 @@ public Task changeTaskEffort(long taskId,String effort) throws NoSuchElementExce
            return milestone;
        }
    }
+   
+   
+   /**
+   *
+   * @param milestoneId
+   * @return void
+   * @throws NoSuchElementException
+   */
+  @Transactional
+  public void deleteMilestone(long milestoneId) throws NoSuchElementException {
+      //description can be null, so no exception handling is requiered
+
+      EntityManager entityManager = entitiyManagerProvider.get();
+      Milestone milestone = entityManager.find(Milestone.class, milestoneId);
+
+      if (milestone == null) {
+          throw new NoSuchElementException("Milestone with milestoneId " + milestoneId + "is not in the database");
+      } else {
+   	   	  //delete Milestone
+    	  entityManager.remove(milestone);
+      }
+  }
     
    
    /**

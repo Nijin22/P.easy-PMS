@@ -38,16 +38,16 @@
 								<div class="control-group">
 									<label class="control-label" for="title">${i18n('milestone.progress')}</label>
 									<div class="controls">
-										<input type="number" id="first_name" name="name" value="${milestone.progress}"
+										<input type="text" id="first_name" name="name" value="${milestone.getProgress()}%"
 											class="form-control" disabled>
 									</div>
 								</div>
 								
 								<div class="control-group">
-									<label class="control-label" for="Deadline">${i18n('milestone.deadline')}</label>
+									<label class="control-label" for="Deadline">Calculated Deadline</label>
 									<div class="controls">
 										<input class="form-control" type="date" id="projectEnd"
-										value="${milestone.deadline}" id="example-date-input" onblur="changeDeadline()">
+										value="${milestone.getDeadline()}" id="example-date-input" onblur="changeDeadline()" disabled>
 									</div>
 								</div>
 								<hr>

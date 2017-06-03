@@ -35,6 +35,7 @@
 											<th>Name</th>
 											<th>Progress</th>
 											<th>Deadline</th>
+											<th>Tasks</th>
 											<th>Delete</th>
 										</tr>
 									</thead>
@@ -42,63 +43,21 @@
 									<#list milestones as milestone>
 										<tr>
 											<td><a href="/projects/${project.projectId}/milestones/${milestone.mileStoneId}">${milestone.name}</a></td>
-											<td style="color: #00cd66" >${milestone.progress}%</td>
+											<td>${milestone.progress}%</td>
 											<td>${milestone.deadline}</td>
+											<td>${milestone.getTasksSize()}</td>
 											<td>	
 											<p data-placement="top" data-toggle="tooltip" title="Delete">
-												<button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete">
+												<button class="btn btn-danger btn-xs" onclick="deleteMilestone( ${milestone.mileStoneId},${milestone.getTasksSize()})">
 													<span class="glyphicon glyphicon-trash"></span>
 												</button>
 											</p>
 											</td>
 										</tr>
 										</#list>
-<!-- 										<tr> -->
-<!-- 											<td>4</td> -->
-<!-- 											<td>Project 50% finished</td> -->
-<!-- 											<td style="color: #FF0000">Delayed</td> -->
-<!-- 											<td>60%</td> -->
-<!-- 											<td>22 Days</td> -->
-<!-- 											<td>Task 3</td> -->
-<!-- 											<td>13.09.2017</td> -->
-<!-- 											<td><a href="user.html"><i class="icon-pencil"></i></a> -->
-<!-- 												<a href="#myModal" role="button" data-toggle="modal"><i -->
-<!-- 													class="icon-remove"></i></a></td> -->
-<!-- 										</tr> -->
+
 									</tbody>
 								</table>
-															<div class="modal fade" id="delete" tabindex="-1" role="dialog"
-								aria-labelledby="edit" aria-hidden="true">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal"
-												aria-hidden="true">
-												<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-											</button>
-											<h4 class="modal-title custom_align" id="Heading">"${i18n('members.deleteThisEntry')}"</h4>
-										</div>
-										<div class="modal-body">
-											<div class="alert alert-danger">
-												<span class="glyphicon glyphicon-warning-sign"></span>
-												"${i18n('members.sureToDelete')}"
-											</div>
-										</div>
-										<div class="modal-footer ">
-											<button type="button" class="btn btn-success">
-												<span class="glyphicon glyphicon-ok-sign"></span>"${i18n('members.yesDelete')}"
-											</button>
-											<button type="button" class="btn btn-default"
-												data-dismiss="modal">
-												<span class="glyphicon glyphicon-remove"></span>
-												"${i18n('members.noDelete')}"
-											</button>
-										</div>
-									</div>
-									<!-- /.modal-content -->
-								</div>
-								<!-- /.modal-dialog -->
-							</div>
 							</div>
 						</div>
 					</div>
@@ -106,5 +65,30 @@
 			</div>
 		</div>
 	</div>
+	<script>
+	function deleteMilestone(id,size){
+		if(size != 0){
+			alert("Milestone has Tasks! Delete not allowed!");
+		}else{
+		
+		$.ajax({
+			type : "POST",
+			url : "/project/"+${project.projectId}+"/deleteMilestone/"+ id,
+			success: function (response) {  
+				window.location.reload(true);													
+			},
+			statusCode: {
+			    500: function() {
+			       // Only if your server returns a 403 status code can it come in this block. :-)
+			        //alert("Error to update DeadLine");
+					window.location.reload(true);													
+			    }
+			}
+		});
+		}
+	}
+	
+	</script>
+	
 </body>
 </@layout.peasyLayout> 

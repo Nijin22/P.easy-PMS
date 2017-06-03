@@ -125,7 +125,6 @@ public class ApplicationController {
 		}
         
         result.render("potentialTasks",taskswithoutCurrentMilestone);
-
         return result;
 	}
 

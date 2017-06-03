@@ -45,6 +45,14 @@ public class ProjectController {
 	}
 	
 	
+	public Result deleteMilestone(@PathParam("projectId") String projectId, @PathParam("milestoneId") String milestoneId){
+		
+		System.out.println("delete " + projectId+ "   " + milestoneId);
+		projectManager.deleteMilestone(Long.parseLong(milestoneId));
+		
+		return Results.redirect("/projects/"+projectId+"/milestones");
+	}
+	
 	public Result createTask(@PathParam("projectId") String projectId){
 		
 	    Task task = projectManager.createTask(Long.parseLong(projectId), "initial Task");

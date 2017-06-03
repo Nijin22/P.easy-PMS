@@ -130,7 +130,10 @@ public class Routes implements ApplicationRoutes {
         router.POST().route("/changeMilestone/{milestoneId}/deleteTask/{taskId}").with(ProjectController::deleteTaskfromMilestone);
         router.POST().route("/changeMilestone/{mileStoneId}/milestoneDeadline/{milestoneDeadline}").with(ProjectController::changeMilestoneEnd);
         router.POST().route("/changeMilestone/{mileStoneId}/milestoneName/{milestoneName}").with(ProjectController::changeMilestoneName);
-
+        
+        //AJAX Calls -Milestones
+        router.POST().route("/project/{projectId}/deleteMilestone/{milestoneId}").with(ProjectController::deleteMilestone);
+        
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)
         ///////////////////////////////////////////////////////////////////////    
