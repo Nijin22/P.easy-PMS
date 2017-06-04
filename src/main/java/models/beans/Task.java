@@ -169,8 +169,6 @@ public class Task implements Serializable {
 
 			for (Task task : upTasks) {
 
-				String start = task.getStart();
-
 				// calculating end task
 				Calendar c = Calendar.getInstance();
 				try {
@@ -194,6 +192,7 @@ public class Task implements Serializable {
 			return format.format(earliestDate);
 		}
 	}
+	
 
 	public void setStart(String start) {
 		this.start = start;

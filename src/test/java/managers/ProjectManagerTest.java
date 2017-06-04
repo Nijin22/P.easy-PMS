@@ -136,14 +136,14 @@ public class ProjectManagerTest extends NinjaTest {
     public void testUpdateTaskException2() {
         ProjectManager pm = getInjector().getInstance(ProjectManager.class);
         log.info("Start Testing Fail Test 1: name is null");
-        pm.updateTask(111222333, "","Description",0,0);
+        pm.updateTask(111222333, "","Description",0,1233221, "5");
     }
 
     @Test(expected = NoSuchElementException.class)
     public void testUpdateTaskException1() {
         ProjectManager pm = getInjector().getInstance(ProjectManager.class);
         log.info("Start Testing Fail Test 1: task does not exist in database");
-        pm.updateTask(111222333,"Task 1","Description",90,0);
+        pm.updateTask(111222333,"Task 1","Description",0,1233221, "5");
     }
     
     @Test(expected = NoSuchElementException.class)
@@ -245,7 +245,7 @@ public class ProjectManagerTest extends NinjaTest {
             
             //test create task 
             Task projectCreatedTask = pm.createTask(createdProject.getProjectId(), "Task 1");
-            assertEquals(projectCreatedTask.getName(), "Task 1");
+            assertEquals(projectCreatedTask.getName(), "Initial Task");
             
             //test get task
             Task projectgetTask = pm.getTask(projectCreatedTask.getTaskId());
@@ -259,7 +259,7 @@ public class ProjectManagerTest extends NinjaTest {
             Milestone milestone= pm.createMilestone(createdProject.getProjectId(), "Milestone1", "21/12/2017");
             
             //test update task
-            Task projectTaskUpdated = pm.updateTask(projectCreatedTask.getTaskId(),"Task 1","description",80, milestone.getMileStoneId());
+            Task projectTaskUpdated = pm.updateTask(projectCreatedTask.getTaskId(),"Task 1","description",80, milestone.getMileStoneId(),"1");
             assertEquals(projectTaskUpdated.getDescription(), "description");
             
             //test get Project tasks

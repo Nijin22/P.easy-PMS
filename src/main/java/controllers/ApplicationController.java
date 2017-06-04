@@ -163,6 +163,7 @@ public class ApplicationController {
             result.render("files", project.getProjectFiles());
             result.render("members", project.getProjectMembers());
             
+            //rendering Members
     		List<PeasyUser> peasyUsers = projectManager.getAllPeasyusers();
     		
     		Set<PeasyUser> peasyUserswithoutCurrentProject = new HashSet<>();
@@ -196,6 +197,8 @@ public class ApplicationController {
     		}
               
             result.render("userManagers",peasyUserswithoutCurrentManager);
+            
+
 
             return result;
 
@@ -238,7 +241,10 @@ public class ApplicationController {
 			}    			
 		}
         result.render("potentialMembers",peasyUserswithoutCurrentTask);
-         
+        
+        //rendering Tasks
+
+		
          
          return result;
 	}
