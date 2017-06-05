@@ -93,7 +93,7 @@
 									<TD></TD>
 									<TD><strong>Initial Task</strong></TD>
 									<TD><input class="form-control" type="text" value="${task.initialTask?string('yes','no')}" disabled></TD>
-									${task.level}
+									
 								</TR>
 								<TR class="spaceUnder">
 									<TD><strong>${i18n('task.taskMilestone')}</strong></TD>
@@ -107,12 +107,15 @@
 									value=""
 										id="example-number-input" disabled></TD>
 									</#if>
+									<TD></TD>
+									<TD><strong>Task Level</strong></TD>
+									<TD><input class="form-control" type="text" value="${task.level}" disabled></TD>
 									
 								</TR>
 							</TABLE>
 							<hr>
 							
-					<h4><strong>${i18n('task.dependencies')}</strong></h4>
+					<h4><strong>${i18n('task.dependencies')} (Parents)</strong></h4>
 					<table id="mytable1" class="table table-bordred table-striped">
                      <thead>
                         <th>Task Name</th>
@@ -124,7 +127,7 @@
                      <tbody>
                      <#list UpTasks as UpTask>
                         <tr>
-                        	<td>${UpTask.name} </td>
+                        	<td><a href= "/projects/${project.projectId}/tasks/${UpTask.taskId}">${UpTask.name} </a></td>
                            <td>${UpTask.effort}</td>
                            <td>${UpTask.start}</td>
                           
@@ -145,6 +148,25 @@
 														value="Add Dependency"> <span></span>
 						</div>
 				</div>
+				
+					<h4><strong>${i18n('task.dependencies')} (Children)</strong></h4>
+					<table id="mytable1" class="table table-bordred table-striped">
+                     <thead>
+                        <th>Task Name</th>
+                        <th>Effort</th>
+                        <th>Start</th>
+
+                     </thead>
+                     <tbody>
+                     <#list DownTasks as DownTask>
+                        <tr>
+                        	<td><a href= "/projects/${project.projectId}/tasks/${DownTask.taskId}">${DownTask.name}</a></td>
+                           <td>${DownTask.effort}</td>
+                           <td>${DownTask.start}</td>
+                        </tr>
+                        </#list>
+                     </tbody>
+                  </table>
 				<!-- Modal for add Dependency to Task -->
 							<div class="modal fade" id="addDep" tabindex="-1" role="dialog"
 								aria-labelledby="edit" aria-hidden="true">

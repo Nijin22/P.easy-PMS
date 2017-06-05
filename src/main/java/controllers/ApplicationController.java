@@ -223,8 +223,11 @@ public class ApplicationController {
          //Taskmebers
          result.render("members", task.getUsers());
          
-         //Taskmebers
+         //UpTasks
          result.render("UpTasks", task.getUpTasks());
+         
+         //DownTasks
+         result.render("DownTasks", task.getBelowTasks());
          
          //rendering PotentialTasks
          result.render("potentialTasks",task.getPotentialTasks());
