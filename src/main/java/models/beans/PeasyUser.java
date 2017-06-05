@@ -176,7 +176,7 @@ public class PeasyUser implements Serializable {
 
     @Override
     public String toString() {
-        return "PeasyUser{" + "emailAddress=" + emailAddress + ", firstName=" + firstName + ", lastName=" + lastName + '}';
+        return "PeasyUser{" + "emailAddress=" + emailAddress + ", firstName=" + firstName + ", lastName=" + lastName +'}';
     }
     
 

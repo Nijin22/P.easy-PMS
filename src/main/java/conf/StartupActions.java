@@ -22,6 +22,7 @@ import models.beans.Organisation;
 
 import models.beans.PeasyUser;
 import models.beans.Project;
+import models.beans.ProjectStatus;
 import models.beans.Task;
 import models.manager.FileManager;
 import models.manager.OrganisationManager;
@@ -63,10 +64,17 @@ public class StartupActions {
                                 //Project Controller Example data
                                 PeasyUser manager = userManager.createUser("manageruser@peasy.com", "Tug", "Bug", "123");               
                                 Project project = projectManager.createProject(manager, "Project 1");
+                                Project project2 = projectManager.createProject(user, "Project 2");
                                 projectManager.updateProject(project.getProjectId(), "Project Description");
+                                projectManager.updateProject(project2.getProjectId(), "Project Description");
                                 projectManager.updateProjectParameters(project.getProjectId(),"2017-08-19","2018-08-19","100000");
-                                System.out.println("Example Project created: " + project.toString());
-                               
+                                projectManager.updateProjectParameters(project2.getProjectId(),"2017-08-19","2018-08-19","100000");
+                                projectManager.changeProjectState(project.getProjectId(), ProjectStatus.IMPLEMENTATION);
+                                projectManager.changeProjectState(project2.getProjectId(), ProjectStatus.PREPARATION);
+
+                                projectManager.assignUserToProject(project.getProjectId(), user.getEmailAddress());
+                                projectManager.assignUserToProject(project2.getProjectId(), manager.getEmailAddress());
+
                                 //create 3 Blogentries
                                 projectManager.createBlogEntry(project.getProjectId(), manager.getEmailAddress(), "TitleManager", "TextManager");
                                 projectManager.createBlogEntry(project.getProjectId(), user.getEmailAddress(), "TitleUser1", "TextUser1");
@@ -81,24 +89,34 @@ public class StartupActions {
                                 projectManager.addMemberToProject(project.getProjectId(), member3.getEmailAddress());
                                 
                                 //create Milestones
-                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                Date d1 = sdf.parse("21/12/2017");
-                                Date d2 = sdf.parse("01/12/2017");
-                                Milestone milestone1  = projectManager.createMilestone(project.getProjectId(), "Milestone1 ", d1);
-                                Milestone milestone2  = projectManager.createMilestone(project.getProjectId(), "Milestone2 ", d2);
+//                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//                                Date d1 = sdf.parse("21/12/2017");
+//                                Date d2 = sdf.parse("01/12/2017");
+                                Milestone milestone1  = projectManager.createMilestone(project.getProjectId(), "Milestone1 ", "2017-08-19");
+                                Milestone milestone2  = projectManager.createMilestone(project.getProjectId(), "Milestone2 ", "2017-08-19");
 
                                 //create Tasks
                                 Task task = projectManager.createTask(project.getProjectId(), "Task 1");
-                                projectManager.updateTask(task.getTaskId(), "Task 1", "Description Task 1 ", 80, milestone1.getMileStoneId());
+                                projectManager.updateTask(task.getTaskId(), "Task 1", "Description Task 1 ", 80, milestone1.getMileStoneId(),"1");
+                                projectManager.setInitialTask(task.getTaskId(), true);
                                 
                                 Task task2 = projectManager.createTask(project.getProjectId(), "Task 2");
-                                projectManager.updateTask(task2.getTaskId(), "Task 2", "Description Task 1 ", 20, milestone1.getMileStoneId());
+                                projectManager.updateTask(task2.getTaskId(), "Task 2", "Description Task 1 ", 20, milestone1.getMileStoneId(),"1");
+                                projectManager.setInitialTask(task2.getTaskId(), false);
+                                projectManager.addTaskDependency(task2.getTaskId(), task.getTaskId());
                                 
                                 Task task3 = projectManager.createTask(project.getProjectId(), "Task 3");
-                                projectManager.updateTask(task3.getTaskId(), "Task 3", "Description Task 1 ", 10, milestone2.getMileStoneId());
+                                projectManager.updateTask(task3.getTaskId(), "Task 3", "Description Task 1 ", 10, milestone2.getMileStoneId(),"1");
+                                task3.setEffort("1");
+                                projectManager.setInitialTask(task3.getTaskId(), false);
+                                projectManager.addTaskDependency(task3.getTaskId(), task.getTaskId());
                                 
                                 Task task4 = projectManager.createTask(project.getProjectId(), "Task 4");
-                                projectManager.updateTask(task4.getTaskId(), "Task 4", "Description Task 1 ", 0, milestone2.getMileStoneId());
+                                projectManager.updateTask(task4.getTaskId(), "Task 4", "Description Task 1 ", 0, milestone2.getMileStoneId(),"1");
+                                projectManager.assignUserToTask(task4.getTaskId(), member1.getEmailAddress());
+                                task4.setEffort("1");
+                                projectManager.setInitialTask(task4.getTaskId(), false);
+                                projectManager.addTaskDependency(task4.getTaskId(), task.getTaskId());
                                 
                                 //Upload 2 Files
                                 File file1 = new File("src/test/resources/StartupFile1.pdf");

@@ -14,6 +14,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.validation.constraints.AssertTrue;
+
 import models.beans.Milestone;
 import models.beans.PeasyUser;
 import models.beans.Project;
@@ -25,6 +27,7 @@ import models.manager.UserManager;
 import models.manager.exceptions.UserAlreadyExistsException;
 import ninja.NinjaTest;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
@@ -133,14 +136,14 @@ public class ProjectManagerTest extends NinjaTest {
     public void testUpdateTaskException2() {
         ProjectManager pm = getInjector().getInstance(ProjectManager.class);
         log.info("Start Testing Fail Test 1: name is null");
-        pm.updateTask(111222333, "","Description",0,0);
+        pm.updateTask(111222333, "","Description",0,1233221, "5");
     }
 
     @Test(expected = NoSuchElementException.class)
     public void testUpdateTaskException1() {
         ProjectManager pm = getInjector().getInstance(ProjectManager.class);
         log.info("Start Testing Fail Test 1: task does not exist in database");
-        pm.updateTask(111222333,"Task 1","Description",90,0);
+        pm.updateTask(111222333,"Task 1","Description",0,1233221, "5");
     }
     
     @Test(expected = NoSuchElementException.class)
@@ -212,16 +215,23 @@ public class ProjectManagerTest extends NinjaTest {
             Project createdProject = pm.createProject(manager, "Project 1");
 
             assertEquals(createdProject.getName(), "Project 1");
+            
 
             //test get Project
             Project getProject = pm.getProject(createdProject.getProjectId());
             assertEquals(createdProject.getProjectId(), getProject.getProjectId());
-
+            
+            //test change Name of Project
+            Project projectNewName = pm.changeProjectname(createdProject.getProjectId(), "New Project");
+            //No test requiered
+            
             //test update Project description
             Project projectUpadteDescription = pm.updateProject(createdProject.getProjectId(), "Description");
             assertEquals(projectUpadteDescription.getDescription(), "Description");
+            
+            
 
-            // test update Project, change Project state
+            //test update Project, change Project state
             Project projectUpadteState = pm.changeProjectState(createdProject.getProjectId(), ProjectStatus.CREATED);
             assertEquals(projectUpadteState.getStatus(), ProjectStatus.CREATED);
 
@@ -235,21 +245,21 @@ public class ProjectManagerTest extends NinjaTest {
             
             //test create task 
             Task projectCreatedTask = pm.createTask(createdProject.getProjectId(), "Task 1");
-            assertEquals(projectCreatedTask.getName(), "Task 1");
+            assertEquals(projectCreatedTask.getName(), "Initial Task");
             
             //test get task
             Task projectgetTask = pm.getTask(projectCreatedTask.getTaskId());
             assertEquals(projectgetTask.getName(), projectCreatedTask.getName());
            
-            //create Date for Milestone
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            Date d1 = sdf.parse("21/12/2017");
+            //test change Name of Project
+            Task taskNewName = pm.changeTaskname(projectgetTask.getTaskId(), "New Task");
+            //No test requiered
             
             //create Milsestone
-            Milestone milestone= pm.createMilestone(createdProject.getProjectId(), "Milestone1", d1);
+            Milestone milestone= pm.createMilestone(createdProject.getProjectId(), "Milestone1", "21/12/2017");
             
             //test update task
-            Task projectTaskUpdated = pm.updateTask(projectCreatedTask.getTaskId(),"Task 1","description",80, milestone.getMileStoneId());
+            Task projectTaskUpdated = pm.updateTask(projectCreatedTask.getTaskId(),"Task 1","description",80, milestone.getMileStoneId(),"1");
             assertEquals(projectTaskUpdated.getDescription(), "description");
             
             //test get Project tasks
@@ -292,10 +302,7 @@ public class ProjectManagerTest extends NinjaTest {
             
         } catch (GeneralSecurityException | UserAlreadyExistsException e) {
             fail(e.getMessage());
-        } catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        }
 
     }
 

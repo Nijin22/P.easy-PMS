@@ -55,11 +55,14 @@ public class FileController {
         String type = context.getParameter("type");
        
         LOG.log(Level.INFO, "Start method uploadFinish with parameters: File: {0}, type: {1}, IdOfOwner:{2}", new Object[]{upfile, type, idOfOwner});
-        
+        if(!upfile.getFileName().isEmpty()){
         //String ownerId = context.getParameter("id");
         String path = fileManager.uploadFile(upfile.getFile(), upfile.getFileName(), type, idOfOwner);
-
         LOG.log(Level.INFO, "Uploaded File in following Path: {0}", path);
+        }
+        	
+        
+
         
         if(type.equals("project")){
         	return Results.redirect("/projects/"+idOfOwner);
@@ -70,6 +73,7 @@ public class FileController {
         	//it is a profilePicture
         	return null;
         }
+        
         
         
 

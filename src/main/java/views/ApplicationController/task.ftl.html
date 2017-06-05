@@ -3,19 +3,36 @@
 
 <div id="project">
 	<div class="page-header">
-		<h1>${task.project.name}-${task.name}</h1>
+		<h1 id="projectName">${task.name}</h1>
+		<button  class="btn btn-primary btn-xs" data-title="editName"
+				onclick="editNameButton()" id='editNameButton'>
+				<span class="glyphicon glyphicon-pencil"></span>
+			</button>
+
+		</div>
+	 <div id=newNameForm style="display: none;">
+			<div class="form-group">
+				<label for="newName1">Select a Task name</label> <input 
+					type="text" class="form-control" id="newNameText">
+			</div>
+
+			<input type='button' onclick="saveNameButton()" id='saveNameButton'
+				class="btn btn-success pull-right" value='Save'> <br>
+
+
+		</div>
 	</div>
 	<div class="container">
 		<div class="row">
 			<div role="tabpanel">
 				<div class="col-sm-3">
 					<ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
-							<li role="presentation" class="brand-nav"><a
+					   <li role="presentation" class="brand-nav"><a
 								href="/projects/${project.projectId}">${i18n("projectsidebar.overview")}</a></li>
 							<li role="presentation" class="brand-nav active"><a
-								href="/projects/${project.projectId}/tasks/1">${i18n("projectsidebar.taskoverview")}</a></li>
-							<li role="presentation" class="brand-nav"><a
-								href="/projects/${project.projectId}/members" >${i18n("projectsidebar.members")}</a></li>
+								href="/projects/${project.projectId}/tasks">${i18n("projectsidebar.taskoverview")}</a></li>
+<!-- 							<li role="presentation" class="brand-nav"><a -->
+<!-- 								href="/projects/${project.projectId}/members" >${i18n("projectsidebar.members")}</a></li> -->
 							<li role="presentation" class="brand-nav"><a
 								href="/projects/${project.projectId}/report">${i18n("projectsidebar.report")}</a></li>
 							<li role="presentation" class="brand-nav"><a
@@ -26,11 +43,29 @@
 					<div class="tab-content">
 						<div role="tabpanel" class="tab-pane active" id="tab1">
 							<p>
-								<!--Button Project Description Start -->
-								<button class="btn btn-primary" data-toggle="collapse"
-									data-target="#details1">${i18n('task.taskDescription')}</button>
-							<div id="details1" class="collapse">
-								${task.description}</div>
+							
+						    <!--Button Project Description Start -->
+							<button class="btn btn-primary" data-toggle="collapse"
+									data-target="#descriptionText">${i18n('task.taskDescription')}</button>
+							<div id="descriptionText" class="collapse">
+								<div class="textDescription" id="textDescritpion">${task.description}</div>
+
+								<br> <input type='button' onclick="editButton()"
+									id='editButton' class="btn btn-primary pull-right" value='Edit'>
+								<br>
+								<div id="editDescription" style="display: none;">
+									<div class="form-group">
+										<label for=" Email1msg">Edit Description</label>
+										<textarea class="form-control" id="textareaDescription"
+											rows="5"></textarea>
+									</div>
+									<input type='button' onclick="saveButton()" id='saveButton'
+										class="btn btn-success pull-right" value='Save'> <br>
+
+
+
+								</div>
+							</div>
 							<br>
 							<!-- Buttom Project Description End -->
 							<!-- Start Progess Bar -->
@@ -43,88 +78,192 @@
 							<!--Start Input Parameters of Project -->
 							<TABLE>
 								<TR class="spaceUnder">
-									<TD><strong>${i18n('task.taskDependency')}</strong></TD>
-									<TD><input class="form-control" type="text" value="Task 2"
-										id="example-date-input"></TD>
+									<TD><strong>${i18n('task.taskProgress')}</strong></TD>
+									<TD><input class="form-control" type="text" value="${task.progress}"
+										id="progressId" onblur="changeProgress()"></TD>
 									<TD></TD>
-
-																			<TD><strong>${i18n('task.taskProgress')}</strong></TD>
-									<TD><input class="form-control" type="text" value="${task.progress}%"
-										id="example-date-input"></TD>
+									<TD><strong>${i18n('task.taskEffort')}</strong></TD>
+									<TD><input class="form-control" type="number" value="${task.effort}"
+										id="effortId" onblur="changeEffort()"></TD>
 								</TR>
 								<TR class="spaceUnder">
 									<TD><strong>${i18n('task.taskStart')}</strong></TD>
 									<TD><input class="form-control" type="date"
-										value="2011-08-19" id="example-date-input"></TD>
-										<TD></TD>
-									<TD><strong>${i18n('task.taskEffort')}</strong></TD>
-									<TD><input class="form-control" type="number" value="42"
-										id="example-number-input"></TD>
-								</TR>
-
+										value="${task.getStart()}" id="example-date-input" disabled></TD>
+									<TD></TD>
+									<TD><strong>Initial Task</strong></TD>
+									<TD><input class="form-control" type="text" value="${task.initialTask?string('yes','no')}" disabled></TD>
+									
 								</TR>
 								<TR class="spaceUnder">
 									<TD><strong>${i18n('task.taskMilestone')}</strong></TD>
-									<TD><input class="form-control" type="text" value="42"
-										id="example-number-input"></TD>
-											<TD></TD>
-																			<TD><strong>${i18n('task.taskRealEffort')}</strong></TD>
-									<TD><input class="form-control" type="number" value="42"
-										id="example-number-input"></TD>
+									
+									<#if task.milestone??>
+									<TD><input class="form-control" type="text" 
+									value="${task.milestone.name}"
+										id="example-number-input" disabled></TD>
+									<#else>
+	  									<TD><input class="form-control" type="text" 
+									value=""
+										id="example-number-input" disabled></TD>
+									</#if>
+									<TD></TD>
+									<TD><strong>Task Level</strong></TD>
+									<TD><input class="form-control" type="text" value="${task.level}" disabled></TD>
+									
 								</TR>
-
 							</TABLE>
+							<hr>
 							
-														<hr>
-							<h4><strong>${i18n('task.dependencies')}</strong></h4>
-							<table id="mytable1" class="table table-bordred table-striped">
+					<h4><strong>${i18n('task.dependencies')} (Parents)</strong></h4>
+					<table id="mytable1" class="table table-bordred table-striped">
                      <thead>
-                        <th>${i18n('task.number')}</th>
-                        <th>${i18n('task.taskEfford')}</th>
-                        <th>${i18n('task.efford')}</th>
+                        <th>Task Name</th>
+                        <th>Effort</th>
+                        <th>Start</th>
+                        <th>Delete</th>
 
                      </thead>
                      <tbody>
+                     <#list UpTasks as UpTask>
                         <tr>
-                           <td>12</td>
-                           <td>follow up Meeting</td>
-                           <td>13.000</td>
+                        	<td><a href= "/projects/${project.projectId}/tasks/${UpTask.taskId}">${UpTask.name} </a></td>
+                           <td>${UpTask.effort}</td>
+                           <td>${UpTask.start}</td>
+                          
                            <td>
-                              <p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p>
+                           <#if UpTasks?size gt 1>
+                              <p><button class="btn btn-danger btn-xs" onclick="removeDep('${UpTask.taskId}')" ><span class="glyphicon glyphicon-trash"></span></button></p>
+                          </#if>
                            </td>
-                           <td>
-                              <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p>
-                           </td>
+                           
                         </tr>
+                        </#list>
                      </tbody>
                   </table>
+                  <div class="form-group">
+				  	<label class="col-md-0 control-label"></label>
+						<div class="col-md-0">
+									<input type="button" class="btn btn-primary"  data-title="Add" data-toggle="modal" data-target="#addDep"
+														value="Add Dependency"> <span></span>
+						</div>
+				</div>
+				
+					<h4><strong>${i18n('task.dependencies')} (Children)</strong></h4>
+					<table id="mytable1" class="table table-bordred table-striped">
+                     <thead>
+                        <th>Task Name</th>
+                        <th>Effort</th>
+                        <th>Start</th>
+
+                     </thead>
+                     <tbody>
+                     <#list DownTasks as DownTask>
+                        <tr>
+                        	<td><a href= "/projects/${project.projectId}/tasks/${DownTask.taskId}">${DownTask.name}</a></td>
+                           <td>${DownTask.effort}</td>
+                           <td>${DownTask.start}</td>
+                        </tr>
+                        </#list>
+                     </tbody>
+                  </table>
+				<!-- Modal for add Dependency to Task -->
+							<div class="modal fade" id="addDep" tabindex="-1" role="dialog"
+								aria-labelledby="edit" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal"
+												aria-hidden="true">
+												<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+											</button>
+											<h4 class="modal-title custom_align" id="Heading">Add Dependency</h4>
+										</div>
+										<table>							
+										<#if potentialTasks??>
+										<#list potentialTasks as potentialTask>
+										<tr><td>
+										${potentialTask.name}
+										</td>
+										<td><button type="button" class="btn" onclick="addDep('${potentialTask.taskId}')"><span class="glyphicon glyphicon-ok-sign"></span></button></td>
+										</tr>
+										</#list>
+										</#if>
+										</table>
+									</div>
+									<!-- /.modal-content -->
+								</div>
+								<!-- /.modal-dialog -->
+							</div>
+				<!--End Modal for Add Dependency to Task -->
+				<!--End Modal for Delete Dependency from Task -->
 							
-							
-							<hr>
-							<h4><strong>${i18n('task.taskMembers')}</strong></h4>
-							<table id="mytable1" class="table table-bordred table-striped">
+				<hr>
+				<h4><strong>${i18n('task.taskMembers')}</strong></h4>
+				 <table id="mytable1" class="table table-bordred table-striped">
                      <thead>
                         <th>${i18n('members.firstName')}</th>
                         <th>${i18n('members.lastName')}</th>
                         <th>${i18n('members.email')}</th>
-                        <th>${i18n('members.editRow')}</th>
                         <th>${i18n('members.deleteRow')}</th>
                      </thead>
                      <tbody>
+                     <#list members as member>
                         <tr>
-                           <td>John</td>
-                           <td>Doe</td>
-                           <td>john.doe@example.com</td>
+                           <td>${member.firstName}</td>
+                           <td>${member.lastName}</td>
+                           <td>${member.emailAddress}</td>
+
                            <td>
-                              <p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p>
-                           </td>
-                           <td>
-                              <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p>
+                              <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" onclick="unassignUser( '${member.emailAddress}')" ><span class="glyphicon glyphicon-trash"></span></button></p>
                            </td>
                         </tr>
+                        </#list>
                      </tbody>
                   </table>
-							
+                  <div class="form-group">
+				  	<label class="col-md-0 control-label"></label>
+						<div class="col-md-0">
+							<input type="button" class="btn btn-primary"  data-title="Add Member" data-toggle="modal" data-target="#addMember"
+														value="Add Member"> <span></span>
+						</div>
+				</div>
+							<!-- Modal for add User to Task -->
+							<div class="modal fade" id="addMember" tabindex="-1" role="dialog"
+								aria-labelledby="edit" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal"
+												aria-hidden="true" >
+												<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+											</button>
+											<h4 class="modal-title custom_align" id="Heading">${i18n('members.addMemberToTask')}</h4>
+										</div>
+										<div class="modal-body">
+										<table>
+										<#list potentialMembers as user>
+										<tr><td>
+										${user.firstName}
+										</td>
+										<td>
+										,
+										</td>
+										<td>
+									     ${user.lastName}
+										</td>
+										<td><button type="button" class="btn" onclick="addUserToTask('${user.emailAddress}')"><span class="glyphicon glyphicon-ok-sign"></span></button></td>
+										</tr>
+										</#list>
+										</table>
+										</div>
+									</div>
+									<!-- /.modal-content -->
+								</div>
+								<!-- /.modal-dialog -->
+							</div>
+				<!--End Modal for Add Dependency to Task -->
+
 							
 							<!--End Input Parameters of Project -->
 							<hr>
@@ -173,6 +312,9 @@
 	</div>
 </div>
 
+				
+
+
 <!-- CSS is not found therefor its in html Template -->
 <script>
 	function myFunction() {
@@ -195,6 +337,203 @@
 			}
 		}
 	}
+	
+	function editNameButton() {
+		$('#newNameForm').toggle('show');
+		$('h1').toggle('hide');
+		$('editNameButton').toggle('hide');
+		//if ($("h1").text() == $("#newNameText").text()) {
+		//$("h1").clone().appendTo("#newNameText");
+		$('#newNameText').val($('#projectName').html());
+
+	}
+
+	function saveNameButton() {
+		$('#newNameForm').toggle('hide');
+		$('h1').toggle('show');
+			
+		
+		if($('#newNameText').val()==null||$('#newNameText').val()==""){
+			alert("Projektname muss gefuellt sein");
+		}else{
+
+		$('#projectName').text($('#newNameText').val());
+		$.ajax({
+			type : "POST",
+			url : "/changeTaskname/"+${task.taskId}+"/newName/"+$('#newNameText').val(),
+			success: function (response) {  
+			},
+			statusCode: {
+			    500: function() {
+			       // Only if your server returns a 403 status code can it come in this block. :-)
+			       // alert("Error to update Projectname");
+			    }
+			}
+			});
+		}
+	}
+	
+	function editButton() {
+		$('#editDescription').toggle('show');
+		$('#textDescritpion').toggle('hide');
+		$('#editButton').toggle('hide');
+		$('#textareaDescription').val($('#textDescritpion').html());
+		
+	}
+
+	function saveButton() {
+		$('#textDescritpion').text($('#textareaDescription').val());
+		$('#editDescription').toggle('hide');
+		$('#textDescritpion').toggle('show');
+		$('#editButton').toggle('show');
+	
+		
+		
+		$.ajax({
+			type : "POST",
+			url : "/changeTaskDescription/"+${task.taskId}+"/newDescription/"+$('#textareaDescription').val(),
+			success: function (response) {  
+			},
+			statusCode: {
+			    500: function() {
+			       // Only if your server returns a 403 status code can it come in this block. :-)
+			        //alert("Error to update Description");
+			    }
+			}
+			});
+			
+	}	
+		function unassignUser(email){
+
+			$.ajax({
+				type : "POST",
+				url : "/changeTask/"+${task.taskId}+"/deleteMemberFromTask/"+email,
+				success: function (response) {  
+					window.location.reload(true);													
+				},
+				statusCode: {
+				    500: function() {
+				       // Only if your server returns a 403 status code can it come in this block. :-)
+				        //alert("Error to update DeadLine");
+						window.location.reload(true);													
+				    }
+				}
+			});
+		}	
+
+		function addUserToTask(email){
+			$.ajax({
+				type : "POST",
+				url : "/changeTask/"+${task.taskId}+"/addMemberToTask/"+email,
+				success: function (response) {  
+					window.location.reload(true);
+				
+				},
+				statusCode: {
+				    500: function() {
+				    	window.location.reload(true);
+				    	// Only if your server returns a 403 status code can it come in this block. :-)
+				       // alert("Error to update Project Start");
+				    	}
+					}
+					});
+					
+		}
+		
+		function changeProgress(){
+			if($('#progressId').val()==null||$('#progressId').val()==""){
+				
+				alert("ProgressId muss gefuellt sein");
+				window.location.reload(true);
+			}
+			else if ($('#progressId').val() > 100){
+				alert("Progress muss kleiner gleich 100 sein");
+				window.location.reload(true);
+			}
+			else{
+			$.ajax({
+				type : "POST",
+				url : "/changeTask/"+${task.taskId}+"/changeProgress/"+ $('#progressId').val(),
+				success: function (response) {  
+					window.location.reload(true);
+				
+				},
+				statusCode: {
+				    500: function() {
+				    	window.location.reload(true);
+				    	// Only if your server returns a 403 status code can it come in this block. :-)
+				       // alert("Error to update Project Start");
+				    	}
+					}
+					});
+			}		
+		}
+		
+		function changeEffort(){
+			if($('#effortId').val()==null||$('#effortId').val()==""){
+				
+				alert("Effort muss gefuellt sein");
+				window.location.reload(true);
+			}else{
+			$.ajax({
+				type : "POST",
+				url : "/changeTask/"+${task.taskId}+"/changeEffort/"+ $('#effortId').val(),
+				success: function (response) {  
+					window.location.reload(true);
+				
+				},
+				statusCode: {
+				    500: function() {
+				    	window.location.reload(true);
+				    	// Only if your server returns a 403 status code can it come in this block. :-)
+				       // alert("Error to update Project Start");
+				    	}
+					}
+					});
+					
+		}
+		}
+		
+		function addDep(deptaskId){
+			$.ajax({
+				type : "POST",
+				url : "/changeTask/"+${task.taskId}+"/addDep/"+ deptaskId,
+				success: function (response) {  
+					window.location.reload(true);
+				
+				},
+				statusCode: {
+				    500: function() {
+				    	window.location.reload(true);
+				    	// Only if your server returns a 403 status code can it come in this block. :-)
+				       // alert("Error to update Project Start");
+				    	}
+					}
+					});
+					
+		
+		}
+		
+		function removeDep(deptaskId){
+			$.ajax({
+				type : "POST",
+				url : "/changeTask/"+${task.taskId}+"/removeDep/"+ deptaskId,
+				success: function (response) {  
+					window.location.reload(true);
+				
+				},
+				statusCode: {
+				    500: function() {
+				    	window.location.reload(true);
+				    	// Only if your server returns a 403 status code can it come in this block. :-)
+				       // alert("Error to update Project Start");
+				    	}
+					}
+					});
+					
+		
+		}
+		
 </script>
 
 <style>
