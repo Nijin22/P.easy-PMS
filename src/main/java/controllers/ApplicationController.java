@@ -223,6 +223,11 @@ public class ApplicationController {
          //Taskmebers
          result.render("members", task.getUsers());
          
+         //Taskmebers
+         result.render("UpTasks", task.getUpTasks());
+         
+         //rendering PotentialTasks
+         result.render("potentialTasks",task.getPotentialTasks());
          
          
      	Set<PeasyUser> peasyUsers = task.getProject().getProjectMembers();
@@ -240,11 +245,7 @@ public class ApplicationController {
 				peasyUserswithoutCurrentTask.add(peasyUser);
 			}    			
 		}
-        result.render("potentialMembers",peasyUserswithoutCurrentTask);
-        
-        //rendering Tasks
-
-		
+        result.render("potentialMembers",peasyUserswithoutCurrentTask);		
          
          return result;
 	}

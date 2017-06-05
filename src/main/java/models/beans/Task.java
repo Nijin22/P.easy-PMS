@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.print.attribute.DateTimeSyntax;
 
 /**
  * Entity implementation class for Entity: Task
@@ -154,56 +155,118 @@ public class Task implements Serializable {
 		return effort;
 	}
 
-	public void setEffort(String effort) {
+	public void setInitalEffort(String effort) {
 		this.effort = effort;
 	}
 
-	public String getStart() {
+	public void setEffort(String effort) {
+		this.effort = effort;
 
-		if (initialTask == true || upTasks.isEmpty()) {
-			return project.getStart();
-		} else {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		try {
 
-			Date earliestDate = null;
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			Date startDate = format.parse(start);
 
-			for (Task task : upTasks) {
+			Calendar c = Calendar.getInstance();
+			c.setTime(startDate);
+			c.add(Calendar.DATE, Integer.parseInt(effort));
 
-				// calculating end task
-				Calendar c = Calendar.getInstance();
-				try {
-					c.setTime(format.parse(start));
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-				c.add(Calendar.DATE, Integer.parseInt(task.getEffort()));
-				Date end = c.getTime();
+			// this.start = format.format(c.getTime());
 
-				if (earliestDate == null) {
-					earliestDate = end;
-				} else {
-					if (earliestDate.before(end)) {
-						earliestDate = end;
-					}
-				}
-
+			for (Task task : belowTasks) {
+				task.setStart(format.format(c.getTime()));
 			}
 
-			return format.format(earliestDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public Set<Task> getPotentialTasks() {
+		Set<Task> potentialTasks = new HashSet<>();
+
+		if (initialTask) {
+			return null;
+		} else if (belowTasks.isEmpty()) {
+			for (Task task : project.getTasks()) {
+				if (task.getTaskId() != taskId) {
+					potentialTasks.add(task);
+				}
+			}
+
+			for (Task task : upTasks) {
+				potentialTasks.remove(task);
+			}
+
+			return potentialTasks;
+		} else {
+			for (Task task : project.getTasks()) {
+				if (task.getTaskId() != taskId) {
+					if (task.getLevel() < level) {
+						potentialTasks.add(task);
+					}
+				}
+			}
+
+			for (Task task : upTasks) {
+				potentialTasks.remove(task);
+			}
+
+			return potentialTasks;
 		}
 	}
-	
+
+	public String getStart() {
+		return start;
+	}
+
+	public void setInitialStart(String start) {
+		this.start = start;
+	}
 
 	public void setStart(String start) {
-		this.start = start;
+		try {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			Date startDate;
+
+			startDate = format.parse(start);
+
+			Calendar c = Calendar.getInstance();
+			c.setTime(startDate);
+
+			this.start = format.format(c.getTime());
+
+			// after this.start because it has to effect only the below tasks
+			c.add(Calendar.DATE, Integer.parseInt(effort));
+
+			for (Task task : belowTasks) {
+				task.setStart(format.format(c.getTime()));
+			}
+
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public Integer getLevel() {
 		return level;
 	}
 
-	public void setLevel(int level) {
-		this.level = level;
+	public void setLevel() {
+		int highestLevel = 0;
+		
+		for (Task task : getUpTasks()) {
+			if (highestLevel < task.getLevel()) {
+				highestLevel = task.getLevel();
+			}
+		}
+		level = highestLevel + 1;
+		for (Task task : belowTasks) {
+			task.setLevel();
+		}
 	}
 
 	@Override

@@ -141,6 +141,21 @@ public class ProjectController {
 		}
 		
 	}
+	
+	public Result addTaskDep(@PathParam("taskId") String taskId,@PathParam("taskDepId") String taskDepId){
+		
+		projectManager.addTaskDependency(Long.parseLong(taskId), Long.parseLong(taskDepId));
+		return Results.ok();
+		
+	}
+	
+	public Result removeTaskDep(@PathParam("taskId") String taskId,@PathParam("taskDepId") String taskDepId){
+		
+		projectManager.removeTaskDependency(Long.parseLong(taskId), Long.parseLong(taskDepId));
+		return Results.ok();
+		
+	}
+	
 	public Result changeProjectStart(@PathParam("projectId") String projectId,@PathParam("projectStart") String projectStart){
 		Project project = projectManager.changeProjectStart(Long.parseLong(projectId), projectStart);
 		

@@ -122,7 +122,10 @@ public class Routes implements ApplicationRoutes {
         router.POST().route("/changeTask/{taskId}/addMemberToTask/{email}").with(ProjectController::addUsertoTask);
         router.POST().route("/changeTask/{taskId}/changeEffort/{effort}").with(ProjectController::changeTaskEffort);
         router.POST().route("/changeTask/{taskId}/changeProgress/{progress}").with(ProjectController::changeTaskProgress);
-
+        
+        router.POST().route("/changeTask/{taskId}/addDep/{taskDepId}").with(ProjectController::addTaskDep);
+        router.POST().route("/changeTask/{taskId}/removeDep/{taskDepId}").with(ProjectController::removeTaskDep);
+        
         router.GET().route("/createTask/{projectId}").with(ProjectController::createTask);
        
         //AJAX Calls -Milestone 
