@@ -132,11 +132,11 @@
 					<#if task.milestone??>
 	  							<a href="/projects/${project.projectId}/milestones/${task.milestone.mileStoneId}">${task.milestone.name}</a>
 	  							<#else>
-	  							Set a Milestone
+	  							-
 					</#if>
 					</td>
 					<td>${task.start}</td>
-					<td>${task.progress}</td>
+					<td>${task.effort}</td>
 					
 				</tr>
 			</#list>
