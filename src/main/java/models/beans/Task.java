@@ -158,7 +158,14 @@ public class Task implements Serializable {
 	public void setInitalEffort(String effort) {
 		this.effort = effort;
 	}
-
+	
+	public void setEffortFromMaster(String effort) {
+		this.effort = effort;
+	}
+	
+	public void setStartFromMaster(String start) {
+		this.start = start;
+	}
 	public void setEffort(String effort) {
 		this.effort = effort;
 

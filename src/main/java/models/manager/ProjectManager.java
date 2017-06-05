@@ -73,8 +73,9 @@ public class ProjectManager {
 		Task task = new Task();
 		task.setName("Initial Task");
 		task.setDescription("Initial Description");
-		task.setStart(dtf.format(localDate));
-		task.setEffort("1");
+		//Setting from Master
+		task.setStartFromMaster(dtf.format(localDate));
+		task.setEffortFromMaster("1");
 		task.setProgress(0);
 		task.setProject(project);
 		task.setInitialTask(true);
