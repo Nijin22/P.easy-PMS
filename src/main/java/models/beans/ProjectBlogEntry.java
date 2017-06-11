@@ -28,4 +28,10 @@ public class ProjectBlogEntry extends BlogEntry implements Serializable {
 		this.project = project;
 	}
 
+	@Override
+	public String toString() {
+		return "ProjectBlogEntry [Id = " + getBlogEntryId() + ", project=" + project + "]";
+	}
+
+	
 }

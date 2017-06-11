@@ -1,1 +1,159 @@
-<h1>Tasks</h1>
+<#import "../layout/peasyLayout.ftl.html" as layout>
+<@layout.peasyLayout "Tasks page">
+<html>
+<head>
+<script type="text/javascript" src="../assets/js/ganttchart.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+	google.charts.load('current', {
+		'packages' : [ 'gantt' ]
+	});
+	google.charts.setOnLoadCallback(drawChart);
+
+	function drawChart() {
+
+		var data = new google.visualization.DataTable();
+		data.addColumn('string', 'Task ID');
+		data.addColumn('string', 'Task Name');
+		data.addColumn('string', 'Resource');
+		data.addColumn('date', 'Start Date');
+		data.addColumn('date', 'End Date');
+		data.addColumn('number', 'Duration');
+		data.addColumn('number', 'Percent Complete');
+		data.addColumn('string', 'Dependencies');
+
+		data.addRows([
+				[ '2014Spring', 'Spring 2014', 'spring', new Date(2014, 2, 22),
+						new Date(2014, 5, 20), null, 100, null ],
+				[ '2014Summer', 'Summer 2014', 'summer', new Date(2014, 5, 21),
+						new Date(2014, 8, 20), null, 100, null ],
+				[ '2014Autumn', 'Autumn 2014', 'autumn', new Date(2014, 8, 21),
+						new Date(2014, 11, 20), null, 100, null ],
+				[ '2014Winter', 'Winter 2014', 'winter',
+						new Date(2014, 11, 21), new Date(2015, 2, 21), null,
+						100, null ],
+				[ '2015Spring', 'Spring 2015', 'spring', new Date(2015, 2, 22),
+						new Date(2015, 5, 20), null, 50, null ],
+				[ '2015Summer', 'Summer 2015', 'summer', new Date(2015, 5, 21),
+						new Date(2015, 8, 20), null, 0, null ],
+				[ '2015Autumn', 'Autumn 2015', 'autumn', new Date(2015, 8, 21),
+						new Date(2015, 11, 20), null, 0, null ],
+				[ '2015Winter', 'Winter 2015', 'winter',
+						new Date(2015, 11, 21), new Date(2016, 2, 21), null, 0,
+						null ],
+				[ 'Football', 'Football Season', 'sports',
+						new Date(2014, 8, 4), new Date(2015, 1, 1), null, 100,
+						null ],
+				[ 'Baseball', 'Baseball Season', 'sports',
+						new Date(2015, 2, 31), new Date(2015, 9, 20), null, 14,
+						null ],
+				[ 'Basketball', 'Basketball Season', 'sports',
+						new Date(2014, 9, 28), new Date(2015, 5, 20), null, 86,
+						null ],
+				[ 'Hockey', 'Hockey Season', 'sports', new Date(2014, 9, 8),
+						new Date(2015, 5, 21), null, 89, null ] ]);
+
+		var options = {
+				height : 400,
+				gantt : {
+					trackHeight : 30
+				}
+		
+		};
+
+		var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+		chart.draw(data,options);
+	}
+</script>
+
+<div id="project">
+	<div class="page-header">
+		<h1>${project.name} - Tasks</h1>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div role="tabpanel">
+				<div class="col-sm-3">
+					<ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
+					   <li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}">${i18n("projectsidebar.overview")}</a></li>
+							<li role="presentation" class="brand-nav active"><a
+								href="/projects/${project.projectId}/tasks">${i18n("projectsidebar.taskoverview")}</a></li>
+<!-- 							<li role="presentation" class="brand-nav"><a -->
+<!-- 								href="/projects/${project.projectId}/members" >${i18n("projectsidebar.members")}</a></li> -->
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}/report">${i18n("projectsidebar.report")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}/milestones">${i18n("projectsidebar.milestones")}</a></li>
+					</ul>
+				</div>
+				<div class="col-sm-9">
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="tab1">
+
+
+	<div>
+		<div class="row">
+			<!-- /.col-lg-8 -->
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<i class="fa fa-bar-chart"></i> ${i18n("dashboard.gantt")}
+					</div>
+					<!-- /.panel-heading -->
+					<div class="panel-body">
+						<div id="chart_div"></div>
+					</div>
+					<!-- /.panel-body -->
+				</div>
+			</div>
+		</div>
+			<div class="btn-toolbar">
+					<a href="/createTask/${project.projectId}"><button class="btn btn-primary">New Task</button></a>
+			</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Progress</th>
+					<th>Milestone</th>
+					<th>Start</th>
+					<th>Effort</th>
+				</tr>
+			</thead>
+			<tbody>
+			<#list tasks as task>
+				<tr>
+					<td><a href="/projects/${project.projectId}/tasks/${task.taskId}">${task.name}</a></td>
+					<td>${task.progress}%</td>
+					<td>
+					<#if task.milestone??>
+	  							<a href="/projects/${project.projectId}/milestones/${task.milestone.mileStoneId}">${task.milestone.name}</a>
+	  							<#else>
+	  							-
+					</#if>
+					</td>
+					<td>${task.start}</td>
+					<td>${task.effort}</td>
+					
+				</tr>
+			</#list>
+			</tbody>
+		</table>
+
+	</div>
+							
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
+</@layout.peasyLayout>

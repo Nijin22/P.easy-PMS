@@ -1,6 +1,6 @@
-#project {
-	margin: 2%;
-}
+/* #project { */
+/* 	margin: 2%; */
+/* } */
 
 tr.spaceUnder>td {
 	padding-bottom: 1em;
@@ -8,7 +8,7 @@ tr.spaceUnder>td {
 }
 
 .form-control {
-	margin-left: 0.35cm;
+	margin-top: 0.15cm;
 }
 
 /* CSS for Chat */

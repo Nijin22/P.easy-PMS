@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.lang.String;
 import javax.persistence.*;
 import models.beans.Project;
+
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -23,9 +25,9 @@ public class PeasyUser implements Serializable {
     private String passwordInDb;
     private static final long serialVersionUID = 1L;
     @ManyToMany(mappedBy = "projectMembers")
-    private Set<Project> projects;
+    private Set<Project> projects = new HashSet<>();
     @ManyToMany(mappedBy = "users")
-    private Set<Task> tasks;
+    private Set<Task> tasks = new HashSet<>();
     @OneToMany(mappedBy = "projectManager")
     private Set<Project> projectsWhereUserIsManager;
     @ManyToOne()
@@ -174,7 +176,7 @@ public class PeasyUser implements Serializable {
 
     @Override
     public String toString() {
-        return "PeasyUser{" + "emailAddress=" + emailAddress + ", firstName=" + firstName + ", lastName=" + lastName + '}';
+        return "PeasyUser{" + "emailAddress=" + emailAddress + ", firstName=" + firstName + ", lastName=" + lastName +'}';
     }
 
 }

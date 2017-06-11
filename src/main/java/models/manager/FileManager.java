@@ -23,6 +23,7 @@ import models.beans.ProjectFile;
 import models.beans.Task;
 import models.beans.TaskFile;
 import models.manager.enums.FileType;
+import ninja.jpa.UnitOfWork;
 import ninja.utils.NinjaProperties;
 import org.apache.commons.io.FilenameUtils;
 import org.dom4j.IllegalAddException;
@@ -106,7 +107,8 @@ public class FileManager {
         }
 
         if (saveFile.exists()) {
-            log.log(Level.WARNING, "File with Filename {0} exists already!", saveFile.getName());
+            //saveFile.delete();
+            log.log(Level.WARNING, "File with Filename {0} exists already! ", saveFile.getName());
             throw new IllegalArgumentException("File with Filename " + saveFile.getName() + " exists already!");
         }
         saveFile.createNewFile();
@@ -196,11 +198,12 @@ public class FileManager {
      * @return id of created rofilePicture-Object
      * @throws NoSuchElementException
      */
-    @Transactional
     private String createPictureUser(String email, String fileName, String fileType) throws NoSuchElementException {
         log.log(Level.INFO, "Start add ProfilePicture to User in Database");
 
         EntityManager entityManager = entitiyManagerProvider.get();
+        entityManager.getTransaction().begin();
+
         PeasyUser peasyUser = entityManager.find(PeasyUser.class, email);
 
         if (peasyUser == null) {
@@ -219,6 +222,7 @@ public class FileManager {
         peasyUser.setProfilePicture(profilePicture);
 
         entityManager.persist(profilePicture);
+        entityManager.getTransaction().commit();
 
         log.log(Level.INFO, profilePicture.toString());
 
@@ -237,11 +241,12 @@ public class FileManager {
      * @return id of created TaskFile-Object
      * @throws NoSuchElementException
      */
-    @Transactional
     private String createTaskFile(long taskId, String fileName, String fileType) throws NoSuchElementException {
         log.log(Level.INFO, "Start add TaskFile to Task in Database");
 
         EntityManager entityManager = entitiyManagerProvider.get();
+        entityManager.getTransaction().begin();
+
         Task task = entityManager.find(Task.class, taskId);
 
         if (task == null) {
@@ -258,6 +263,8 @@ public class FileManager {
         task.getTaskFiles().add(taskFile);
 
         entityManager.persist(taskFile);
+        entityManager.getTransaction().commit();
+
         log.info(taskFile.toString());
 
 
@@ -275,11 +282,11 @@ public class FileManager {
      * @return id of created ProjectFile-Object
      * @throws NoSuchElementException
      */
-    @Transactional
     private String createProjectFile(long projectId, String fileName, String fileType) throws NoSuchElementException {
         log.log(Level.INFO, "Start add ProjectFile to Project in Database");
 
         EntityManager entityManager = entitiyManagerProvider.get();
+        entityManager.getTransaction().begin();
         Project project = entityManager.find(Project.class, projectId);
 
         if (project == null) {
@@ -297,6 +304,9 @@ public class FileManager {
 
         entityManager.persist(projectFile);
         log.log(Level.INFO, projectFile.toString());
+        
+        entityManager.getTransaction().commit();
+        
 
         return String.valueOf(projectFile.getFileId()) + projectFile.getFileType();
 
@@ -310,11 +320,11 @@ public class FileManager {
      * @param fileId
      * @throws NoSuchElementException
      */
-    @Transactional
     private void deletePictureUser(long fileId) throws NoSuchElementException {
         log.log(Level.INFO, "Start deleting ProfilPicture from User in Database");
 
         EntityManager entityManager = entitiyManagerProvider.get();
+        entityManager.getTransaction().begin();
 
         ProfilePicture profilePicture = entityManager.find(ProfilePicture.class, fileId);
 
@@ -331,6 +341,7 @@ public class FileManager {
         profilePicture.setPeasyUser(null);
 
         entityManager.remove(profilePicture);
+        entityManager.getTransaction().commit();
 
         log.log(Level.INFO, profilePicture.toString());
 
@@ -344,11 +355,11 @@ public class FileManager {
      * @param fileId
      * @throws NoSuchElementException
      */
-    @Transactional
     private void deleteTaskFile(long fileId) throws NoSuchElementException {
         log.log(Level.INFO, "Start deleting TaskFile from Task in Database");
 
         EntityManager entityManager = entitiyManagerProvider.get();
+        entityManager.getTransaction().begin();
 
         TaskFile taskFile = entityManager.find(TaskFile.class, fileId);
         if (taskFile == null) {
@@ -364,6 +375,8 @@ public class FileManager {
         taskFile.setTask(null);
 
         entityManager.remove(taskFile);
+        entityManager.getTransaction().commit();
+
         log.log(Level.INFO, taskFile.toString());
 
     }
@@ -376,11 +389,11 @@ public class FileManager {
      * @param fileId
      * @throws NoSuchElementException
      */
-    @Transactional
     private void deleteProjectFile(long fileId) throws NoSuchElementException {
         log.log(Level.INFO, "Start deleting ProjectFile from Project in Database");
 
         EntityManager entityManager = entitiyManagerProvider.get();
+        entityManager.getTransaction().begin();
 
         ProjectFile projectFile = entityManager.find(ProjectFile.class, fileId);
         if (projectFile == null) {
@@ -396,7 +409,8 @@ public class FileManager {
         projectFile.setProject(null);
 
         entityManager.remove(projectFile);
-
+        entityManager.getTransaction().commit();
+        
         log.log(Level.INFO, projectFile.toString());
 
     }

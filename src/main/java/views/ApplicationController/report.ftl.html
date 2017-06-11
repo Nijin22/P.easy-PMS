@@ -2,6 +2,7 @@
 <@layout.peasyLayout "Report">
 <head>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 <script type="text/javascript">
 	google.charts.load("current", {
 		packages : [ "corechart" ]
@@ -10,30 +11,10 @@
 	function drawChart() {
 		var data = google.visualization
 				.arrayToDataTable([ [ 'Task', 'Hours per Day' ],
-						[ 'Finished', 2 ], [ 'Open', 12 ] ]);
+						[ 'Finished', ${finished} ], [ 'Open', ${open} ] ]);
 
 		var options = {
-			title : 'Milestones',
-			pieHole : 0.4,
-		};
-
-		var chart = new google.visualization.PieChart(document
-				.getElementById('donutchart'));
-		chart.draw(data, options);
-	}
-</script>
-<script type="text/javascript">
-	google.charts.load("current", {
-		packages : [ "corechart" ]
-	});
-	google.charts.setOnLoadCallback(drawChart);
-	function drawChart() {
-		var data = google.visualization
-				.arrayToDataTable([ [ 'Task', 'Hours per Day' ],
-						[ 'Finished', 32 ], [ 'Open', 42 ] ]);
-
-		var options = {
-			title : 'Tasks',
+			title : 'Tasks finished in average',
 			pieHole : 0.4,
 		};
 
@@ -45,23 +26,23 @@
 </head>
 <div id="project">
 	<div class="page-header">
-		<h1>${i18n("report.header")}</h1>
+		<h1>${project.name} - ${i18n("report.header")}</h1>
 	</div>
 	<div class="container">
 		<div class="row">
 			<div role="tabpanel">
 				<div class="col-sm-3">
 					<ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
-						<li role="presentation" class="brand-nav"><a
-							href="/projects/123">${i18n("projectsidebar.overview")}</a></li>
-						<li role="presentation" class="brand-nav"><a
-							href="/projects/123/tasks/123">${i18n("projectsidebar.taskoverview")}</a></li>
-						<li role="presentation" class="brand-nav"><a
-							href="/projects/123/members">${i18n("projectsidebar.members")}</a></li>
-						<li role="presentation" class="brand-nav active"><a
-							href="/projects/123/report">${i18n("projectsidebar.report")}</a></li>
-						<li role="presentation" class="brand-nav"><a
-							href="/projects/123/milestones">${i18n("projectsidebar.milestones")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}">${i18n("projectsidebar.overview")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}/tasks">${i18n("projectsidebar.taskoverview")}</a></li>
+<!-- 							<li role="presentation" class="brand-nav"><a -->
+<!-- 								href="/projects/${project.projectId}/members" >${i18n("projectsidebar.members")}</a></li> -->
+							<li role="presentation" class="brand-nav active"><a
+								href="/projects/${project.projectId}/report">${i18n("projectsidebar.report")}</a></li>
+							<li role="presentation" class="brand-nav"><a
+								href="/projects/${project.projectId}/milestones">${i18n("projectsidebar.milestones")}</a></li>
 					</ul>
 				</div>
 				<div class="col-sm-9">
@@ -90,31 +71,20 @@
 
 									<div class="container-fluid">
 										<div class="row">
-											<div class="col-md-6 col-sm-6">
-												<div id="donutchart" style="width: 400px; height: 250px;"></div>
-											</div>
+<!-- 											<div class="col-md-6 col-sm-6"> -->
+<!-- 												<div id="donutchart" style="width: 400px; height: 250px;"></div> -->
+<!-- 											</div> -->
 											<div class="col-md-6 col-sm-6">
 												<div id="donutchart1" style="width: 400px; height: 250px;"></div>
 											</div>
 										</div>
 									</div>
-									<h6>${i18n("report.employees")}</h6>
-									<h6>Max Muster</h6>
+									<h3>Project Details</h6>
 									<div class="progress">
 										<div class="progress-bar progress-bar-success"
-											role="progressbar" style="width: 40%">Free Space (4
-											days)</div>
+											role="progressbar" style="width: ${startrel}%">${projectstart} ${start}</div>
 										<div class="progress-bar progress-bar-warning"
-											role="progressbar" style="width: 60%">Plannend (6 days)
-										</div>
-									</div>
-									<h6>John Doe</h6>
-									<div class="progress">
-										<div class="progress-bar progress-bar-success"
-											role="progressbar" style="width: 30%">Free Space (3
-											days)</div>
-										<div class="progress-bar progress-bar-warning"
-											role="progressbar" style="width: 70%">Plannend (7 days)
+											role="progressbar" style="width: ${endrel}%">${projectend} ${end}
 										</div>
 									</div>
 								</div>
@@ -128,7 +98,6 @@
 			</div>
 		</div>
 	</div>
-</div>
 </div>
 
 </@layout.peasyLayout> 

@@ -15,11 +15,11 @@ public abstract class BlogEntry implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int BlogEntryId;
+	private int blogEntryId;
 	private String title;
 	private String text;
-	private Date creationDate;
-	@ManyToOne(fetch = FetchType.LAZY)
+	private String creationDate;
+	@ManyToOne(fetch = FetchType.EAGER)
 	private PeasyUser author;
 	private static final long serialVersionUID = 1L;
 
@@ -31,7 +31,7 @@ public abstract class BlogEntry implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + BlogEntryId;
+		result = prime * result + blogEntryId;
 		return result;
 	}
 
@@ -44,17 +44,17 @@ public abstract class BlogEntry implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		BlogEntry other = (BlogEntry) obj;
-		if (BlogEntryId != other.BlogEntryId)
+		if (blogEntryId != other.blogEntryId)
 			return false;
 		return true;
 	}
 
 	public int getBlogEntryId() {
-		return this.BlogEntryId;
+		return this.blogEntryId;
 	}
 
 	public void setBlogEntryId(int BlogEntryId) {
-		this.BlogEntryId = BlogEntryId;
+		this.blogEntryId = BlogEntryId;
 	}
 
 	public String getTitle() {
@@ -73,11 +73,11 @@ public abstract class BlogEntry implements Serializable {
 		this.text = text;
 	}
 
-	public Date getCreationDate() {
+	public String getCreationDate() {
 		return this.creationDate;
 	}
 
-	public void setCreationDate(Date creationDate) {
+	public void setCreationDate(String creationDate) {
 		this.creationDate = creationDate;
 	}
 
