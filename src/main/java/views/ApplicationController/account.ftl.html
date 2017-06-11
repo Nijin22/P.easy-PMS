@@ -1,0 +1,124 @@
+<#import "../layout/peasyLayout.ftl.html" as layout>
+<@layout.peasyLayout "Account">
+
+
+   <h1>${i18n('account.contentDescr')}</h1>
+   <hr>
+   <div class="row">
+      <!-- left column -->
+      <div class="col-md-3">
+         <div class="text-center">
+            <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
+            <h6>${i18n('account.photoUploadSentence')}</h6>
+            <input type="file" class="form-control">
+         </div>
+      </div>
+      <!-- edit form column -->
+      <div class="col-md-9 personal-info">
+         <div class="alert alert-info alert-dismissable">
+            <a class="panel-close close" data-dismiss="alert">×</a> 
+            <i class="fa fa-coffee"></i>
+            This is an <strong>.alert</strong>. Use this to show important messages to the user.
+         </div>
+         <h3>${i18n('account.persInfo')}</h3>
+         <form class="form-horizontal" role="form">
+            <div class="form-group">
+               <label class="col-lg-3 control-label">${i18n('account.firstName')}</label>
+               <div class="col-lg-8">
+                  <input class="form-control" type="text" value="${i18n('account.firstName')}">
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="col-lg-3 control-label">${i18n('account.lastName')}</label>
+               <div class="col-lg-8">
+                  <input class="form-control" type="text" value="${i18n('account.lastName')}">
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="col-lg-3 control-label">${i18n('account.organisation')}</label>
+               <div class="col-lg-8">
+                  <input class="form-control" type="text" value="${i18n('account.organisation')}">
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="col-lg-3 control-label">${i18n('account.email')}</label>
+               <div class="col-lg-8">
+                  <input class="form-control" type="text" value="${i18n('account.email')}">
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="col-lg-3 control-label">${i18n('account.timezone')}</label>
+               <div class="col-lg-8">
+                  <div class="ui-select">
+                     <select id="user_time_zone" class="form-control">
+                        <option value="" selected="selected">${i18n('account.selectTimeZone')}</option>
+                        <option value="(GMT -12:00) Eniwetok, Kwajalein">(GMT -12:00) Eniwetok, Kwajalein</option>
+                        <option value="(GMT -11:00) Midway Island, Samoa">(GMT -11:00) Midway Island, Samoa</option>
+                        <option value="(GMT -10:00) Hawaii">(GMT -10:00) Hawaii</option>
+                        <option value="(GMT -9:30) Taiohae">(GMT -9:30) Taiohae</option>
+                        <option value="(GMT -9:00) Alaska">(GMT -9:00) Alaska</option>
+                        <option value="(GMT -8:00) Pacific Time (US & Canada)">(GMT -8:00) Pacific Time (US & Canada)</option>
+                        <option value="(GMT -7:00) Mountain Time (US & Canada)">(GMT -7:00) Mountain Time (US & Canada)</option>
+                        <option value="(GMT -6:00) Central Time (US & Canada), Mexico City">(GMT -6:00) Central Time (US & Canada), Mexico City</option>
+                        <option value="(GMT -5:00) Eastern Time (US & Canada), Bogota, Lima">(GMT -5:00) Eastern Time (US & Canada), Bogota, Lima</option>
+                        <option value="(GMT -4:30) Caracas">(GMT -4:30) Caracas</option>
+                        <option value="(GMT -4:00) Atlantic Time (Canada), Caracas, La Paz">(GMT -4:00) Atlantic Time (Canada), Caracas, La Paz</option>
+                        <option value="(GMT -3:30) Newfoundland">(GMT -3:30) Newfoundland</option>
+                        <option value="(GMT -3:00) Brazil, Buenos Aires, Georgetown">(GMT -3:00) Brazil, Buenos Aires, Georgetown</option>
+                        <option value="(GMT -2:00) Mid-Atlantic">(GMT -2:00) Mid-Atlantic</option>
+                        <option value="(GMT -1:00) Azores, Cape Verde Islands">(GMT -1:00) Azores, Cape Verde Islands</option>
+                        <option value="(GMT +0:00) Western Europe Time, London, Lisbon, Casablanca">(GMT +0:00) Western Europe Time, London, Lisbon, Casablanca</option>
+                        <option value="(GMT +1:00) Brussels, Copenhagen, Madrid, Paris">(GMT +1:00) Brussels, Copenhagen, Madrid, Paris</option>
+                        <option value="(GMT +2:00) Kaliningrad, South Africa">(GMT +2:00) Kaliningrad, South Africa</option>
+                        <option value="(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg">(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
+                        <option value="(GMT +3:30) Tehran">(GMT +3:30) Tehran</option>
+                        <option value="(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi">(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi</option>
+                        <option value="(GMT +4:30) Kabul">(GMT +4:30) Kabul</option>
+                        <option value="(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent">(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent</option>
+                        <option value="(GMT +5:30) Bombay, Calcutta, Madras, New Delhi">(GMT +5:30) Bombay, Calcutta, Madras, New Delhi</option>
+                        <option value="(GMT +5:45) Kathmandu, Pokhara">(GMT +5:45) Kathmandu, Pokhara</option>
+                        <option value="(GMT +6:00) Almaty, Dhaka, Colombo">(GMT +6:00) Almaty, Dhaka, Colombo</option>
+                        <option value="(GMT +6:30) Yangon, Mandalay">(GMT +6:30) Yangon, Mandalay</option>
+                        <option value="(GMT +7:00) Bangkok, Hanoi, Jakarta">(GMT +7:00) Bangkok, Hanoi, Jakarta</option>
+                        <option value="(GMT +8:00) Beijing, Perth, Singapore, Hong Kong">(GMT +8:00) Beijing, Perth, Singapore, Hong Kong</option>
+                        <option value="(GMT +8:45) Eucla">(GMT +8:45) Eucla</option>
+                        <option value="(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk">(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk</option>
+                        <option value="(GMT +9:30) Adelaide, Darwin">(GMT +9:30) Adelaide, Darwin</option>
+                        <option value="(GMT +10:00) Eastern Australia, Guam, Vladivostok">(GMT +10:00) Eastern Australia, Guam, Vladivostok</option>
+                        <option value="(GMT +10:30) Lord Howe Island">(GMT +10:30) Lord Howe Island</option>
+                        <option value="(GMT +11:00) Magadan, Solomon Islands, New Caledonia">(GMT +11:00) Magadan, Solomon Islands, New Caledonia</option>
+                        <option value="(GMT +11:30) Norfolk Island">(GMT +11:30) Norfolk Island</option>
+                        <option value="(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
+                        <option value="(GMT +12:45) Chatham Islands">(GMT +12:45) Chatham Islands</option>
+                        <option value="(GMT +13:00) Apia, Nukualofa">(GMT +13:00) Apia, Nukualofa</option>
+                        <option value="(GMT +14:00) Line Islands, Tokelau">(GMT +14:00) Line Islands, Tokelau</option>
+                     </select>
+                  </div>
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="col-lg-3 control-label">${i18n('account.selectLanguage')}</label>
+               <div class="col-lg-8">
+                  <div class="ui-select">
+                     <select id="user_language" class="form-control">
+                        <option value="" selected="selected">${i18n('account.selectLanguage')}</option>
+                        <option value="de">Deutsch</option>
+                        <option value="en">English</option>
+                     </select>
+                  </div>
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="col-md-3 control-label"></label>
+               <div class="col-md-8">
+                  <input type="button" class="btn btn-primary" value="${i18n('account.safeChanges')}">
+                  <span></span>
+                  <input type="reset" class="btn btn-default" value="${i18n('account.cancelChanges')}">
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+
+
+</@layout.peasyLayout>
