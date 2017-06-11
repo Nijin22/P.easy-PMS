@@ -161,10 +161,31 @@ public class UserController {
 		userManager.updateUser(context.getSession().get("email"), firstName.get(), lastName.get(), formOfAddress.get());
 		context.getSession().put("firstName", firstName.get());
 		context.getSession().put("lastName", lastName.get());
-		
+
 		flashScope.success("account.isUpdated");
-		
+
 		return Results.redirect("/account");
+	}
+
+	@FilterWith(LoginFilter.class)
+	public Result accountUpdatePassword(FlashScope flashScope, Context context,
+			@Param("oldPassword") Optional<String> oldPassword, @Param("newPassword") Optional<String> newPassword) {
+		
+		try {
+			String email = context.getSession().get("email");
+			if (userManager.verifyLogin(email, oldPassword.get())) {
+				userManager.updatePassword(email, newPassword.get());
+				flashScope.success("account.PwUpdate.isUpdated");
+				
+			} else {
+				flashScope.error("account.PwUpdate.mismatch");
+			}
+
+			return Results.redirect("/account");
+			
+		} catch (GeneralSecurityException e) {
+			throw new InternalServerErrorException("Error when hashing password");
+		}
 	}
 
 	public void setUserManager(UserManager userManager) {

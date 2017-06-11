@@ -75,6 +75,7 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/logout").with(UserController::logout);
         router.GET().route("/account").with(UserController::account);
         router.POST().route("/accountUpdate").with(UserController::accountUpdate);
+        router.POST().route("/accountUpdatePassword").with(UserController::accountUpdatePassword);
        
         //static
     	router.GET().route("/").with(ApplicationController::index);
