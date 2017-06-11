@@ -143,7 +143,7 @@ public class UserController {
 	public Result account(Context context) {
 		Result result = Results.html();
 		PeasyUser user = userManager.getUser(context.getSession().get("email"));
-		
+
 		result.render("user", user);
 		if (user.getOrganisation() != null) {
 			result.render("organisation", user.getOrganisation().getName());
@@ -152,6 +152,16 @@ public class UserController {
 		}
 
 		return result;
+	}
+
+	@FilterWith(LoginFilter.class)
+	public Result accountUpdate(FlashScope flashScope, Context context, @Param("firstName") Optional<String> firstName,
+			@Param("lastName") Optional<String> lastName, @Param("formOfAddress") Optional<String> formOfAddress) {
+
+		userManager.updateUser(context.getSession().get("email"), firstName.get(), lastName.get(), formOfAddress.get());
+		context.getSession().put("firstName", firstName.get());
+		context.getSession().put("lastName", lastName.get());
+		return Results.redirect("/account");
 	}
 
 	public void setUserManager(UserManager userManager) {
