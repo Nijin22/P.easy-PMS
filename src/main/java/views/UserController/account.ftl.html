@@ -1,0 +1,90 @@
+<#import "../layout/peasyLayout.ftl.html" as layout>
+<@layout.peasyLayout "Account">
+<h1>${i18n('account.contentDescr')}</h1>
+<hr>
+<div class="row">
+	<!-- left column -->
+	<div class="col-md-3">
+		<!-- Disable profile picture for the moment
+         <div class="text-center">
+            <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
+            <h6>${i18n('account.photoUploadSentence')}</h6>
+            <input type="file" class="form-control">
+         </div>
+         -->
+
+		<h3>${i18n('account.password')}</h3>
+		<form class="form-horizontal" action="/accountUpdatePassword" method="post"
+			role="form">
+			<div class="form-group">
+				<label class="col-lg-3 control-label">${i18n('account.PwUpdate.oldPassword')}</label>
+				<div class="col-lg-8">
+					<input name="oldPassword" class="form-control" type="password">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-3 control-label">${i18n('account.PwUpdate.newPassword')}</label>
+				<div class="col-lg-8">
+					<input name="newPassword" class="form-control" type="password">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-md-3 control-label"></label>
+				<div class="col-md-8">
+					<input type="submit" class="btn btn-primary" value=${i18n('account.changePW')}>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!-- edit form column -->
+	<div class="col-md-9 personal-info">
+		<h3>${i18n('account.persInfo')}</h3>
+		<form class="form-horizontal" action="/accountUpdate" method="post"
+			role="form">
+			<div class="form-group">
+				<label class="col-lg-3 control-label">${i18n('account.email')}</label>
+				<div class="col-lg-8">
+					<input name="email" class="form-control" type="text"
+						value="${user.emailAddress}" disabled>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-3 control-label">${i18n('account.organisation')}</label>
+				<div class="col-lg-8">
+					<input name="organisation" class="form-control" type="text"
+						value="${organisation}" disabled>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-3 control-label">${i18n('account.firstName')}</label>
+				<div class="col-lg-8">
+					<input name="firstName" class="form-control" type="text"
+						value=${user.firstName}>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-3 control-label">${i18n('account.lastName')}</label>
+				<div class="col-lg-8">
+					<input name="lastName" class="form-control" type="text"
+						value=${user.lastName}>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-3 control-label">${i18n('account.formOfAddress')}</label>
+				<div class="col-lg-8">
+					<input name="formOfAddress" class="form-control" type="text"
+						value="${user.formOfAddress}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label"></label>
+				<div class="col-md-8">
+					<input type="submit" class="btn btn-primary" value=${i18n('account.update')}>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	</@layout.peasyLayout>

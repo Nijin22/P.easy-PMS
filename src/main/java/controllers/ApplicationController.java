@@ -40,11 +40,6 @@ public class ApplicationController {
 
 	}
 
-	public Result account() {
-		return Results.html();
-
-	}
-
 	public Result dashboard() {
 		return Results.html();
 
