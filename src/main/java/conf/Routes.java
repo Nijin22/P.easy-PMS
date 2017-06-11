@@ -59,7 +59,6 @@ public class Routes implements ApplicationRoutes {
 
         router.GET().route("/projects").with(ApplicationController::projects);
         router.GET().route("/projects/{projectID}").with(ApplicationController::project);
-//        router.GET().route("/projects/{projectID}/members").with(ApplicationController::members);
         router.GET().route("/projects/{projectID}/milestones").with(ApplicationController::milestones);
         router.GET().route("/projects/{projectID}/milestones/{milestoneID}").with(ApplicationController::milestone);
         router.GET().route("/projects/{projectID}/report").with(ApplicationController::report);
@@ -76,6 +75,7 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/account").with(UserController::account);
         router.POST().route("/accountUpdate").with(UserController::accountUpdate);
         router.POST().route("/accountUpdatePassword").with(UserController::accountUpdatePassword);
+        router.GET().route("/changeLanguage").with(UserController::changeLanguage);
        
         //static
     	router.GET().route("/").with(ApplicationController::index);

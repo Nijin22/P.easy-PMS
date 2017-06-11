@@ -16,6 +16,7 @@ import ninja.Result;
 import ninja.Results;
 import ninja.exceptions.BadRequestException;
 import ninja.exceptions.InternalServerErrorException;
+import ninja.i18n.Lang;
 import ninja.params.Param;
 import ninja.session.FlashScope;
 
@@ -23,6 +24,8 @@ import ninja.session.FlashScope;
 public class UserController {
 	@Inject
 	private UserManager userManager;
+	@Inject
+	Lang lang;
 
 	/**
 	 * Displaying the site register form
@@ -188,8 +191,30 @@ public class UserController {
 		}
 	}
 
+	public Result changeLanguage(FlashScope flashScope, @Param("lang") Optional<String> selectedLanguage){
+		if (selectedLanguage.isPresent() && (selectedLanguage.get().equals("de")) || selectedLanguage.get().equals("en")) {
+			Result result = Results.redirect("/");;
+			
+			flashScope.success("nav.lang.success");
+			lang.setLanguage(selectedLanguage.get(), result);
+			
+			return result;
+		} else {
+			throw new BadRequestException("Selected language not valid");
+		}
+		
+	}
+	
+	/////////////////////////////////////////
+	// Getters & Setters
+/////////////////////////////////////////
+	
 	public void setUserManager(UserManager userManager) {
 		this.userManager = userManager;
 	}
 
+	public void setLang(Lang lang) {
+		this.lang = lang;
+	}
+	
 }
