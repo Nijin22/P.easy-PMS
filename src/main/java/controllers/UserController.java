@@ -161,6 +161,9 @@ public class UserController {
 		userManager.updateUser(context.getSession().get("email"), firstName.get(), lastName.get(), formOfAddress.get());
 		context.getSession().put("firstName", firstName.get());
 		context.getSession().put("lastName", lastName.get());
+		
+		flashScope.success("account.isUpdated");
+		
 		return Results.redirect("/account");
 	}
 
