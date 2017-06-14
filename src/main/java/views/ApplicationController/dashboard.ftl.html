@@ -93,4 +93,31 @@
 		</tbody>
 	</table>
 </div>
-<!-- /My Projects --> </@layout.peasyLayout>
+<!-- /My Projects -->
+
+<div class="row">
+	<h2>${i18n("dashboard.mytasks")}</h2>
+	<table id="myTable">
+		<thead>
+			<tr>
+				<th>${i18n("dashboard.tasks.project")}</th>
+				<th>${i18n("dashboard.tasks.task")}</th>
+				<th>${i18n("dashboard.tasks.progress")}</th>
+				<th>${i18n("dashboard.tasks.beginnDate")}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<#list tasks as task>
+				<tr>
+					<td>${task.project.name}</td>
+					<td><a href="/projects/${task.project.projectId}/tasks/${task.taskId}">${task.name}</a></td>
+					<td>${task.progress}%</td>
+					<td>${task.start}</td>
+				</tr>
+			</#list>
+		</tbody>
+	</table>
+</div>
+
+
+ </@layout.peasyLayout>
