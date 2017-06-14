@@ -50,73 +50,78 @@
 <!-- /Panels -->
 
 <!-- My Projects -->
-<div class="row">
-	<h2>${i18n("dashboard.myprojects")}</h2>
-	<table id="myTable">
-		<tr class="header">
-			<th style="width: 18%;">${i18n("projects.projectname")}</th>
-			<th style="width: 10%;">${i18n("projects.status")}</th>
-			<th style="width: 18%;">${i18n("projects.lefttime")}</th>
-			<th style="width: 18%;">${i18n("projects.budget")}</th>
-			<th style="width: 18%;">${i18n("projects.ProjectManager")}</th>
-			<th style="width: 18%;">${i18n("projects.deadline")}</th>
-		</tr>
-
-		<tbody>
-			<#list projects as project>
-			<tr>
-				<td><a href="/projects/${project.projectId}">${project.name}</a></td>
-				<td>${project.status}</td>
-				<#if project.getTimeLeft()gt 10>
-				<td style="color: #00cd66">${project.getTimeLeft()}</td>
-				<#elseif project.getTimeLeft()gt 0>
-				<td style="color: #DAA520">${project.getTimeLeft()}</td>
-				<#elseif project.getTimeLeft()==0> 							 		
- 									<td style="color:#FF8C00">${project.getTimeLeft()}</td>				
-							<#elseif project.status == "FINISHED"> 							 		
- 									<td style="color:#1E90FF">${project.getTimeLeft()}</td>
- 							<#elseif project.status == "CANCELED"> 							 		
- 									<td style="color:#1E90FF">${project.getTimeLeft()}</td>
- 							<#else>
- 									<td style="color:#FF4500">${project.getTimeLeft()}</td>
-							</#if>
-				<td>${project.budget}€</td>
-				<td>${project.projectManager.emailAddress}</td>
-				<td>${project.deadline}</td>
+<div class="panel panel-default">
+	<div class="panel-heading">${i18n("dashboard.myprojects")}</div>
+	<div class="panel-body">
+		<table id="myTable">
+			<tr class="header">
+				<th style="width: 18%;">${i18n("projects.projectname")}</th>
+				<th style="width: 10%;">${i18n("projects.status")}</th>
+				<th style="width: 18%;">${i18n("projects.lefttime")}</th>
+				<th style="width: 18%;">${i18n("projects.budget")}</th>
+				<th style="width: 18%;">${i18n("projects.ProjectManager")}</th>
+				<th style="width: 18%;">${i18n("projects.deadline")}</th>
 			</tr>
-			</#list>
-		</tbody>
-	</table>
+	
+			<tbody>
+				<#list projects as project>
+				<tr>
+					<td><a href="/projects/${project.projectId}">${project.name}</a></td>
+					<td>${project.status}</td>
+					<#if project.getTimeLeft()gt 10>
+					<td style="color: #00cd66">${project.getTimeLeft()}</td>
+					<#elseif project.getTimeLeft()gt 0>
+					<td style="color: #DAA520">${project.getTimeLeft()}</td>
+					<#elseif project.getTimeLeft()==0> 							 		
+	 									<td style="color:#FF8C00">${project.getTimeLeft()}</td>				
+								<#elseif project.status == "FINISHED"> 							 		
+	 									<td style="color:#1E90FF">${project.getTimeLeft()}</td>
+	 							<#elseif project.status == "CANCELED"> 							 		
+	 									<td style="color:#1E90FF">${project.getTimeLeft()}</td>
+	 							<#else>
+	 									<td style="color:#FF4500">${project.getTimeLeft()}</td>
+								</#if>
+					<td>${project.budget}€</td>
+					<td>${project.projectManager.emailAddress}</td>
+					<td>${project.deadline}</td>
+				</tr>
+				</#list>
+			</tbody>
+		</table>
+	</div>
 </div>
 <!-- /My Projects -->
 
-<div class="row">
-	<h2>${i18n("dashboard.mytasks")}</h2>
-	<table id="myTable">
-		<thead>
-			<tr>
-				<th>${i18n("dashboard.tasks.project")}</th>
-				<th>${i18n("dashboard.tasks.task")}</th>
-				<th>${i18n("dashboard.tasks.progress")}</th>
-				<th>${i18n("dashboard.tasks.beginnDate")}</th>
-			</tr>
-		</thead>
-		<tbody>
-			<#list tasks as task>
+<div class="panel panel-default">
+	<div class="panel-heading">${i18n("dashboard.mytasks")}</div>
+	<div class="panel-body">
+		<table id="myTable">
+			<thead>
 				<tr>
-					<td>${task.project.name}</td>
-					<td><a href="/projects/${task.project.projectId}/tasks/${task.taskId}">${task.name}</a></td>
-					<td>${task.progress}%</td>
-					<td>${task.start}</td>
+					<th>${i18n("dashboard.tasks.project")}</th>
+					<th>${i18n("dashboard.tasks.task")}</th>
+					<th>${i18n("dashboard.tasks.progress")}</th>
+					<th>${i18n("dashboard.tasks.beginnDate")}</th>
 				</tr>
-			</#list>
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				<#list tasks as task>
+					<tr>
+						<td>${task.project.name}</td>
+						<td><a href="/projects/${task.project.projectId}/tasks/${task.taskId}">${task.name}</a></td>
+						<td>${task.progress}%</td>
+						<td>${task.start}</td>
+					</tr>
+				</#list>
+			</tbody>
+		</table>
+	</div>
 </div>
 
 <!-- My Account -->
-<div class="row">
-	<h2>${i18n("dashboard.myAccount")}</h2>
+<div class="panel panel-default">
+	<div class="panel-heading">${i18n("dashboard.myAccount")}</div>
+	<div class="panel-body"></div>
 </div>
 <!-- /My Account -->
 
