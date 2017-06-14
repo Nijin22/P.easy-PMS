@@ -121,7 +121,11 @@
 <!-- My Account -->
 <div class="panel panel-default">
 	<div class="panel-heading">${i18n("dashboard.myAccount")}</div>
-	<div class="panel-body"></div>
+	<div class="panel-body">
+		<p>${i18n("dashboard.account.name")}: ${user.firstName} ${user.lastName}</p>
+		<p>${i18n("dashboard.account.email")}: ${user.emailAddress}</p>
+		<a class="btn btn-default" href="/account">${i18n("nav.myAccount")}</a>
+	</div>
 </div>
 <!-- /My Account -->
 

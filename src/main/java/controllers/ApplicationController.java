@@ -65,6 +65,8 @@ public class ApplicationController {
 		result.render("tasks", usersTasks);
 		result.render("tasksCount", usersTasks.size());
 
+		// User themself
+		result.render("user", peasyUser);
 		return result;
 
 	}
