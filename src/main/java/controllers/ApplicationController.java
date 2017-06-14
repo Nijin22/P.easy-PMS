@@ -2,6 +2,8 @@ package controllers;
 
 import com.google.inject.Inject;
 
+import filters.LoginFilter;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,6 +26,7 @@ import models.beans.Task;
 import models.manager.OrganisationManager;
 import models.manager.ProjectManager;
 import models.manager.UserManager;
+import ninja.FilterWith;
 import ninja.Result;
 import ninja.Results;
 import ninja.params.PathParam;
@@ -40,8 +43,20 @@ public class ApplicationController {
 
 	}
 
-	public Result dashboard() {
-		return Results.html();
+	@FilterWith(LoginFilter.class)
+	public Result dashboard(Session session) {
+		Result result = Results.html();
+		
+		String email = session.get("email");
+        PeasyUser peasyUser = userManager.getUser(email);
+        
+        // Projects of user
+        Set<Project> usersProjects = new HashSet<Project>(); 
+        usersProjects.addAll(peasyUser.getProject());
+        usersProjects.addAll(peasyUser.getProjectsWhereUserIsManager()); 
+        result.render("projects", usersProjects);    
+		
+		return result;
 
 	}
 

@@ -1,6 +1,9 @@
 <#import "../layout/peasyLayout.ftl.html" as layout>
 <@layout.peasyLayout "Dashboard page">
-<h1 class="page-header">${i18n("dashboard.title")}</h1>
+
+<div class="row">
+	<h1 class="page-header">${i18n("dashboard.title")}</h1>
+</div>
 
 <!-- Panels -->
 <div class="row">
@@ -51,8 +54,43 @@
 		</div>
 	</div>
 </div>
-<!-- /Panels -->
+<!-- /Panels --> <!-- My Projects -->
+<div class="row">
+	<h2>${i18n("dashboard.myprojects")}</h2>
+	<table id="myTable">
+		<tr class="header">
+			<th style="width: 18%;">${i18n("projects.projectname")}</th>
+			<th style="width: 10%;">${i18n("projects.status")}</th>
+			<th style="width: 18%;">${i18n("projects.lefttime")}</th>
+			<th style="width: 18%;">${i18n("projects.budget")}</th>
+			<th style="width: 18%;">${i18n("projects.ProjectManager")}</th>
+			<th style="width: 18%;">${i18n("projects.deadline")}</th>
+		</tr>
 
-Unterhalb der Panels
-
-</@layout.peasyLayout>
+		<tbody>
+			<#list projects as project>
+			<tr>
+				<td><a href="/projects/${project.projectId}">${project.name}</a></td>
+				<td>${project.status}</td>
+				<#if project.getTimeLeft()gt 10>
+				<td style="color: #00cd66">${project.getTimeLeft()}</td>
+				<#elseif project.getTimeLeft()gt 0>
+				<td style="color: #DAA520">${project.getTimeLeft()}</td>
+				<#elseif project.getTimeLeft()==0> 							 		
+ 									<td style="color:#FF8C00">${project.getTimeLeft()}</td>				
+							<#elseif project.status == "FINISHED"> 							 		
+ 									<td style="color:#1E90FF">${project.getTimeLeft()}</td>
+ 							<#elseif project.status == "CANCELED"> 							 		
+ 									<td style="color:#1E90FF">${project.getTimeLeft()}</td>
+ 							<#else>
+ 									<td style="color:#FF4500">${project.getTimeLeft()}</td>
+							</#if>
+				<td>${project.budget}€</td>
+				<td>${project.projectManager.emailAddress}</td>
+				<td>${project.deadline}</td>
+			</tr>
+			</#list>
+		</tbody>
+	</table>
+</div>
+<!-- /My Projects --> </@layout.peasyLayout>
