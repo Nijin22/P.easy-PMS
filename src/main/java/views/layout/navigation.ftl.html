@@ -22,6 +22,13 @@
           <li><a href="/register">${i18n('nav.register')}</a></li>
           <li><a href="/login">${i18n('nav.login')}</a></li>
         </#if>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${i18n('nav.lang.title')} <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/changeLanguage?lang=en">${i18n('nav.lang.en')}</a></li>
+              <li><a href="/changeLanguage?lang=de">${i18n('nav.lang.de')}</a></li>
+            </ul>
+          </li>
       </ul>
       
       <#if (session.email)??>
@@ -44,7 +51,7 @@
               <span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${session.firstName} ${session.lastName}<span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="/????">${i18n('nav.myAccount')}</a></li>
+              <li><a href="/account">${i18n('nav.myAccount')}</a></li>
               <li role="separator" class="divider"></li>
               <li><a href="/logout">${i18n('nav.logout')}</a></li>
             </ul>

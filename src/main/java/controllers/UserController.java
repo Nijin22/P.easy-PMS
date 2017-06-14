@@ -6,14 +6,17 @@ import java.util.Optional;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import filters.LoginFilter;
 import models.beans.PeasyUser;
 import models.manager.UserManager;
 import models.manager.exceptions.UserAlreadyExistsException;
 import ninja.Context;
+import ninja.FilterWith;
 import ninja.Result;
 import ninja.Results;
 import ninja.exceptions.BadRequestException;
 import ninja.exceptions.InternalServerErrorException;
+import ninja.i18n.Lang;
 import ninja.params.Param;
 import ninja.session.FlashScope;
 
@@ -21,6 +24,8 @@ import ninja.session.FlashScope;
 public class UserController {
 	@Inject
 	private UserManager userManager;
+	@Inject
+	Lang lang;
 
 	/**
 	 * Displaying the site register form
@@ -108,34 +113,104 @@ public class UserController {
 		try {
 			if (userManager.verifyLogin(email.get(), passwordCleartext.get())) {
 				// Credentials correct
-				
+
 				// Set session
 				PeasyUser user = userManager.getUser(email.get());
 				context.getSession().put("email", user.getEmailAddress());
 				context.getSession().put("firstName", user.getFirstName());
 				context.getSession().put("lastName", user.getLastName());
-				
+
 				flashScope.success("login.success");
 				return Results.redirect("/dashboard");
 			} else {
 				// Credentials false
 				flashScope.error("login.failed");
-				;
 				return Results.redirect("/login");
 			}
 		} catch (GeneralSecurityException e) {
 			throw new InternalServerErrorException("Error when hashing password");
 		}
 	}
-	
-	public Result logout(Context context){
+
+	public Result logout(Context context) {
 		context.getSession().clear();
 		context.getFlashScope().success("logout.success");
 		return Results.redirect("/");
 	}
 
+	@FilterWith(LoginFilter.class)
+	public Result account(Context context) {
+		Result result = Results.html();
+		PeasyUser user = userManager.getUser(context.getSession().get("email"));
+
+		result.render("user", user);
+		if (user.getOrganisation() != null) {
+			result.render("organisation", user.getOrganisation().getName());
+		} else {
+			result.render("organisation", "-");
+		}
+
+		return result;
+	}
+
+	@FilterWith(LoginFilter.class)
+	public Result accountUpdate(FlashScope flashScope, Context context, @Param("firstName") Optional<String> firstName,
+			@Param("lastName") Optional<String> lastName, @Param("formOfAddress") Optional<String> formOfAddress) {
+
+		userManager.updateUser(context.getSession().get("email"), firstName.get(), lastName.get(), formOfAddress.get());
+		context.getSession().put("firstName", firstName.get());
+		context.getSession().put("lastName", lastName.get());
+
+		flashScope.success("account.isUpdated");
+
+		return Results.redirect("/account");
+	}
+
+	@FilterWith(LoginFilter.class)
+	public Result accountUpdatePassword(FlashScope flashScope, Context context,
+			@Param("oldPassword") Optional<String> oldPassword, @Param("newPassword") Optional<String> newPassword) {
+		
+		try {
+			String email = context.getSession().get("email");
+			if (userManager.verifyLogin(email, oldPassword.get())) {
+				userManager.updatePassword(email, newPassword.get());
+				flashScope.success("account.PwUpdate.isUpdated");
+				
+			} else {
+				flashScope.error("account.PwUpdate.mismatch");
+			}
+
+			return Results.redirect("/account");
+			
+		} catch (GeneralSecurityException e) {
+			throw new InternalServerErrorException("Error when hashing password");
+		}
+	}
+
+	public Result changeLanguage(FlashScope flashScope, @Param("lang") Optional<String> selectedLanguage){
+		if (selectedLanguage.isPresent() && (selectedLanguage.get().equals("de")) || selectedLanguage.get().equals("en")) {
+			Result result = Results.redirect("/");;
+			
+			flashScope.success("nav.lang.success");
+			lang.setLanguage(selectedLanguage.get(), result);
+			
+			return result;
+		} else {
+			throw new BadRequestException("Selected language not valid");
+		}
+		
+	}
+	
+	/////////////////////////////////////////
+	// Getters & Setters
+/////////////////////////////////////////
+	
 	public void setUserManager(UserManager userManager) {
 		this.userManager = userManager;
 	}
 
+	public void setLang(Lang lang) {
+		this.lang = lang;
+	}
+	
 }
