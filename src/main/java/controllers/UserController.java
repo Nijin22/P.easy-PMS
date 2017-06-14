@@ -65,12 +65,8 @@ public class UserController {
 								passwordCleartext.get());
 
 						// TODO: Send email verification mail
-						Result result = Results.html();
-
-						result.render("userFirstName", user.getFirstName());
-						result.render("userPassword", user.getPasswordInDb());
-
-						return result;
+						flashScope.success("register.success");
+						return Results.redirect("/login");
 					} catch (GeneralSecurityException e) {
 						throw new InternalServerErrorException("Error when hashing password");
 					} catch (UserAlreadyExistsException e) {
