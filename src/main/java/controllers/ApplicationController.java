@@ -51,6 +51,7 @@ public class ApplicationController {
 		usersProjects.addAll(peasyUser.getProject());
 		usersProjects.addAll(peasyUser.getProjectsWhereUserIsManager());
 		result.render("projects", usersProjects);
+		result.render("projectsCount", usersProjects.size());
 
 		// Tasks of user
 		Set<Task> usersTasks = new HashSet<Task>();
@@ -62,6 +63,7 @@ public class ApplicationController {
 			}
 		}
 		result.render("tasks", usersTasks);
+		result.render("tasksCount", usersTasks.size());
 
 		return result;
 
