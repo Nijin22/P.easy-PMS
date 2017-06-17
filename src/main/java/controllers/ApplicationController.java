@@ -81,6 +81,7 @@ public class ApplicationController {
 
 	}
 
+	@FilterWith(LoginFilter.class)
 	public Result members(@PathParam("projectID") String projectId) {
 		Result result = Results.html();
 		Project project = projectManager.getProject(Long.parseLong(projectId));
@@ -95,6 +96,7 @@ public class ApplicationController {
 		return result;
 	}
 
+	@FilterWith(LoginFilter.class)
 	public Result milestones(@PathParam("projectID") String projectId) {
 		Result result = Results.html();
 		Project project = projectManager.getProject(Long.parseLong(projectId));
@@ -106,6 +108,7 @@ public class ApplicationController {
 		return result;
 	}
 
+	@FilterWith(LoginFilter.class)
 	public Result milestone(@PathParam("milestoneID") String milestoneId) {
 		Result result = Results.html();
 		Milestone milestone = projectManager.getMilestone(Long.parseLong(milestoneId));
@@ -135,6 +138,7 @@ public class ApplicationController {
 		return result;
 	}
 
+	@FilterWith(LoginFilter.class)
 	public Result organization(@PathParam("id") String id) {
 		Result result = Results.html();
 		// eigentlich org vom user auslesen.
@@ -147,6 +151,7 @@ public class ApplicationController {
 
 	}
 
+	@FilterWith(LoginFilter.class)
 	public Result project(@PathParam("projectID") String projectId) {
 		Result result = Results.html();
 		Project project = projectManager.getProject(Long.parseLong(projectId));
@@ -203,6 +208,7 @@ public class ApplicationController {
 
 	}
 
+	@FilterWith(LoginFilter.class)
 	public Result task(@PathParam("projectID") String projectId, @PathParam("taskID") String taskId) {
 
 		// projectId is not needed until now
@@ -251,6 +257,7 @@ public class ApplicationController {
 		return result;
 	}
 
+	@FilterWith(LoginFilter.class)
 	public Result projects(Session session) {
 
 		Result result = Results.html();
@@ -267,6 +274,7 @@ public class ApplicationController {
 		return result;
 	}
 
+	@FilterWith(LoginFilter.class)
 	public Result report(@PathParam("projectID") String projectId) {
 
 		Result result = Results.html();
@@ -373,6 +381,7 @@ public class ApplicationController {
 		return result;
 	}
 
+	@FilterWith(LoginFilter.class)
 	public Result tasks(@PathParam("projectID") String projectId) {
 
 		// projectId is not needed until now
@@ -389,6 +398,7 @@ public class ApplicationController {
 		return result;
 	}
 
+	@FilterWith(LoginFilter.class)
 	public Result fileUpload() {
 		return Results.html();
 
