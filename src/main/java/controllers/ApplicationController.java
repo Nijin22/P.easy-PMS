@@ -76,15 +76,6 @@ public class ApplicationController {
 
 	}
 
-	public Result editProject() {
-		return Results.html();
-
-	}
-
-	public Result information() {
-		return Results.html();
-	}
-
 	public Result login() {
 		return Results.html();
 

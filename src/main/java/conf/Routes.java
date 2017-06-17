@@ -50,12 +50,7 @@ public class Routes implements ApplicationRoutes {
         ///////////////////////////////////////////////////////////////////////          
         //dynamic 
         router.GET().route("/dashboard").with(ApplicationController::dashboard);
-        router.GET().route("/forgotPassword").with(ApplicationController::forgotPassword);
-        router.GET().route("/myCalender").with(ApplicationController::myCalender);
-        router.GET().route("/organization/{id}").with(ApplicationController::organization);
-
-        router.GET().route("/editProject").with(ApplicationController::editProject);
-       
+        router.GET().route("/organization/{id}").with(ApplicationController::organization);       
 
         router.GET().route("/projects").with(ApplicationController::projects);
         router.GET().route("/projects/{projectID}").with(ApplicationController::project);
@@ -80,7 +75,6 @@ public class Routes implements ApplicationRoutes {
         //static
     	router.GET().route("/").with(ApplicationController::index);
         router.GET().route("/impress").with(ApplicationController::impress);
-        router.GET().route("/information").with(ApplicationController::information); 
 
         ///////////////////////////////////////////////////////////////////////
         // user uploaded content
