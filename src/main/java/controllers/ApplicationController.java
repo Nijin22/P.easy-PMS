@@ -81,11 +81,6 @@ public class ApplicationController {
 
 	}
 
-	public Result forgotPassword() {
-		return Results.html();
-
-	}
-
 	public Result members(@PathParam("projectID") String projectId) {
 		Result result = Results.html();
 		Project project = projectManager.getProject(Long.parseLong(projectId));
@@ -138,11 +133,6 @@ public class ApplicationController {
 
 		result.render("potentialTasks", taskswithoutCurrentMilestone);
 		return result;
-	}
-
-	public Result myCalender() {
-		return Results.html();
-
 	}
 
 	public Result organization(@PathParam("id") String id) {
