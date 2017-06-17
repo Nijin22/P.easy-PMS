@@ -16,7 +16,6 @@ import models.beans.Milestone;
 import models.beans.Organisation;
 import models.beans.PeasyUser;
 import models.beans.Project;
-import models.beans.ProjectBlogEntry;
 import models.beans.Task;
 import models.manager.OrganisationManager;
 import models.manager.ProjectManager;
@@ -155,7 +154,7 @@ public class ApplicationController {
 	public Result project(@PathParam("projectID") String projectId) {
 		Result result = Results.html();
 		Project project = projectManager.getProject(Long.parseLong(projectId));
-		Set<ProjectBlogEntry> blogEntries = project.getBlogEntries();
+		project.getBlogEntries();
 
 		// Project Parameters
 		result.render("project", project);
@@ -312,10 +311,8 @@ public class ApplicationController {
 		String start = project.getStart();
 		String end = project.getDeadline();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Date dateStart = null;
-
 		try {
-			dateStart = format.parse(start);
+			format.parse(start);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

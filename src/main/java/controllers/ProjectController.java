@@ -2,8 +2,6 @@ package controllers;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -30,7 +28,6 @@ public class ProjectController {
 
 	@FilterWith(LoginFilter.class)
 	public Result createProject(@PathParam("email") String email) {
-
 		Project project = projectManager.createMasterProject(email);
 
 		return Results.redirect("/projects/" + project.getProjectId());
@@ -38,7 +35,6 @@ public class ProjectController {
 
 	@FilterWith(LoginFilter.class)
 	public Result createMilestone(@PathParam("projectId") String projectId) {
-
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate localDate = LocalDate.now();
 
@@ -51,8 +47,6 @@ public class ProjectController {
 	@FilterWith(LoginFilter.class)
 	public Result deleteMilestone(@PathParam("projectId") String projectId,
 			@PathParam("milestoneId") String milestoneId) {
-
-		System.out.println("delete " + projectId + "   " + milestoneId);
 		projectManager.deleteMilestone(Long.parseLong(milestoneId));
 
 		return Results.redirect("/projects/" + projectId + "/milestones");
@@ -60,9 +54,7 @@ public class ProjectController {
 
 	@FilterWith(LoginFilter.class)
 	public Result createTask(@PathParam("projectId") String projectId) {
-
 		Task task = projectManager.createTask(Long.parseLong(projectId), "initial Task");
-
 		return Results.redirect("/projects/" + projectId + "/tasks/" + task.getTaskId());
 	}
 
@@ -75,13 +67,11 @@ public class ProjectController {
 		} else {
 			return Results.badRequest();
 		}
-
 	}
 
 	@FilterWith(LoginFilter.class)
 	public Result addBlogEntry(@PathParam("projectId") String projectId, @PathParam("email") String email,
 			@PathParam("title") String title, @PathParam("text") String text) {
-		System.out.println(projectId + " " + email + " " + title + " " + text + " ");
 		projectManager.createBlogEntry(Long.parseLong(projectId), email, title, text);
 		return Results.ok();
 	}
@@ -95,15 +85,12 @@ public class ProjectController {
 
 	@FilterWith(LoginFilter.class)
 	public Result changeTaskName(@PathParam("taskId") String taskId, @PathParam("newName") String newName) {
-		System.out.println("Bin hier");
 		Task task = projectManager.changeTaskname(Long.parseLong(taskId), newName);
-		System.out.println("Bin hier" + task.getName() + newName);
 		if (task.getName().equals(newName)) {
 			return Results.ok();
 		} else {
 			return Results.badRequest();
 		}
-
 	}
 
 	@FilterWith(LoginFilter.class)
@@ -116,7 +103,6 @@ public class ProjectController {
 		} else {
 			return Results.badRequest();
 		}
-
 	}
 
 	@FilterWith(LoginFilter.class)
@@ -129,7 +115,6 @@ public class ProjectController {
 		} else {
 			return Results.badRequest();
 		}
-
 	}
 
 	@FilterWith(LoginFilter.class)
@@ -141,7 +126,6 @@ public class ProjectController {
 		} else {
 			return Results.badRequest();
 		}
-
 	}
 
 	@FilterWith(LoginFilter.class)
@@ -153,23 +137,18 @@ public class ProjectController {
 		} else {
 			return Results.badRequest();
 		}
-
 	}
 
 	@FilterWith(LoginFilter.class)
 	public Result addTaskDep(@PathParam("taskId") String taskId, @PathParam("taskDepId") String taskDepId) {
-
 		projectManager.addTaskDependency(Long.parseLong(taskId), Long.parseLong(taskDepId));
 		return Results.ok();
-
 	}
 
 	@FilterWith(LoginFilter.class)
 	public Result removeTaskDep(@PathParam("taskId") String taskId, @PathParam("taskDepId") String taskDepId) {
-
 		projectManager.removeTaskDependency(Long.parseLong(taskId), Long.parseLong(taskDepId));
 		return Results.ok();
-
 	}
 
 	@FilterWith(LoginFilter.class)
@@ -292,7 +271,6 @@ public class ProjectController {
 	@FilterWith(LoginFilter.class)
 	public Result deleteTaskfromMilestone(@PathParam("milestoneId") String milestoneId,
 			@PathParam("taskId") String taskId) {
-		System.out.println("Ready to delete " + milestoneId + " " + taskId);
 		Milestone milestone = projectManager.deleteTaskfromMilestone(Long.parseLong(milestoneId),
 				Long.parseLong(taskId));
 		Task task = projectManager.getTask(Long.parseLong(taskId));
@@ -320,8 +298,7 @@ public class ProjectController {
 
 	@FilterWith(LoginFilter.class)
 	public Result changeManager(@PathParam("projectId") String projectId, @PathParam("email") String email) {
-		Project project = projectManager.changeProjectmanager(Long.parseLong(projectId), email);
-
+		projectManager.changeProjectmanager(Long.parseLong(projectId), email);
 		return Results.ok();
 
 	}

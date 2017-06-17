@@ -66,8 +66,7 @@ public class UserController {
 
 					// create the user
 					try {
-						PeasyUser user = userManager.createUser(email.get(), firstName.get(), lastName.get(),
-								passwordCleartext.get());
+						userManager.createUser(email.get(), firstName.get(), lastName.get(), passwordCleartext.get());
 
 						// TODO: Send email verification mail
 						flashScope.success("register.success");
@@ -169,42 +168,44 @@ public class UserController {
 	@FilterWith(LoginFilter.class)
 	public Result accountUpdatePassword(FlashScope flashScope, Context context,
 			@Param("oldPassword") Optional<String> oldPassword, @Param("newPassword") Optional<String> newPassword) {
-		
+
 		try {
 			String email = context.getSession().get("email");
 			if (userManager.verifyLogin(email, oldPassword.get())) {
 				userManager.updatePassword(email, newPassword.get());
 				flashScope.success("account.PwUpdate.isUpdated");
-				
+
 			} else {
 				flashScope.error("account.PwUpdate.mismatch");
 			}
 
 			return Results.redirect("/account");
-			
+
 		} catch (GeneralSecurityException e) {
 			throw new InternalServerErrorException("Error when hashing password");
 		}
 	}
 
-	public Result changeLanguage(FlashScope flashScope, @Param("lang") Optional<String> selectedLanguage){
-		if (selectedLanguage.isPresent() && (selectedLanguage.get().equals("de")) || selectedLanguage.get().equals("en")) {
-			Result result = Results.redirect("/");;
-			
+	public Result changeLanguage(FlashScope flashScope, @Param("lang") Optional<String> selectedLanguage) {
+		if (selectedLanguage.isPresent() && (selectedLanguage.get().equals("de"))
+				|| selectedLanguage.get().equals("en")) {
+			Result result = Results.redirect("/");
+			;
+
 			flashScope.success("nav.lang.success");
 			lang.setLanguage(selectedLanguage.get(), result);
-			
+
 			return result;
 		} else {
 			throw new BadRequestException("Selected language not valid");
 		}
-		
+
 	}
-	
+
 	/////////////////////////////////////////
 	// Getters & Setters
-/////////////////////////////////////////
-	
+	/////////////////////////////////////////
+
 	public void setUserManager(UserManager userManager) {
 		this.userManager = userManager;
 	}
@@ -212,5 +213,5 @@ public class UserController {
 	public void setLang(Lang lang) {
 		this.lang = lang;
 	}
-	
+
 }
