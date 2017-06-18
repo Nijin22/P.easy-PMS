@@ -59,7 +59,7 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/projects/{projectID}/report").with(ApplicationController::report);
         router.GET().route("/projects/{projectID}/tasks/{taskID}").with(ApplicationController::task);
         router.GET().route("/projects/{projectID}/tasks").with(ApplicationController::tasks);
-        router.GET().route("/upload").with(ApplicationController::fileUpload);
+        // router.GET().route("/upload").with(ApplicationController::fileUpload); // ONLY for debugging
 
         // Handling user specifics + registration + sessions
         router.GET().route("/register").with(UserController::register);
