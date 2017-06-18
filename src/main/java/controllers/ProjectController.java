@@ -375,10 +375,12 @@ public class ProjectController {
 	}
 
 	@FilterWith(LoginFilter.class)
-	public Result members(@PathParam("projectID") String projectId) {
+	public Result members(@PathParam("projectID") String projectId, Context context) {
 		Result result = Results.html();
 		Project project = projectManager.getProject(Long.parseLong(projectId));
 
+		verifyAccessOrBreak(projectId, context);
+		
 		// Project
 		result.render("project", project);
 
@@ -402,10 +404,12 @@ public class ProjectController {
 	}
 
 	@FilterWith(LoginFilter.class)
-	public Result milestone(@PathParam("milestoneID") String milestoneId) {
+	public Result milestone(@PathParam("projectID") String projectId, @PathParam("milestoneID") String milestoneId, Context context) {
 		Result result = Results.html();
 		Milestone milestone = projectManager.getMilestone(Long.parseLong(milestoneId));
 
+		verifyAccessOrBreak(projectId, context);
+		
 		result.render("project", milestone.getProject());
 		result.render("milestone", milestone);
 		result.render("tasks", milestone.getTasks());
@@ -432,11 +436,13 @@ public class ProjectController {
 	}
 
 	@FilterWith(LoginFilter.class)
-	public Result project(@PathParam("projectID") String projectId) {
+	public Result project(@PathParam("projectID") String projectId, Context context) {
 		Result result = Results.html();
 		Project project = projectManager.getProject(Long.parseLong(projectId));
 		project.getBlogEntries();
 
+		verifyAccessOrBreak(projectId, context);
+		
 		// Project Parameters
 		result.render("project", project);
 		System.out.println("Size of project-Blogentries: " + project.getBlogEntries().size());
@@ -489,9 +495,9 @@ public class ProjectController {
 	}
 
 	@FilterWith(LoginFilter.class)
-	public Result task(@PathParam("projectID") String projectId, @PathParam("taskID") String taskId) {
+	public Result task(@PathParam("projectID") String projectId, @PathParam("taskID") String taskId, Context context) {
 
-		// projectId is not needed until now
+		verifyAccessOrBreak(projectId, context);
 
 		Result result = Results.html();
 		Task task = projectManager.getTask(Long.parseLong(taskId));
@@ -539,7 +545,6 @@ public class ProjectController {
 
 	@FilterWith(LoginFilter.class)
 	public Result projects(Session session) {
-
 		Result result = Results.html();
 		String email = session.get("email");
 
@@ -555,11 +560,12 @@ public class ProjectController {
 	}
 
 	@FilterWith(LoginFilter.class)
-	public Result report(@PathParam("projectID") String projectId) {
-
+	public Result report(@PathParam("projectID") String projectId, Context context) {
 		Result result = Results.html();
 		Project project = projectManager.getProject(Long.parseLong(projectId));
 
+		verifyAccessOrBreak(projectId, context);
+		
 		// Project Parameters
 		result.render("project", project);
 
@@ -660,9 +666,9 @@ public class ProjectController {
 	}
 
 	@FilterWith(LoginFilter.class)
-	public Result tasks(@PathParam("projectID") String projectId) {
+	public Result tasks(@PathParam("projectID") String projectId, Context context) {
 
-		// projectId is not needed until now
+		verifyAccessOrBreak(projectId, context);
 
 		Result result = Results.html();
 		Project project = projectManager.getProject(Long.parseLong(projectId));
