@@ -1,0 +1,132 @@
+<#import "../layout/peasyLayout.ftl.html" as layout>
+<@layout.peasyLayout "Dashboard page">
+
+<div class="row">
+	<h1 class="page-header">${i18n("dashboard.title")}</h1>
+</div>
+
+<!-- Panels -->
+<div class="row">
+	<!-- My Projects Panel -->
+	<div class="col-lg-6 col-md-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-cubes fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">${projectsCount}</div>
+						<div>${i18n("dashboard.myprojects")}</div>
+					</div>
+				</div>
+			</div>
+			<a href="#">
+				<div class="panel-footer">
+					<a href="projects">${i18n("dashboard.viewdetails")}</a> <span
+						class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+					<div class="clearfix"></div>
+				</div>
+			</a>
+		</div>
+	</div>
+	<!-- My Tasks Panel -->
+	<div class="col-lg-6 col-md-6">
+		<div class="panel panel-green">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-tasks fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">${tasksCount}</div>
+						<div>${i18n("dashboard.mytasks")}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /Panels -->
+
+<!-- My Projects -->
+<div class="panel panel-default">
+	<div class="panel-heading">${i18n("dashboard.myprojects")}</div>
+	<div class="panel-body">
+		<table id="myTable">
+			<tr class="header">
+				<th style="width: 18%;">${i18n("projects.projectname")}</th>
+				<th style="width: 10%;">${i18n("projects.status")}</th>
+				<th style="width: 18%;">${i18n("projects.lefttime")}</th>
+				<th style="width: 18%;">${i18n("projects.budget")}</th>
+				<th style="width: 18%;">${i18n("projects.ProjectManager")}</th>
+				<th style="width: 18%;">${i18n("projects.deadline")}</th>
+			</tr>
+	
+			<tbody>
+				<#list projects as project>
+				<tr>
+					<td><a href="/projects/${project.projectId}">${project.name}</a></td>
+					<td>${project.status}</td>
+					<#if project.getTimeLeft()gt 10>
+					<td style="color: #00cd66">${project.getTimeLeft()}</td>
+					<#elseif project.getTimeLeft()gt 0>
+					<td style="color: #DAA520">${project.getTimeLeft()}</td>
+					<#elseif project.getTimeLeft()==0> 							 		
+	 									<td style="color:#FF8C00">${project.getTimeLeft()}</td>				
+								<#elseif project.status == "FINISHED"> 							 		
+	 									<td style="color:#1E90FF">${project.getTimeLeft()}</td>
+	 							<#elseif project.status == "CANCELED"> 							 		
+	 									<td style="color:#1E90FF">${project.getTimeLeft()}</td>
+	 							<#else>
+	 									<td style="color:#FF4500">${project.getTimeLeft()}</td>
+								</#if>
+					<td>${project.budget}€</td>
+					<td>${project.projectManager.emailAddress}</td>
+					<td>${project.deadline}</td>
+				</tr>
+				</#list>
+			</tbody>
+		</table>
+	</div>
+</div>
+<!-- /My Projects -->
+
+<div class="panel panel-default">
+	<div class="panel-heading">${i18n("dashboard.mytasks")}</div>
+	<div class="panel-body">
+		<table id="myTable">
+			<thead>
+				<tr>
+					<th>${i18n("dashboard.tasks.project")}</th>
+					<th>${i18n("dashboard.tasks.task")}</th>
+					<th>${i18n("dashboard.tasks.progress")}</th>
+					<th>${i18n("dashboard.tasks.beginnDate")}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<#list tasks as task>
+					<tr>
+						<td>${task.project.name}</td>
+						<td><a href="/projects/${task.project.projectId}/tasks/${task.taskId}">${task.name}</a></td>
+						<td>${task.progress}%</td>
+						<td>${task.start}</td>
+					</tr>
+				</#list>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<!-- My Account -->
+<div class="panel panel-default">
+	<div class="panel-heading">${i18n("dashboard.myAccount")}</div>
+	<div class="panel-body">
+		<p>${i18n("dashboard.account.name")}: ${user.firstName} ${user.lastName}</p>
+		<p>${i18n("dashboard.account.email")}: ${user.emailAddress}</p>
+		<a class="btn btn-default" href="/account">${i18n("nav.myAccount")}</a>
+	</div>
+</div>
+<!-- /My Account -->
+
+ </@layout.peasyLayout>

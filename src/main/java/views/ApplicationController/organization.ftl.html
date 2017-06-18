@@ -1,0 +1,147 @@
+<#import "../layout/peasyLayout.ftl.html" as layout>
+<@layout.peasyLayout "Organization">
+
+
+<h1> ${i18n('organization.pageDescribtion')}</h1>
+<!-- Collapse 1 - Project User Table --> 
+<div class="panel-group" id="accordion">
+<div class="panel panel-default">
+   <div class="panel-heading">
+      <h4 class="panel-title">
+         <a data-toggle="collapse"  href="#collapse1">
+         ${i18n('organization.collapseProjectUser')}</a>
+      </h4>
+   </div>
+   </div>
+   <div id="collapse1" class="panel-collapse collapse in">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-12">
+               <h4></h4>
+               <div class="table-responsive">
+                  <table id="mytable" class="table table-bordred table-striped">
+                     <thead>
+                        <th><input type="checkbox" id="checkall" /></th>
+                        <th>${i18n('organization.firstName')}</th>
+                        <th>${i18n('organization.lastName')}</th>
+                        <th>${i18n('organization.email')}</th>
+                        <th>${i18n('organization.editRow')}</th>
+                        <th>${i18n('organization.deleteRow')}</th>
+                     </thead>
+                     <tbody>
+                        <#list members as member>
+                        <tr>
+                           <td><input type="checkbox" class="checkthis" /></td>
+                           <td>${member.firstName}</td>
+                           <td>${member.lastName}</td>
+                           <td>${member.emailAddress}</td>
+                           <td>
+                              <p data-placement="top" data-toggle="tooltip" title=${i18n('organization.tooltipEdit')}><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p>
+                           </td>
+                           <td>
+                              <p data-placement="top" data-toggle="tooltip" title=${i18n('organization.tooltipDelete')}><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p>
+                           </td>
+                        </tr>
+                        </#list>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                  <h4 class="modal-title custom_align" id="Heading">${i18n('organization.editYourDetail')}</h4>
+               </div>
+               <div class="modal-body">
+                  <div class="form-group">
+                     <input class="form-control " type="text" placeholder="Max">
+                  </div>
+                  <div class="form-group">
+                     <input class="form-control " type="text" placeholder="Mustermann">
+                  </div>
+                  <div class="form-group">
+                     <input class="form-control " type="text" placeholder="Mustermann@gmail.com"></textarea>
+                  </div>
+               </div>
+               <div class="modal-footer ">
+                  <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> ${i18n('organization.editUpdateButton')}</button>
+               </div>
+            </div>
+            <!-- /.modal-content --> 
+         </div>
+         <!-- /.modal-dialog --> 
+      </div>
+      <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                  <h4 class="modal-title custom_align" id="Heading">${i18n('organization.deleteThisEntry')}</h4>
+               </div>
+               <div class="modal-body">
+                  <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> ${i18n('organization.sureToDelete')}</div>
+               </div>
+               <div class="modal-footer ">
+                  <button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>${i18n('organization.yesDelete')} Yes</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> ${i18n('organization.noDelete')}</button>
+               </div>
+            </div>
+            <!-- /.modal-content --> 
+         </div>
+         <!-- /.modal-dialog --> 
+      </div>
+   </div>
+</div>
+
+
+
+
+
+<!-- Collapse 2 - Data Upload --> 
+<script src='../assets/js/organizationDataUpload.js'></script>
+<div class="panel panel-default">
+<div class="panel-heading">
+   <h4 class="panel-title">
+      <a data-toggle="collapse"  href="#collapse2">${i18n('organization.coorperateDesign')}</a>
+   </h4>
+</div>
+<div id="collapse2" class="panel-collapse collapse">
+   <div class="container">
+      <div class="panel panel-centre">
+         <div class="panel-body">
+            <!-- Standar Form -->
+            <h4>${i18n('organization.uploadQuote')}</h4>
+            <form action="" method="post" enctype="multipart/form-data" id="js-upload-form">
+               <div class="form-inline">
+                  <div class="form-group">
+                     <input type="file" name="files[]" id="js-upload-files" multiple>
+                  </div>
+                  <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">${i18n('organization.uploadFile')}</button>
+               </div>
+            </form>
+            
+            
+            <!-- Drop Zone -->
+            <h4>${i18n('organization.orDragFile')}</h4>
+            <div class="upload-drop-zone" id="drop-zone">
+              {i18n('organization.dragHere')}
+            </div>
+           
+            <!-- Upload Finished -->
+            <div class="js-upload-finished">
+               <h3>${i18n('organization.processedFiles')}</h3>
+               <div class="list-group">
+                  <a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">Success</span>image-01.jpg</a>
+                  <a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">Success</span>image-02.jpg</a>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- /container -->
+   </div>
+</div>
+</@layout.peasyLayout>

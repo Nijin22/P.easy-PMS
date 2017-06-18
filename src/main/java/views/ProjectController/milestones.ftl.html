@@ -1,0 +1,94 @@
+<#import "../layout/peasyLayout.ftl.html" as layout>
+<@layout.peasyLayout "Milestones">
+<body>
+	<div id="wrapper">
+		<div id="page-wrapper">
+			<div class="page-header">
+				<h1>${project.name} - ${i18n("milestones.header")}</h1>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div role="tabpanel">
+						<div class="col-sm-3">
+							<ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
+								<li role="presentation" class="brand-nav"><a
+									href="/projects/${project.projectId}">${i18n("projectsidebar.overview")}</a></li>
+								<li role="presentation" class="brand-nav"><a
+									href="/projects/${project.projectId}/tasks">${i18n("projectsidebar.taskoverview")}</a></li>
+<!-- 								<li role="presentation" class="brand-nav"><a -->
+<!-- 									href="/projects/${project.projectId}/members">${i18n("projectsidebar.members")}</a></li> -->
+								<li role="presentation" class="brand-nav"><a
+									href="/projects/${project.projectId}/report">${i18n("projectsidebar.report")}</a></li>
+								<li role="presentation" class="brand-nav active"><a
+									href="/projects/${project.projectId}/milestones">${i18n("projectsidebar.milestones")}</a></li>
+							</ul>
+						</div>
+						<div class="col-sm-9">
+							<div class="btn-toolbar">
+								<a href="/createMilestone/${project.projectId}"><button class="btn btn-primary">New Milestone</button></a>
+							</div>
+							<br>
+							<div class="well">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>Name</th>
+											<th>Progress</th>
+											<th>Deadline</th>
+											<th>Tasks</th>
+											<th>Delete</th>
+										</tr>
+									</thead>
+									<tbody>
+									<#list milestones as milestone>
+										<tr>
+											<td><a href="/projects/${project.projectId}/milestones/${milestone.mileStoneId}">${milestone.name}</a></td>
+											<td>${milestone.progress}%</td>
+											<td>${milestone.deadline}</td>
+											<td>${milestone.getTasksSize()}</td>
+											<td>	
+											<p data-placement="top" data-toggle="tooltip" title="Delete">
+												<button class="btn btn-danger btn-xs" onclick="deleteMilestone( ${milestone.mileStoneId},${milestone.getTasksSize()})">
+													<span class="glyphicon glyphicon-trash"></span>
+												</button>
+											</p>
+											</td>
+										</tr>
+										</#list>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+	function deleteMilestone(id,size){
+		if(size != 0){
+			alert("Milestone has Tasks! Delete not allowed!");
+		}else{
+		
+		$.ajax({
+			type : "POST",
+			url : "/project/"+${project.projectId}+"/deleteMilestone/"+ id,
+			success: function (response) {  
+				window.location.reload(true);													
+			},
+			statusCode: {
+			    500: function() {
+			       // Only if your server returns a 403 status code can it come in this block. :-)
+			        //alert("Error to update DeadLine");
+					window.location.reload(true);													
+			    }
+			}
+		});
+		}
+	}
+	
+	</script>
+	
+</body>
+</@layout.peasyLayout> 

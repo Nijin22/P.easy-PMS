@@ -1,47 +1,99 @@
-/**
- * Copyright (C) 2013 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package controllers;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.google.inject.Inject;
+
+import filters.LoginFilter;
+import models.beans.Organisation;
+import models.beans.PeasyUser;
+import models.beans.Project;
+import models.beans.Task;
+import models.manager.OrganisationManager;
+import models.manager.ProjectManager;
+import models.manager.UserManager;
+import ninja.FilterWith;
 import ninja.Result;
 import ninja.Results;
+import ninja.params.PathParam;
+import ninja.session.Session;
 
-import com.google.inject.Singleton;
-
-
-@Singleton
 public class ApplicationController {
+	@Inject
+	ProjectManager projectManager;
+	@Inject
+	OrganisationManager organisationManager;
+	@Inject
+	UserManager userManager;
 
-    public Result index() {
-        return Results.html();
+	public ApplicationController() {
 
-    }
-    
-    public Result helloWorldJson() {
-        
-        SimplePojo simplePojo = new SimplePojo();
-        simplePojo.content = "Simple JSON test!";
+	}
 
-        return Results.json().render(simplePojo);
+	@FilterWith(LoginFilter.class)
+	public Result dashboard(Session session) {
+		Result result = Results.html();
 
-    }
-    
-    public static class SimplePojo {
+		String email = session.get("email");
+		PeasyUser peasyUser = userManager.getUser(email);
 
-        public String content;
-        
-    }
+		// Projects of user
+		Set<Project> usersProjects = new HashSet<Project>();
+		usersProjects.addAll(peasyUser.getProject());
+		usersProjects.addAll(peasyUser.getProjectsWhereUserIsManager());
+		result.render("projects", usersProjects);
+		result.render("projectsCount", usersProjects.size());
+
+		// Tasks of user
+		Set<Task> usersTasks = new HashSet<Task>();
+		for (Project currentProject : usersProjects) {
+			for (Task currentTask : currentProject.getTasks()) {
+				if (currentTask.getUsers().contains(peasyUser)) {
+					usersTasks.add(currentTask);
+				}
+			}
+		}
+		result.render("tasks", usersTasks);
+		result.render("tasksCount", usersTasks.size());
+
+		// User themself
+		result.render("user", peasyUser);
+		return result;
+
+	}
+
+	public Result impress() {
+		return Results.html();
+
+	}
+
+	public Result login() {
+		return Results.html();
+
+	}
+
+	@FilterWith(LoginFilter.class)
+	public Result organization(@PathParam("id") String id) {
+		Result result = Results.html();
+		// eigentlich org vom user auslesen.
+		Organisation organization = organisationManager.getOrganisation(Integer.parseInt(id));
+
+		System.out.println("Size of users =) " + organization.getUsers().size());
+
+		result.render("members", organization.getUsers());
+		return result;
+
+	}
+	
+	@FilterWith(LoginFilter.class)
+	public Result fileUpload() {
+		return Results.html();
+
+	}
+
+	public Result index() {
+		return Results.html();
+
+	}
 }

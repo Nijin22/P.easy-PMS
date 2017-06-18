@@ -1,0 +1,86 @@
+<#import "../layout/peasyLayout.ftl.html" as layout>
+<@layout.peasyLayout "Projects">
+
+<div id="projectContent">
+	<div class="page-header">
+		<h1>${i18n("projects.header")}</h1>
+	</div>
+	      <div class="container">
+         <div class="row">
+            <div class="col-md-14">
+               <h4></h4>
+               <div class="table-responsive">
+               	<input type="text" id="myInput" onkeyup="myFunction()"
+		placeholder="Search for Projectname">
+
+	<table id="myTable">
+		<tr class="header">
+			<th style="width: 18%;">${i18n("projects.projectname")}</th>
+			<th style="width: 10%;">${i18n("projects.status")}</th>
+			<th style="width: 18%;">${i18n("projects.lefttime")}</th>
+			<th style="width: 18%;">${i18n("projects.budget")}</th>
+		    <th style="width: 18%;">${i18n("projects.ProjectManager")}</th>
+			<th style="width: 18%;">${i18n("projects.deadline")}</th>
+		</tr>
+		
+                     <tbody>	
+                     <#list projects as project>
+                        <tr>
+                           <td><a href="/projects/${project.projectId}">${project.name}</a></td>
+                           <td>${project.status}</td>
+                           <#if project.getTimeLeft() gt 10>
+ 								      <td style="color:#00cd66">${project.getTimeLeft()}</td>
+ 							<#elseif project.getTimeLeft() gt 0>
+ 							 		<td style="color:#DAA520">${project.getTimeLeft()}</td>
+ 							<#elseif project.getTimeLeft() == 0> 							 		
+ 									<td style="color:#FF8C00">${project.getTimeLeft()}</td>				
+							<#elseif project.status == "FINISHED"> 							 		
+ 									<td style="color:#1E90FF">${project.getTimeLeft()}</td>
+ 							<#elseif project.status == "CANCELED"> 							 		
+ 									<td style="color:#1E90FF">${project.getTimeLeft()}</td>
+ 							<#else>
+ 									<td style="color:#FF4500">${project.getTimeLeft()}</td>
+							</#if>
+                           <td>${project.budget}€</td>
+                           <td>${project.projectManager.emailAddress}</td>
+                           <td>${project.deadline}</td>
+                        </tr>
+                      </#list>
+                     </tbody>
+                  </table>
+                  <div class="form-group">
+                     <label class="col-md-0 control-label"></label>
+                     <div class="col-md-0">
+                        <a href="/createProject/${session.email}"><input type="button" class="btn btn-primary" value="${i18n('projects.addUser')}"></a>    
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+<script>
+	function myFunction() {
+		// Declare variables 
+		var input, filter, table, tr, td, i;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("myTable");
+		tr = table.getElementsByTagName("tr");
+
+		// Loop through all table rows, and hide those who don't match the search query
+		for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[0];
+			if (td) {
+				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
+	}
+	
+</script>
+</@layout.peasyLayout>

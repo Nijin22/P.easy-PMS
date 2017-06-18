@@ -1,0 +1,483 @@
+package models.manager;
+
+import com.google.common.io.Files;
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+import com.google.inject.persist.Transactional;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.NoSuchElementException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.persistence.EntityManager;
+import models.beans.PeasyUser;
+import models.beans.ProfilePicture;
+import models.beans.Project;
+import models.beans.ProjectFile;
+import models.beans.Task;
+import models.beans.TaskFile;
+import models.manager.enums.FileType;
+import ninja.jpa.UnitOfWork;
+import ninja.utils.NinjaProperties;
+import org.apache.commons.io.FilenameUtils;
+import org.dom4j.IllegalAddException;
+
+/**
+ *
+ * @author Tugrul
+ */
+public class FileManager {
+
+    private static final Logger log = Logger.getLogger(FileManager.class.getName());
+
+    @Inject
+    Provider<EntityManager> entitiyManagerProvider;
+
+    @Inject
+    NinjaProperties ninjaProperties;
+
+    /**
+     * This Method is saving the File in the FileSystem and creates a FileObject
+     * in the Database
+     *
+     *
+     * @param file
+     * @param fileName
+     * @param type
+     * @param idOfOwner
+     * @return Path, where File is saved in the FileSystem
+     * @throws IOException
+     * @throws IllegalArgumentException
+     * @throws NoSuchElementException
+     */
+    public String uploadFile(File file, String fileName, String type, String idOfOwner) throws IOException, IllegalArgumentException, NoSuchElementException {
+        log.log(Level.INFO, "Start method with file: {0} and type: {1}", new Object[]{fileName, type});
+
+        //First check attributes
+        if (!file.isFile()) {
+            log.log(Level.WARNING, "File is null!");
+            throw new IllegalArgumentException("File can't be null!");
+        }
+        if (type.isEmpty()) {
+            log.log(Level.WARNING, "Type is null!");
+            throw new IllegalArgumentException("Type can't be null!");
+        }
+
+        String fileIdJPA = "";
+        String fileType = FilenameUtils.getExtension(fileName);
+        //Second Persist Objects in Database
+        if (type.equals(FileType.picture.name())) {
+            log.log(Level.INFO, "Saving ProfilePicture: {0}", fileName);
+            try {
+                ImageIO.read(file);
+                fileIdJPA = createPictureUser(idOfOwner, fileName, fileType);
+            } catch (IOException e) {
+                log.log(Level.WARNING, "Given File is not a image {0}", file.getName());
+                throw new IllegalAddException("Given File is not a image " + file.getName());
+            }
+
+        } else if (type.equals(FileType.task.name())) {
+            log.log(Level.INFO, "Saving Taskfile: {0}", fileName);
+            long taskId = Long.parseLong(idOfOwner);
+            fileIdJPA = createTaskFile(taskId, fileName, fileType);
+            log.log(Level.INFO, "Generated Id for TaskFile {0}", fileIdJPA);
+
+        } else if (type.equals(FileType.project.name())) {
+            log.log(Level.INFO, "Saving Projectfile: {0}", fileName);
+            long projectId = Long.parseLong(idOfOwner);
+            fileIdJPA = createProjectFile(projectId, fileName, fileType);
+        }
+
+        //File directory = new File("target" + File.separator + "tmp" + File.separator + type); 
+        File directory = new File(ninjaProperties.get("UploadDirectoryPath") + File.separator + type);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        File saveFile = null;
+        if (!fileIdJPA.isEmpty()) {
+            saveFile = new File(directory.getCanonicalPath(), fileIdJPA);
+        } else {
+            throw new IllegalArgumentException("fileIdJPA is not set in methods");
+        }
+
+        if (saveFile.exists()) {
+            //saveFile.delete();
+            log.log(Level.WARNING, "File with Filename {0} exists already! ", saveFile.getName());
+            throw new IllegalArgumentException("File with Filename " + saveFile.getName() + " exists already!");
+        }
+        saveFile.createNewFile();
+        //get Inputstream of File which shall be uploaded
+        InputStream inputStream = Files.asByteSource(file).openStream();
+
+        //Save File in System
+        BufferedInputStream is = null;
+        BufferedOutputStream os = null;
+        try {
+            is = new BufferedInputStream(inputStream);
+            os = new BufferedOutputStream(new FileOutputStream(saveFile));
+            byte[] buff = new byte[8192];
+            int len;
+            while (0 < (len = is.read(buff))) {
+                os.write(buff, 0, len);
+            }
+        } finally {
+            if (is != null) {
+                is.close();
+            }
+            if (os != null) {
+                os.flush();
+                os.close();
+            }
+        }
+        return saveFile.getCanonicalPath();
+
+    }
+
+    /**
+     *
+     * This Method is deleting the File in the FileSystem and deleting the
+     * FileObject in the Database
+     *
+     * @param fileId
+     * @param fileType
+     * @param type
+     * @throws FileNotFoundException
+     * @throws IOException
+     * @throws NoSuchElementException
+     */
+    public void deleteFile(long fileId, String type) throws FileNotFoundException, IOException, NoSuchElementException {
+
+        EntityManager entityManager = entitiyManagerProvider.get();
+        String fileType = "";
+
+        //Second Persist Objects in Database
+        if (type.equals(FileType.picture.name())) {
+            log.log(Level.INFO, "Deleting ProfilePicture with id: {0}", fileId);
+            ProfilePicture profilePicture = entityManager.find(ProfilePicture.class, fileId);
+            fileType = profilePicture.getFileType();
+            deletePictureUser(fileId);
+
+        } else if (type.equals(FileType.task.name())) {
+            log.log(Level.INFO, "Deleting Taskfile with id: {0}", fileId);
+            TaskFile taskFile = entityManager.find(TaskFile.class, fileId);
+            fileType = taskFile.getFileType();
+            deleteTaskFile(fileId);
+
+        } else if (type.equals(FileType.project.name())) {
+            log.log(Level.INFO, "Deleting Projectfile with id: {0}", fileId);
+            ProjectFile projectFile = entityManager.find(ProjectFile.class, fileId);
+            fileType = projectFile.getFileType();
+            deleteProjectFile(fileId);
+        }
+
+        //File directory = new File("target" + File.separator + "tmp" + File.separator + type);
+        File directory = new File(ninjaProperties.get("UploadDirectoryPath") + File.separator + type);
+        if (!directory.exists()) {
+            throw new FileNotFoundException("Could not find directory " + directory.getCanonicalPath());
+        }
+
+        File fileToDelete = new File(directory.getCanonicalPath(), String.valueOf(fileId) + fileType);
+        fileToDelete.delete();
+
+    }
+
+    /**
+     *
+     * This Method is creating a ProfilePicture-Object in the Database. It is
+     * used by the method uploadFile
+     *
+     * @param email
+     * @param fileName
+     * @param fileType
+     * @return id of created rofilePicture-Object
+     * @throws NoSuchElementException
+     */
+    private String createPictureUser(String email, String fileName, String fileType) throws NoSuchElementException {
+        log.log(Level.INFO, "Start add ProfilePicture to User in Database");
+
+        EntityManager entityManager = entitiyManagerProvider.get();
+        entityManager.getTransaction().begin();
+
+        PeasyUser peasyUser = entityManager.find(PeasyUser.class, email);
+
+        if (peasyUser == null) {
+            throw new NoSuchElementException("PeasyUser with email " + email + "is not in the database");
+        }
+
+        ProfilePicture profilePicture = new ProfilePicture(fileName);
+        profilePicture.setPeasyUser(peasyUser);
+
+        if (fileType.isEmpty()) {
+            profilePicture.setFileType("");
+        } else {
+            profilePicture.setFileType("." + fileType);
+        }
+
+        peasyUser.setProfilePicture(profilePicture);
+
+        entityManager.persist(profilePicture);
+        entityManager.getTransaction().commit();
+
+        log.log(Level.INFO, profilePicture.toString());
+
+        return String.valueOf(profilePicture.getFileId()) + profilePicture.getFileType();
+
+    }
+
+    /**
+     *
+     * This Method is creating a TaskFile-Object in the Database. It is used by
+     * the method uploadFile
+     *
+     * @param taskId
+     * @param fileName
+     * @param fileType
+     * @return id of created TaskFile-Object
+     * @throws NoSuchElementException
+     */
+    private String createTaskFile(long taskId, String fileName, String fileType) throws NoSuchElementException {
+        log.log(Level.INFO, "Start add TaskFile to Task in Database");
+
+        EntityManager entityManager = entitiyManagerProvider.get();
+        entityManager.getTransaction().begin();
+
+        Task task = entityManager.find(Task.class, taskId);
+
+        if (task == null) {
+            throw new NoSuchElementException("Task with taskFileId " + taskId + "is not in the database");
+        }
+
+        TaskFile taskFile = new TaskFile(fileName);
+        taskFile.setTask(task);
+        if (fileType.isEmpty()) {
+            taskFile.setFileType("");
+        } else {
+            taskFile.setFileType("." + fileType);
+        }
+        task.getTaskFiles().add(taskFile);
+
+        entityManager.persist(taskFile);
+        entityManager.getTransaction().commit();
+
+        log.info(taskFile.toString());
+
+
+        return String.valueOf(taskFile.getFileId()) + taskFile.getFileType();
+    }
+
+    /**
+     *
+     * This Method is creating a ProjectFile-Object in the Database. It is used
+     * by the method uploadFile
+     *
+     * @param projectId
+     * @param fileName
+     * @param fileType
+     * @return id of created ProjectFile-Object
+     * @throws NoSuchElementException
+     */
+    private String createProjectFile(long projectId, String fileName, String fileType) throws NoSuchElementException {
+        log.log(Level.INFO, "Start add ProjectFile to Project in Database");
+
+        EntityManager entityManager = entitiyManagerProvider.get();
+        entityManager.getTransaction().begin();
+        Project project = entityManager.find(Project.class, projectId);
+
+        if (project == null) {
+            throw new NoSuchElementException("Project with taskFileId " + projectId + "is not in the database");
+        }
+
+        ProjectFile projectFile = new ProjectFile(fileName);
+        projectFile.setProject(project);
+        if (fileType.isEmpty()) {
+            projectFile.setFileType("");
+        } else {
+            projectFile.setFileType("." + fileType);
+        }
+        project.getProjectFiles().add(projectFile);
+
+        entityManager.persist(projectFile);
+        log.log(Level.INFO, projectFile.toString());
+        
+        entityManager.getTransaction().commit();
+        
+
+        return String.valueOf(projectFile.getFileId()) + projectFile.getFileType();
+
+    }
+
+    /**
+     *
+     * This Method is deleting a ProjectFile-Object in the Database. It is used
+     * by the method deleteFile
+     *
+     * @param fileId
+     * @throws NoSuchElementException
+     */
+    private void deletePictureUser(long fileId) throws NoSuchElementException {
+        log.log(Level.INFO, "Start deleting ProfilPicture from User in Database");
+
+        EntityManager entityManager = entitiyManagerProvider.get();
+        entityManager.getTransaction().begin();
+
+        ProfilePicture profilePicture = entityManager.find(ProfilePicture.class, fileId);
+
+        if (profilePicture == null) {
+            throw new NoSuchElementException("ProfilePicture with projectFile " + fileId + "is not in the database");
+        }
+
+        PeasyUser peasyUser = entityManager.find(PeasyUser.class, profilePicture.getPeasyUser().getEmailAddress());
+        if (peasyUser == null) {
+            throw new NoSuchElementException("PeasyUser with projetId " + profilePicture.getPeasyUser().getEmailAddress() + "is not in the database");
+        }
+
+        peasyUser.setProfilePicture(null);
+        profilePicture.setPeasyUser(null);
+
+        entityManager.remove(profilePicture);
+        entityManager.getTransaction().commit();
+
+        log.log(Level.INFO, profilePicture.toString());
+
+    }
+
+    /**
+     *
+     * This Method is deleting a TaskFile-Object in the Database. It is used by
+     * the method deleteFile
+     *
+     * @param fileId
+     * @throws NoSuchElementException
+     */
+    private void deleteTaskFile(long fileId) throws NoSuchElementException {
+        log.log(Level.INFO, "Start deleting TaskFile from Task in Database");
+
+        EntityManager entityManager = entitiyManagerProvider.get();
+        entityManager.getTransaction().begin();
+
+        TaskFile taskFile = entityManager.find(TaskFile.class, fileId);
+        if (taskFile == null) {
+            throw new NoSuchElementException("TaskFile with projectFile " + fileId + "is not in the database");
+        }
+
+        Task task = entityManager.find(Task.class, taskFile.getTask().getTaskId());
+        if (task == null) {
+            throw new NoSuchElementException("Task with projetId " + taskFile.getTask().getTaskId() + "is not in the database");
+        }
+
+        task.getTaskFiles().remove(taskFile);
+        taskFile.setTask(null);
+
+        entityManager.remove(taskFile);
+        entityManager.getTransaction().commit();
+
+        log.log(Level.INFO, taskFile.toString());
+
+    }
+
+    /**
+     *
+     * This Method is deleting a ProjectFile-Object in the Database. It is used
+     * by the method deleteFile
+     *
+     * @param fileId
+     * @throws NoSuchElementException
+     */
+    private void deleteProjectFile(long fileId) throws NoSuchElementException {
+        log.log(Level.INFO, "Start deleting ProjectFile from Project in Database");
+
+        EntityManager entityManager = entitiyManagerProvider.get();
+        entityManager.getTransaction().begin();
+
+        ProjectFile projectFile = entityManager.find(ProjectFile.class, fileId);
+        if (projectFile == null) {
+            throw new NoSuchElementException("ProjectFile with projectFile " + fileId + "is not in the database");
+        }
+
+        Project project = entityManager.find(Project.class, projectFile.getProject().getProjectId());
+        if (project == null) {
+            throw new NoSuchElementException("Project with projetId " + projectFile.getProject().getProjectId() + "is not in the database");
+        }
+
+        project.getProjectFiles().remove(projectFile);
+        projectFile.setProject(null);
+
+        entityManager.remove(projectFile);
+        entityManager.getTransaction().commit();
+        
+        log.log(Level.INFO, projectFile.toString());
+
+    }
+
+    /**
+     *
+     * This Method returns a TaskFile for given ID
+     *
+     * @param id
+     * @return TaskFile which is founded by id
+     * @throws NoSuchElementException
+     */
+    @Transactional
+    public TaskFile getTaskFile(String id) throws NoSuchElementException {
+        EntityManager entityManager = entitiyManagerProvider.get();
+        long taskFileId = Long.parseLong(id);
+        TaskFile taskFile = entityManager.find(TaskFile.class, taskFileId);
+
+        if (taskFile == null) {
+            throw new NoSuchElementException("TaskFile with taskFileId " + taskFileId + "is not in the database");
+        } else {
+            return taskFile;
+        }
+
+    }
+
+    /**
+     *
+     * This Method returns a ProjectFile for given ID
+     *
+     * @param id
+     * @return ProjectFile which is founded by id
+     * @throws NoSuchElementException
+     */
+    @Transactional
+    public ProjectFile getProjectFile(String id) throws NoSuchElementException {
+        EntityManager entityManager = entitiyManagerProvider.get();
+        long projectFileId = Long.parseLong(id);
+        ProjectFile projctFile = entityManager.find(ProjectFile.class, projectFileId);
+
+        if (projctFile == null) {
+            throw new NoSuchElementException("ProjectFile with projctFileId " + projectFileId + "is not in the database");
+        } else {
+            return projctFile;
+        }
+
+    }
+
+    /**
+     *
+     * This Method returns a profilePicture for given ID
+     *
+     * @param id
+     * @return ProfilePicture which is founded by id
+     * @throws NoSuchElementException
+     */
+    @Transactional
+    public ProfilePicture getProfilePicture(String id) throws NoSuchElementException {
+        EntityManager entityManager = entitiyManagerProvider.get();
+        long pictureId = Long.parseLong(id);
+        ProfilePicture picture = entityManager.find(ProfilePicture.class, pictureId);
+
+        if (picture == null) {
+            throw new NoSuchElementException("Picture with pictureId " + pictureId + "is not in the database");
+        } else {
+            return picture;
+        }
+
+    }
+}

@@ -19,14 +19,16 @@ package conf;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 
+import models.manager.UserManager;
+
 @Singleton
 public class Module extends AbstractModule {
-    
 
-    protected void configure() {
-        
-        // bind your injections here!
-        
-    }
+	protected void configure() {
+		bind(StartupActions.class);
+
+		// Manager Services:
+		bind(UserManager.class);
+	}
 
 }
