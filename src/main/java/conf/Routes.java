@@ -52,13 +52,13 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/dashboard").with(ApplicationController::dashboard);
         router.GET().route("/organization/{id}").with(ApplicationController::organization);       
 
-        router.GET().route("/projects").with(ApplicationController::projects);
-        router.GET().route("/projects/{projectID}").with(ApplicationController::project);
-        router.GET().route("/projects/{projectID}/milestones").with(ApplicationController::milestones);
-        router.GET().route("/projects/{projectID}/milestones/{milestoneID}").with(ApplicationController::milestone);
-        router.GET().route("/projects/{projectID}/report").with(ApplicationController::report);
-        router.GET().route("/projects/{projectID}/tasks/{taskID}").with(ApplicationController::task);
-        router.GET().route("/projects/{projectID}/tasks").with(ApplicationController::tasks);
+        router.GET().route("/projects").with(ProjectController::projects);
+        router.GET().route("/projects/{projectID}").with(ProjectController::project);
+        router.GET().route("/projects/{projectID}/milestones").with(ProjectController::milestones);
+        router.GET().route("/projects/{projectID}/milestones/{milestoneID}").with(ProjectController::milestone);
+        router.GET().route("/projects/{projectID}/report").with(ProjectController::report);
+        router.GET().route("/projects/{projectID}/tasks/{taskID}").with(ProjectController::task);
+        router.GET().route("/projects/{projectID}/tasks").with(ProjectController::tasks);
         // router.GET().route("/upload").with(ApplicationController::fileUpload); // ONLY for debugging
 
         // Handling user specifics + registration + sessions
