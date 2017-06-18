@@ -7,6 +7,9 @@ package controllers;
 
 import com.google.common.io.ByteStreams;
 import com.google.inject.Inject;
+
+import filters.LoginFilter;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -21,6 +24,7 @@ import models.manager.FileManager;
 import models.manager.ProjectManager;
 import models.manager.enums.FileType;
 import ninja.Context;
+import ninja.FilterWith;
 import ninja.Renderable;
 import ninja.Result;
 import ninja.Results;
@@ -35,6 +39,7 @@ import ninja.utils.ResponseStreams;
  *
  * @author Tugrul
  */
+@FilterWith(LoginFilter.class)
 public class FileController {
 
     @Inject

@@ -3,13 +3,16 @@ package controllers;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import filters.LoginFilter;
 import models.manager.OrganisationManager;
 import models.manager.UserManager;
+import ninja.FilterWith;
 import ninja.Result;
 import ninja.Results;
 import ninja.params.PathParam;
 
 @Singleton
+@FilterWith(LoginFilter.class)
 public class OrgController {
 
 	@Inject
