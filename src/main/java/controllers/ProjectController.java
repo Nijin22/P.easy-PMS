@@ -19,6 +19,7 @@ import ninja.Results;
 import ninja.params.PathParam;
 
 @Singleton
+@FilterWith(LoginFilter.class)
 public class ProjectController {
 
 	@Inject
@@ -26,14 +27,12 @@ public class ProjectController {
 	@Inject
 	private UserManager userManager;
 
-	@FilterWith(LoginFilter.class)
 	public Result createProject(@PathParam("email") String email) {
 		Project project = projectManager.createMasterProject(email);
 
 		return Results.redirect("/projects/" + project.getProjectId());
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result createMilestone(@PathParam("projectId") String projectId) {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate localDate = LocalDate.now();
@@ -44,7 +43,6 @@ public class ProjectController {
 		return Results.redirect("/projects/" + projectId + "/milestones/" + milestone.getMileStoneId());
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result deleteMilestone(@PathParam("projectId") String projectId,
 			@PathParam("milestoneId") String milestoneId) {
 		projectManager.deleteMilestone(Long.parseLong(milestoneId));
@@ -52,13 +50,11 @@ public class ProjectController {
 		return Results.redirect("/projects/" + projectId + "/milestones");
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result createTask(@PathParam("projectId") String projectId) {
 		Task task = projectManager.createTask(Long.parseLong(projectId), "initial Task");
 		return Results.redirect("/projects/" + projectId + "/tasks/" + task.getTaskId());
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result changeProjectname(@PathParam("projectId") String projectId, @PathParam("newName") String newName) {
 		Project project = projectManager.changeProjectname(Long.parseLong(projectId), newName);
 
@@ -69,21 +65,18 @@ public class ProjectController {
 		}
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result addBlogEntry(@PathParam("projectId") String projectId, @PathParam("email") String email,
 			@PathParam("title") String title, @PathParam("text") String text) {
 		projectManager.createBlogEntry(Long.parseLong(projectId), email, title, text);
 		return Results.ok();
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result deleteBlogEntry(@PathParam("projectId") String projectId,
 			@PathParam("blogEntryId") String blogEntryId) {
 		projectManager.deleteBlogEntry(Integer.parseInt(blogEntryId));
 		return Results.ok();
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result changeTaskName(@PathParam("taskId") String taskId, @PathParam("newName") String newName) {
 		Task task = projectManager.changeTaskname(Long.parseLong(taskId), newName);
 		if (task.getName().equals(newName)) {
@@ -93,7 +86,6 @@ public class ProjectController {
 		}
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result changeProjectDescription(@PathParam("projectId") String projectId,
 			@PathParam("description") String description) {
 		Project project = projectManager.changeProjectDescription(Long.parseLong(projectId), description);
@@ -105,7 +97,6 @@ public class ProjectController {
 		}
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result changeTaskDescription(@PathParam("taskId") String taskId,
 			@PathParam("description") String description) {
 		Task task = projectManager.changeTaskDescription(Long.parseLong(taskId), description);
@@ -117,7 +108,6 @@ public class ProjectController {
 		}
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result changeTaskEffort(@PathParam("taskId") String taskId, @PathParam("effort") String effort) {
 		Task task = projectManager.changeTaskEffort(Long.parseLong(taskId), effort);
 
@@ -128,7 +118,6 @@ public class ProjectController {
 		}
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result changeTaskProgress(@PathParam("taskId") String taskId, @PathParam("progress") String progress) {
 		Task task = projectManager.changeTaskProgress(Long.parseLong(taskId), progress);
 
@@ -139,19 +128,16 @@ public class ProjectController {
 		}
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result addTaskDep(@PathParam("taskId") String taskId, @PathParam("taskDepId") String taskDepId) {
 		projectManager.addTaskDependency(Long.parseLong(taskId), Long.parseLong(taskDepId));
 		return Results.ok();
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result removeTaskDep(@PathParam("taskId") String taskId, @PathParam("taskDepId") String taskDepId) {
 		projectManager.removeTaskDependency(Long.parseLong(taskId), Long.parseLong(taskDepId));
 		return Results.ok();
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result changeProjectStart(@PathParam("projectId") String projectId,
 			@PathParam("projectStart") String projectStart) {
 		Project project = projectManager.changeProjectStart(Long.parseLong(projectId), projectStart);
@@ -164,7 +150,6 @@ public class ProjectController {
 
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result changeProjectEnd(@PathParam("projectId") String projectId,
 			@PathParam("projectDeadline") String projectDeadline) {
 		Project project = projectManager.changeProjectEnd(Long.parseLong(projectId), projectDeadline);
@@ -177,7 +162,6 @@ public class ProjectController {
 
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result changeMilestoneEnd(@PathParam("mileStoneId") String milestoneId,
 			@PathParam("milestoneDeadline") String milestoneDeadline) {
 		Milestone milestone = projectManager.changeMilestoneEnd(Long.parseLong(milestoneId), milestoneDeadline);
@@ -190,7 +174,6 @@ public class ProjectController {
 
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result changeMilestoneName(@PathParam("mileStoneId") String milestoneId,
 			@PathParam("milestoneName") String milestoneName) {
 		Milestone milestone = projectManager.changeMilestoneName(Long.parseLong(milestoneId), milestoneName);
@@ -203,7 +186,6 @@ public class ProjectController {
 
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result changeProjectBudget(@PathParam("projectId") String projectId,
 			@PathParam("projectBudget") String projectBudget) {
 		Project project = projectManager.changeProjectBudget(Long.parseLong(projectId), projectBudget);
@@ -216,7 +198,6 @@ public class ProjectController {
 
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result deleteUserFromProject(@PathParam("projectId") String projectId, @PathParam("email") String email) {
 		Project project = projectManager.unassignUserFromProject(Long.parseLong(projectId), email);
 		PeasyUser peasyUser = userManager.getUser(email);
@@ -229,7 +210,6 @@ public class ProjectController {
 
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result deleteUserFromTask(@PathParam("taskId") String taskId, @PathParam("email") String email) {
 		Task task = projectManager.unassignUserFromTask(Long.parseLong(taskId), email);
 		PeasyUser peasyUser = userManager.getUser(email);
@@ -242,7 +222,6 @@ public class ProjectController {
 
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result addUsertoProject(@PathParam("projectId") String projectId, @PathParam("email") String email) {
 		Project project = projectManager.assignUserToProject(Long.parseLong(projectId), email);
 		PeasyUser peasyUser = userManager.getUser(email);
@@ -255,7 +234,6 @@ public class ProjectController {
 
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result addTasktoMilestone(@PathParam("milestoneId") String milestoneId, @PathParam("taskId") String taskId) {
 		Milestone milestone = projectManager.addTasktoMilestone(Long.parseLong(milestoneId), Long.parseLong(taskId));
 		Task task = projectManager.getTask(Long.parseLong(taskId));
@@ -268,7 +246,6 @@ public class ProjectController {
 
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result deleteTaskfromMilestone(@PathParam("milestoneId") String milestoneId,
 			@PathParam("taskId") String taskId) {
 		Milestone milestone = projectManager.deleteTaskfromMilestone(Long.parseLong(milestoneId),
@@ -283,7 +260,6 @@ public class ProjectController {
 
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result addUsertoTask(@PathParam("taskId") String taskId, @PathParam("email") String email) {
 		Task task = projectManager.assignUserToTask(Long.parseLong(taskId), email);
 		PeasyUser peasyUser = userManager.getUser(email);
@@ -296,14 +272,12 @@ public class ProjectController {
 
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result changeManager(@PathParam("projectId") String projectId, @PathParam("email") String email) {
 		projectManager.changeProjectmanager(Long.parseLong(projectId), email);
 		return Results.ok();
 
 	}
 
-	@FilterWith(LoginFilter.class)
 	public Result changeStatus(@PathParam("projectId") String projectId, @PathParam("status") String status) {
 		ProjectStatus enumStatus = ProjectStatus.valueOf(status);
 		Project project = projectManager.changeProjectState(Long.parseLong(projectId), enumStatus);
